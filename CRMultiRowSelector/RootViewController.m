@@ -34,48 +34,22 @@
     self.title = @"GitHub Explore";
     
     self.navigationItem.rightBarButtonItem = langButton;
-    
-	    
-}
-
-- (void)fetchedData:(NSData *)responseData {
-    //parse out the json data
-    NSError* error;
-    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData
-                          options:kNilOptions
-                          error:&error];
-    
-    self.latestProjects = [json objectForKey:@"projects"];
-    
-    NSLog(@"loans: %@", self.latestProjects);
-    
-    
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    // Do any additional setup after loading the view.
-    UILabel *langLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 300, 20)];
-    [langLabel setTextColor:[UIColor blackColor]];
-    [langLabel setBackgroundColor:[UIColor clearColor]];
-    [langLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 14.0f]]; //this is correct font
-    
-    NSDictionary* projects = [self.latestProjects objectAtIndex:0];
-    
-    NSMutableArray *arrayOfLangs = [[NSMutableArray alloc] initWithContentsOfFile:self.langPrefsPath];
-    
+    NSArray *arrayOfLangs = [NSArray arrayWithContentsOfFile:self.langPrefsPath];
     
     if (arrayOfLangs.count > 0) {
+    //Fetch latest READMEs
+        
+    //Add them to a grouped TableView
+    
         
     } else {
         [self.navigationController presentModalViewController:self.langTable animated:YES];
-        [[self view] addSubview:langLabel];
     }
-
-
-    
 }
-
 
 - (void)settings:(id)sender
 {

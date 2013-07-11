@@ -33,22 +33,10 @@
         
         self.navigationItem.rightBarButtonItem = rightButton;
         
-        dataSource = [[NSArray alloc] initWithObjects:
-                      @"JavaScript",
-                      @"Ruby",
-                      @"Java",
-                      @"Python",
-                      @"Shell",
-                      @"PHP",
-                      @"C", 
-                      @"C++",
-                      @"Perl",  
-                      @"Objective-C",
-                      nil];
+        dataSource = [[NSArray alloc] initWithObjects: @"JavaScript", @"Ruby", @"Java", @"Python", @"Shell", @"PHP", @"C", @"C++", @"Perl", @"Objective-C", nil];
         
         selectedMarks = [NSMutableArray new];
 //        selectedMarks = [[NSMutableArray alloc] initWithContentsOfFile:[(RootViewController *)self.parent langPrefsPath]];
-//x inset the Plist here
         
         
     }
@@ -64,7 +52,6 @@
 {
     [super viewDidUnload];
 }
-
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -84,6 +71,7 @@
     //String Path of file
     NSString *path = [[NSBundle mainBundle] pathForResource:@"Documents" ofType:@"plist"];
     [(RootViewController *)self.parent setLangPrefsPath:path];
+    
     //Save
     [selectedMarks writeToFile:path atomically:YES];
     [self dismissModalViewControllerAnimated:TRUE];
