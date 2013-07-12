@@ -9,10 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "CRTableViewController.h"
 
-@interface RootViewController : UIViewController
-@property (strong, nonatomic) UILabel *langLabel;
-@property (strong, nonatomic) NSArray *latestProjects;
-@property (strong, nonatomic) UILabel *latestProjectsLabel;
+@interface RootViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+{
+//     NSArray *arrayOfLangs;
+}
+
+//@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic) NSArray *arrayOfLangs;
 @property (strong, nonatomic) NSArray *langPrefs;
 @property (strong, nonatomic) UINavigationController *langTable;
 @property (strong, nonatomic) UITableViewController *langList; // why did this change?

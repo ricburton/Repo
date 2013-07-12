@@ -11,7 +11,7 @@
 
 @interface CRTableViewController : UITableViewController
 {
-    NSArray *dataSource;
+//    NSArray *dataSource;
     NSMutableArray *selectedMarks;
 }
 
