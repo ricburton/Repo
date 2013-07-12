@@ -19,4 +19,8 @@
 @property (nonatomic, strong) NSArray *prefs;
 @property (nonatomic, strong) UIViewController *parent;
 
+@property (nonatomic, strong) NSArray *directories;
+@property (nonatomic, strong) NSString *documents;
+@property (nonatomic, strong) NSString *filePathLangs;
+
 @end

@@ -9,7 +9,7 @@
 #import "CRTableViewController.h"
 #import "CRTableViewCell.h"
 
-@interface CRTableViewController ()
+@interface CRTableViewController () {}
 
 @end
 
@@ -23,22 +23,32 @@
     self = [super initWithStyle:style];
     if (self) {
         
+        //Check to see if some favourite languages have already been set.
+        self.directories   = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        self.documents     = [self.directories lastObject];
+        self.filePathLangs = [self.documents stringByAppendingPathComponent:@"langs.plist"];
+        NSLog(@"DOCUMENTS &gt; %@", self.documents);
+        
+        NSMutableArray *loadedLangs = [NSMutableArray arrayWithContentsOfFile:self.filePathLangs];
+        if (loadedLangs.count > 0) {
+            selectedMarks = loadedLangs;
+        } else {
+            selectedMarks = [NSMutableArray new];
+        }
+        
+        //Set up the view
         self.title = @"Favorite Languages";
         
         UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]
                                          initWithTitle:@"Done"
-                                         style:UIBarButtonSystemItemDone
+                                         style:UIBarButtonItemStyleDone
                                          target:self
                                          action:@selector(done:)];
         
         self.navigationItem.rightBarButtonItem = rightButton;
         
+        //Add the languages
         dataSource = [[NSArray alloc] initWithObjects: @"JavaScript", @"Ruby", @"Java", @"Python", @"Shell", @"PHP", @"C", @"C++", @"Perl", @"Objective-C", nil];
-        
-        selectedMarks = [NSMutableArray new];
-//        selectedMarks = [[NSMutableArray alloc] initWithContentsOfFile:[(RootViewController *)self.parent langPrefsPath]];
-        
-        
     }
     return self;
 }
@@ -62,18 +72,13 @@
 #pragma mark - Methods
 - (void)done:(id)sender
 {
-    NSLog(@"%@", selectedMarks);
-//    [self presentViewController:RootViewController animated:YES completion:nil];
-    self.prefs = selectedMarks;
+//    self.prefs = selectedMarks;//TODO Remove this
     
-//    [(RootViewController *)self.parent setLangPrefs:selectedMarks];
+    [selectedMarks writeToFile:self.filePathLangs atomically:YES];
     
-    //String Path of file
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"Documents" ofType:@"plist"];
-    [(RootViewController *)self.parent setLangPrefsPath:path];
+    NSArray *loadedLangs = [NSArray arrayWithContentsOfFile:self.filePathLangs];
+    NSLog(@"Languages: %@", loadedLangs);
     
-    //Save
-    [selectedMarks writeToFile:path atomically:YES];
     [self dismissModalViewControllerAnimated:TRUE];
 }
 

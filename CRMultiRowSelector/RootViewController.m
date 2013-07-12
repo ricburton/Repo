@@ -25,26 +25,26 @@
 {
     [super viewDidLoad];
     
-//    arrayOfLangs = [NSArray arrayWithContentsOfFile:self.langPrefsPath];
-    arrayOfLangs = [NSArray arrayWithObjects:@"Python", @"Objective C", @"Ruby", @"JavaScript", nil];
-    
-    UITableView *readmes = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
-//    readmes.delegate = self;
-//    readmes.dataSource = arrayOfLangs;
-
-    self.langList = [[CRTableViewController alloc] initWithStyle:UITableViewStylePlain];
-    self.langTable = [[UINavigationController alloc] initWithRootViewController:_langList];
-    [(CRTableViewController *)self.langList setParent:self];
-    
-    UIBarButtonItem *langButton = [[UIBarButtonItem alloc]
-                                    initWithTitle:@"Settings"
-                                    style:UIBarButtonSystemItemDone
-                                    target:self
-                                    action:@selector(settings:)];
-
+    //Set up the view
     self.title = @"GitHub Explore";
     
+    UIBarButtonItem *langButton = [[UIBarButtonItem alloc]
+                                   initWithTitle:@"Settings"
+                                   style:UIBarButtonItemStyleDone
+                                   target:self
+                                   action:@selector(settings:)];
+    
     self.navigationItem.rightBarButtonItem = langButton;
+
+    UITableView *readmes = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
+    
+    //Check to see if some favourite languages have already been set.
+    self.directories   = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    self.documents     = [self.directories lastObject];
+    self.filePathLangs = [self.documents stringByAppendingPathComponent:@"langs.plist"];
+    NSLog(@"DOCUMENTS &gt; %@", self.documents);
+    
+    arrayOfLangs = [NSMutableArray arrayWithContentsOfFile:self.filePathLangs];
     
     if (arrayOfLangs.count > 0) {
         //Fetch latest READMEs
@@ -56,16 +56,19 @@
     } else {
         [self.navigationController presentModalViewController:self.langTable animated:YES];
     }
+
     
+
+//    readmes.delegate = self;
+//    readmes.dataSource = arrayOfLangs;
+
+    self.langList = [[CRTableViewController alloc] initWithStyle:UITableViewStylePlain];
+    self.langTable = [[UINavigationController alloc] initWithRootViewController:_langList];
+    [(CRTableViewController *)self.langList setParent:self];
     
 }
 
-//- (void)viewDidAppear:(BOOL)animated {
-//
-//    
-//
-//    
-//}
+//- (void)viewDidAppear:(BOOL)animated {}
 
 - (void)settings:(id)sender
 {
