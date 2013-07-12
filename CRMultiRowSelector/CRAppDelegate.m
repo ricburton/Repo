@@ -21,7 +21,7 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
-    CRTableViewController *tableView = [[CRTableViewController alloc] initWithStyle:UITableViewStylePlain];
+//    CRTableViewController *tableView = [[CRTableViewController alloc] initWithStyle:UITableViewStylePlain];
     RootViewController *rootView = [[RootViewController alloc] init];
     
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:rootView];

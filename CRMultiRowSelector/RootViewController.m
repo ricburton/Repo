@@ -36,39 +36,41 @@
     
     self.navigationItem.rightBarButtonItem = langButton;
 
-    UITableView *readmes = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
     
+    
+    //Prepare popover language selector
+    self.langList = [[CRTableViewController alloc] initWithStyle:UITableViewStylePlain];
+    self.langTable = [[UINavigationController alloc] initWithRootViewController:_langList];
+    [(CRTableViewController *)self.langList setParent:self];
+
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
     //Check to see if some favourite languages have already been set.
     self.directories   = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     self.documents     = [self.directories lastObject];
     self.filePathLangs = [self.documents stringByAppendingPathComponent:@"langs.plist"];
-    NSLog(@"DOCUMENTS &gt; %@", self.documents);
+    NSLog(@"DOCUMENTS: %@", self.documents);
     
     arrayOfLangs = [NSMutableArray arrayWithContentsOfFile:self.filePathLangs];
+    NSLog(@"arrayOfLangs: %@", arrayOfLangs);
     
-    if (arrayOfLangs.count > 0) {
+    //Add the readme tableview
+    UITableView *readmes = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
+    
+    if (arrayOfLangs == nil || arrayOfLangs.count == 0) {
+        NSLog(@"FAIL");
+        [self.navigationController presentModalViewController:self.langTable animated:YES];
+    } else {
         //Fetch latest READMEs
         
         //Add them to a grouped TableView
-        
+        NSLog(@"PASS");
         [self.view addSubview:readmes];
-        
-    } else {
-        [self.navigationController presentModalViewController:self.langTable animated:YES];
     }
 
-    
-
-//    readmes.delegate = self;
-//    readmes.dataSource = arrayOfLangs;
-
-    self.langList = [[CRTableViewController alloc] initWithStyle:UITableViewStylePlain];
-    self.langTable = [[UINavigationController alloc] initWithRootViewController:_langList];
-    [(CRTableViewController *)self.langList setParent:self];
-    
 }
-
-//- (void)viewDidAppear:(BOOL)animated {}
 
 - (void)settings:(id)sender
 {

@@ -8,6 +8,7 @@
 
 #import "CRTableViewController.h"
 #import "CRTableViewCell.h"
+#import "AFNetworking.h"
 
 @interface CRTableViewController () {}
 
@@ -48,7 +49,19 @@
         self.navigationItem.rightBarButtonItem = rightButton;
         
         //Add the languages
-        dataSource = [[NSArray alloc] initWithObjects: @"JavaScript", @"Ruby", @"Java", @"Python", @"Shell", @"PHP", @"C", @"C++", @"Perl", @"Objective-C", nil];
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://githubber.herokuapp.com/languages/top"]];
+        AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+            NSLog(@"JSON: %@", JSON);
+//            dataSource = (NSArray *)JSON;
+            NSLog(@"datasource: %@", dataSource);
+//            NSLog(@"Name: %@ %@", [JSON valueForKeyPath:@"first_name"], [JSON valueForKeyPath:@"last_name"]);
+            [self.tableView reloadData];
+        } failure:nil]; //TODO error message: http://www.raywenderlich.com/30445/afnetworking-crash-course
+        [operation start];
+        
+        
+//        dataSource = [
+        
     }
     return self;
 }
