@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CRTableViewController.h"
 
-@interface RootViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface RootViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource>
 {
 //     NSArray *arrayOfLangs;
 }

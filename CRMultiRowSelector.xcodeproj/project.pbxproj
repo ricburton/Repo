@@ -27,6 +27,8 @@
 		DCF37A32179078EA0009EFC4 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF37A27179078EA0009EFC4 /* AFURLConnectionOperation.m */; };
 		DCF37A33179078EA0009EFC4 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF37A29179078EA0009EFC4 /* AFXMLRequestOperation.m */; };
 		DCF37A34179078EA0009EFC4 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF37A2B179078EA0009EFC4 /* UIImageView+AFNetworking.m */; };
+		DCF37A3817908DF90009EFC4 /* SimpleTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF37A3617908DF90009EFC4 /* SimpleTableCell.m */; };
+		DCF37A3917908DF90009EFC4 /* SimpleTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCF37A3717908DF90009EFC4 /* SimpleTableCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +69,9 @@
 		DCF37A29179078EA0009EFC4 /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
 		DCF37A2A179078EA0009EFC4 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		DCF37A2B179078EA0009EFC4 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
+		DCF37A3517908DF90009EFC4 /* SimpleTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleTableCell.h; sourceTree = "<group>"; };
+		DCF37A3617908DF90009EFC4 /* SimpleTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleTableCell.m; sourceTree = "<group>"; };
+		DCF37A3717908DF90009EFC4 /* SimpleTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SimpleTableCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +91,9 @@
 		07DE687A158E8B5200798DBA = {
 			isa = PBXGroup;
 			children = (
+				DCF37A3517908DF90009EFC4 /* SimpleTableCell.h */,
+				DCF37A3617908DF90009EFC4 /* SimpleTableCell.m */,
+				DCF37A3717908DF90009EFC4 /* SimpleTableCell.xib */,
 				DCDFFDD21714DE5B0059E675 /* Default-568h@2x.png */,
 				07DE688F158E8B5200798DBA /* CRMultiRowSelector */,
 				07DE6888158E8B5200798DBA /* Frameworks */,
@@ -219,6 +227,7 @@
 			files = (
 				07DE6894158E8B5200798DBA /* InfoPlist.strings in Resources */,
 				DCDFFDD31714DE5B0059E675 /* Default-568h@2x.png in Resources */,
+				DCF37A3917908DF90009EFC4 /* SimpleTableCell.xib in Resources */,
 				DCE7E38D171DBDA400DD722A /* Documents.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -244,6 +253,7 @@
 				DCF37A31179078EA0009EFC4 /* AFPropertyListRequestOperation.m in Sources */,
 				DCF37A2C179078EA0009EFC4 /* AFHTTPClient.m in Sources */,
 				DCF37A2D179078EA0009EFC4 /* AFHTTPRequestOperation.m in Sources */,
+				DCF37A3817908DF90009EFC4 /* SimpleTableCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

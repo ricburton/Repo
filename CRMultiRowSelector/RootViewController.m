@@ -2,6 +2,7 @@
 
 #import "RootViewController.h"
 #import "CRTableViewController.h"
+#import "SimpleTableCell.h"
 
 @interface RootViewController ()
 //@property (nonatomic, weak) IBOutlet UITableView *tableView;
@@ -10,16 +11,6 @@
 
 @implementation RootViewController
 @synthesize arrayOfLangs;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil //TODO what is this doing?
-{
-
-    self = [super initWithNibName:nil bundle:nil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -35,15 +26,14 @@
                                    action:@selector(settings:)];
     
     self.navigationItem.rightBarButtonItem = langButton;
-
     
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
     
     //Prepare popover language selector
     self.langList = [[CRTableViewController alloc] initWithStyle:UITableViewStylePlain];
     self.langTable = [[UINavigationController alloc] initWithRootViewController:_langList];
     [(CRTableViewController *)self.langList setParent:self];
-
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -55,10 +45,7 @@
     
     arrayOfLangs = [NSMutableArray arrayWithContentsOfFile:self.filePathLangs];
     NSLog(@"arrayOfLangs: %@", arrayOfLangs);
-    
-    //Add the readme tableview
-    UITableView *readmes = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
-    
+        
     if (arrayOfLangs == nil || arrayOfLangs.count == 0) {
         NSLog(@"FAIL");
         [self.navigationController presentModalViewController:self.langTable animated:YES];
@@ -67,8 +54,10 @@
         
         //Add them to a grouped TableView
         NSLog(@"PASS");
-        [self.view addSubview:readmes];
     }
+    
+    [self.tableView reloadData];
+
 
 }
 
@@ -95,20 +84,20 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell Identifier"; //Keeps memory useage down. Is this needed?
-    [tableView registerClass:[UITableView class] forCellReuseIdentifier:CellIdentifier];
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    NSString *CellIdentifier = @"Cell Identifier";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if(cell == nil){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     //Todo - change to READMEs within section
     NSString *language = [arrayOfLangs objectAtIndex:[indexPath row]];
+    NSString *blurb = @"blurb..";
     [cell.textLabel setText:language];
+    [cell.detailTextLabel setText:blurb];
+
     return cell;
 }
-
 
 @end
 

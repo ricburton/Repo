@@ -13,6 +13,7 @@
 {
 //    NSArray *dataSource;
     NSMutableArray *selectedMarks;
+    NSMutableArray *dataArray;
 }
 
 @property (nonatomic) NSArray *dataSource;
