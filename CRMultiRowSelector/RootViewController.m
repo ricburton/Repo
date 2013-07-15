@@ -2,7 +2,8 @@
 
 #import "RootViewController.h"
 #import "CRTableViewController.h"
-#import "SimpleTableCell.h"
+#import "AFNetworking.h"
+
 
 @interface RootViewController ()
 //@property (nonatomic, weak) IBOutlet UITableView *tableView;
@@ -30,6 +31,13 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
+    // Setting Up Activity Indicator View
+    self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.activityIndicatorView.hidesWhenStopped = YES;
+    self.activityIndicatorView.center = self.view.center;
+    [self.view addSubview:self.activityIndicatorView];
+    [self.activityIndicatorView startAnimating];
+    
     //Prepare popover language selector
     self.langList = [[CRTableViewController alloc] initWithStyle:UITableViewStylePlain];
     self.langTable = [[UINavigationController alloc] initWithRootViewController:_langList];
@@ -54,11 +62,50 @@
         
         //Add them to a grouped TableView
         NSLog(@"PASS");
+                
+        //Set up the params for the GET request
+        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: arrayOfLangs, @"languages", nil];
+        
+        AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://githubber.herokuapp.com"]];//localhost:9292
+        httpClient.parameterEncoding = AFJSONParameterEncoding;
+        NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
+                                                                path:@"/readmes"
+                                                          parameters:params];
+
+        AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+            
+            NSLog(@"response first: %@", JSON);
+            response_data = JSON;
+            
+            //Prepare the data
+            dataArray = [[NSMutableArray alloc]init];
+            
+            for( NSString* language in arrayOfLangs )
+            {
+                //TODO - how to make this work without a hack?
+                NSArray *readmes = [response_data valueForKeyPath:[NSString stringWithFormat:@"%@.readme_raw",language]];
+                NSArray *repo_urls = [response_data valueForKeyPath:[NSString stringWithFormat:@"%@.repo",language]];
+                
+                NSLog(@"Repo_urls: %@ for %@",repo_urls,language);
+                
+                
+                if (readmes && repo_urls) {
+                    NSMutableDictionary *dataDict = [NSMutableDictionary dictionaryWithObject:readmes forKey:@"readmes"];
+                    [dataDict setObject:repo_urls forKey:@"repo"];
+                    
+                    [dataArray addObject:dataDict];
+                } else {
+                    NSLog(@"Readmes or Repo URLs are empty");
+                }
+            }
+                   
+            [self.activityIndicatorView stopAnimating];
+            [self.tableView setHidden:NO];
+            [self.tableView reloadData];
+        
+        } failure:nil];//^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {NSLog(@"JSON Error")}; //TODO error message: http://www.raywenderlich.com/30445/afnetworking-crash-course
+        [operation start];
     }
-    
-    [self.tableView reloadData];
-
-
 }
 
 - (void)settings:(id)sender
@@ -69,17 +116,22 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return dataArray.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return  arrayOfLangs.count;
+    NSDictionary *dictionary = [dataArray objectAtIndex:section];
+    NSArray *array = [dictionary objectForKey:@"readmes"];
+    return [array count];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return arrayOfLangs[section];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -90,11 +142,18 @@
     if(cell == nil){
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
+    
+    NSDictionary *dictionary = [dataArray objectAtIndex:indexPath.section];
+    NSArray *readmeArray = [dictionary objectForKey:@"readmes"];
+    NSString *readmeText = [readmeArray objectAtIndex:indexPath.row];
+    
+    NSArray *repoArray = [dictionary objectForKey:@"repo"];
+    NSString *repoURL = [repoArray objectAtIndex:indexPath.row];
+    NSString *repoURLStrip = [repoURL stringByReplacingOccurrencesOfString:@"https://github.com/" withString:@""];
+    
+    cell.textLabel.text = repoURLStrip;
+    cell.detailTextLabel.text = readmeText;
     //Todo - change to READMEs within section
-    NSString *language = [arrayOfLangs objectAtIndex:[indexPath row]];
-    NSString *blurb = @"blurb..";
-    [cell.textLabel setText:language];
-    [cell.detailTextLabel setText:blurb];
 
     return cell;
 }

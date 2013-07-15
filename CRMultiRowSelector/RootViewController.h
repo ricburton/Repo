@@ -12,6 +12,9 @@
 @interface RootViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource>
 {
 //     NSArray *arrayOfLangs;
+    NSMutableArray *dataArray;
+    NSDictionary *response_data;
+   UIActivityIndicatorView *_activityIndicatorView;
 }
 
 //@property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -24,4 +27,6 @@
 @property (nonatomic, strong) NSArray *directories;
 @property (nonatomic, strong) NSString *documents;
 @property (nonatomic, strong) NSString *filePathLangs;
+
+@property (nonatomic, retain) UIActivityIndicatorView *activityIndicatorView;
 @end
