@@ -1,14 +1,27 @@
 PODS:
-  - AttributedMarkdown (0.9.0)
+  - cdebug (0.1.1)
+  - FoundationExtension (0.36.4):
+    - cdebug (~> 0.1)
+    - FoundationExtension/CocoaExtension
+    - FoundationExtension/FoundationExtension
+    - FoundationExtension/UIKitExtension
+  - FoundationExtension/FoundationExtension (0.36.4):
+    - cdebug (~> 0.1)
+  - FoundationExtension/UIKitExtension (0.36.4):
+    - cdebug (~> 0.1)
+    - FoundationExtension/FoundationExtension
+  - KLSwitch (1.5)
+  - UI7Kit (0.0.20):
+    - FoundationExtension (~> 0.36.4)
+    - KLSwitch (~> 1.5)
 
 DEPENDENCIES:
-  - AttributedMarkdown (from `https://github.com/dreamwieber/AttributedMarkdown.git`)
-
-EXTERNAL SOURCES:
-  AttributedMarkdown:
-    :git: https://github.com/dreamwieber/AttributedMarkdown.git
+  - UI7Kit
 
 SPEC CHECKSUMS:
-  AttributedMarkdown: dec3931152ba5afc06f083214745bce896c11bd9
+  cdebug: 8c2ca6363107205eaf777295736c0ec12ba490bd
+  FoundationExtension: 91baa402ab13b4b88d4b92f6b8ddc4ccbf018656
+  KLSwitch: 8f053fd63305fcd07b7ba24dafe21777a9816245
+  UI7Kit: 6b90154008983ce038f3454fdae95eb4f9a02007
 
 COCOAPODS: 0.22.1

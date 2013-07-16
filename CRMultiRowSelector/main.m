@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import <UI7Kit/UI7Kit.h>
 #import "CRAppDelegate.h"
 
 int main(int argc, char *argv[])
 {
     @autoreleasepool {
+
+        [UI7Kit patchIfNeeded]; // in main.m, before UIApplicationMain()
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([CRAppDelegate class]));
     }
 }

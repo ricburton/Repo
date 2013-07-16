@@ -58,7 +58,10 @@
     
     //Initialize the dataArray
     dataArray = [[NSMutableArray alloc] init];
-    
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
     //Add the languages
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://githubber.herokuapp.com/languages"]];
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {

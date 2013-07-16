@@ -10,7 +10,9 @@
 
 /* Macro for background colors */
 #define colorWithRGBHex(hex)[UIColor colorWithRed:((float)((hex&0xFF0000)>>16))/255.0 green:((float)((hex&0xFF00)>>8))/255.0 blue:((float)(hex&0xFF))/255.0 alpha:1.0]
-#define clearColorWithRGBHex(hex)[UIColor colorWithRed:MIN((((int)(hex>>16)&0xFF)/255.0)+.1,1.0)green:MIN((((int)(hex>>8)&0xFF)/255.0)+.1,1.0)blue:MIN((((int)(hex)&0xFF)/255.0)+.1,1.0)alpha:1.0]
+#define clearColorWithRGBHex(hex)[UIColor colorWithRed:((float)((hex&0xFF0000)>>16))/255.0 green:((float)((hex&0xFF00)>>8))/255.0 blue:((float)(hex&0xFF))/255.0 alpha:1.0]
+
+//#define clearColorWithRGBHex(hex)[UIColor colorWithRed:MIN((((int)(hex>>16)&0xFF)/255.0)+.1,1.0)green:MIN((((int)(hex>>8)&0xFF)/255.0)+.1,1.0)blue:MIN((((int)(hex)&0xFF)/255.0)+.1,1.0)alpha:1.0]
 
 /* Unselected mark constants */
 #define kCircleRadioUnselected      23.0
@@ -20,20 +22,18 @@
 
 /* Mark constants */
 #define kStrokeWidth                2.0
-#define kShadowRadius               4.0
+#define kShadowRadius               .0
 #define kMarkDegrees                70.0
 #define kMarkWidth                  3.0
 #define kMarkHeight                 6.0
-#define kShadowOffset               CGSizeMake(.0, 2.0)
-#define kMarkShadowOffset           CGSizeMake(.0, -1.0)
+#define kShadowOffset               CGSizeMake(.0, .0)
+#define kMarkShadowOffset           CGSizeMake(.0, .0)
 #define kMarkImageSize              CGSizeMake(30.0, 30.0)
 #define kMarkBase                   CGPointMake(9.0, 13.5)
 #define kMarkDrawPoint              CGPointMake(20.0, 9.5)
-#define kShadowColor                [UIColor colorWithWhite:.0 alpha:0.7]
-#define kMarkShadowColor            [UIColor colorWithWhite:.0 alpha:0.3]
-#define kBlueColor                  0x236ed8
-#define kGreenColor                 0x179714
-#define kRedColor                   0xa4091c
+#define kShadowColor                [UIColor colorWithRed:124 green:124 blue:124 alpha:100]
+#define kMarkShadowColor            [UIColor colorWithRed:124 green:124 blue:124 alpha:100]
+#define kBlueColor                  0x4686C5
 #define kMarkColor                  kBlueColor
 
 /* Colums and cell constants */
@@ -74,7 +74,7 @@
     CGContextRestoreGState(ctx);
     
     /* Column separator */
-    CGContextSetRGBStrokeColor(ctx, 224/255.0, 224/255.0, 224/255.0, 1.0);
+    CGContextSetRGBStrokeColor(ctx, 224/255.0, 224/255.0, 224/255.0, .0);
     CGContextSetLineWidth(ctx, 1.0);
     CGContextMoveToPoint(ctx, kColumnPosition, .0);
     CGContextAddLineToPoint(ctx, kColumnPosition, self.bounds.size.height);

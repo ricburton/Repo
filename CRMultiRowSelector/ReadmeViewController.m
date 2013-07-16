@@ -22,10 +22,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 45, self.view.frame.size.width,self.view.frame.size.height)];
+    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 60, self.view.frame.size.width,self.view.frame.size.height)];
     [self.view addSubview:self.webView];
     
-    UINavigationBar *myBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, 320, 45)];
+    UINavigationBar *myBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, 320, 60)];
     [self.view addSubview:myBar];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc]
                                    initWithTitle:@"Done"

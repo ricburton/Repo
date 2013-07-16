@@ -69,7 +69,7 @@
         //Set up the params for the GET request
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: arrayOfLangs, @"languages", nil];
         
-        AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://localhost:9292"]];//githubber.herokuapp.com
+        AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://githubber.herokuapp.com"]];//localhost:9292
         httpClient.parameterEncoding = AFJSONParameterEncoding;
         NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
                                                                 path:@"/readmes"
@@ -167,10 +167,13 @@
     NSArray *repoArray = [dictionary objectForKey:@"repo"];
     NSString *repoURL = [repoArray objectAtIndex:indexPath.row];
     NSString *repoURLStrip = [repoURL stringByReplacingOccurrencesOfString:@"https://github.com/" withString:@""];
+    NSRange range = [repoURLStrip rangeOfString:@"/blob/"];
+    NSString *repoTitle = [repoURLStrip substringToIndex:range.location];
+    
     
     //TODO - Make the navigation swipe-based.
     //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.textLabel.text = repoURLStrip;
+    cell.textLabel.text = repoTitle;
     cell.detailTextLabel.text = readmeText;
 
     return cell;
