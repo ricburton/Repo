@@ -1,6 +1,7 @@
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) //What's this for?
 
 #import "RootViewController.h"
+//#import "ReadmeViewController.h"
 #import "CRTableViewController.h"
 #import "AFNetworking.h"
 
@@ -88,7 +89,6 @@
                 
                 NSLog(@"Repo_urls: %@ for %@",repo_urls,language);
                 
-                
                 if (readmes && repo_urls) {
                     NSMutableDictionary *dataDict = [NSMutableDictionary dictionaryWithObject:readmes forKey:@"readmes"];
                     [dataDict setObject:repo_urls forKey:@"repo"];
@@ -134,6 +134,69 @@
     return arrayOfLangs[section];
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //TODO Remove repetitio
+    NSDictionary *dictionary = [dataArray objectAtIndex:indexPath.section];
+    NSArray *readmeArray = [dictionary objectForKey:@"readmes"];
+    NSString *readmeText = [readmeArray objectAtIndex:indexPath.row];
+    
+
+    
+//    ReadmeViewController *readmeView = [[ReadmeViewController alloc] init];
+//    UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:];
+//    self.navigationItem.leftBarButtonItem = closeButton;
+    //    webView.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    
+    UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 460.0f)];
+    
+    // add long text to label
+    myLabel.text = readmeText;
+    myLabel.backgroundColor = [UIColor whiteColor];
+    
+    
+    // start with a raw markdown string
+    NSString *rawText = @"Hello, world. *This* is native Markdown.";
+    
+    // create a font attribute for emphasized text
+    UIFont *emFont = [UIFont fontWithName:@"AvenirNext-MediumItalic" size:15.0];
+    
+    // create a color attribute for paragraph text
+    UIColor *color = [UIColor purpleColor];
+    
+//    // create a dictionary to hold your custom attributes for any Markdown types
+//    NSDictionary *attributes = @{
+//                                 @(EMPH): @{NSFontAttributeName : emFont,},
+//                                 @(PARA): @{NSForegroundColorAttributeName : color,}
+//                                 };
+//    
+//    // parse the markdown
+//    NSAttributedString *prettyText = markdown_to_attr_string(rawText,0,attributes);
+//    
+//    // assign it to a view object
+//    myTextView.attributedText = prettyText;
+    
+    
+    [scrollView addSubview:myLabel];
+    // set line break mode to word wrap
+    myLabel.lineBreakMode = UILineBreakModeWordWrap;
+    // set number of lines to zero
+    myLabel.numberOfLines = 0;
+    // resize label
+    [myLabel sizeToFit];
+    
+    UIViewController *readmeViewController = UIViewController.new;
+    
+    [self.view addSubview:scrollView];
+    
+//    [self presentViewContoller:readmeViewController animated:YES completion:nil];
+    
+//    [self dismissModalViewControllerAnimated:NO];
+    
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *CellIdentifier = @"Cell Identifier";
@@ -151,6 +214,7 @@
     NSString *repoURL = [repoArray objectAtIndex:indexPath.row];
     NSString *repoURLStrip = [repoURL stringByReplacingOccurrencesOfString:@"https://github.com/" withString:@""];
     
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.text = repoURLStrip;
     cell.detailTextLabel.text = readmeText;
     //Todo - change to READMEs within section

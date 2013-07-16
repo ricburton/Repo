@@ -15,6 +15,7 @@
 		07DE689A158E8B5200798DBA /* CRAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 07DE6899158E8B5200798DBA /* CRAppDelegate.m */; };
 		07DE68AB158E902900798DBA /* CRTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07DE68AA158E902900798DBA /* CRTableViewController.m */; };
 		07DE68AE158E915300798DBA /* CRTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 07DE68AD158E915300798DBA /* CRTableViewCell.m */; };
+		BBCD757956454BA39B2A95E8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B3E00951CC849C89FB12A76 /* libPods.a */; };
 		DCDFFDD11714DD0B0059E675 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCDFFDD01714DD0B0059E675 /* RootViewController.m */; };
 		DCDFFDD31714DE5B0059E675 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCDFFDD21714DE5B0059E675 /* Default-568h@2x.png */; };
 		DCE7E38D171DBDA400DD722A /* Documents.plist in Resources */ = {isa = PBXBuildFile; fileRef = DCE7E38C171DBDA400DD722A /* Documents.plist */; };
@@ -32,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		012FA78F3DE04984A758D1D0 /* Pods/Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		07DE6885158E8B5200798DBA /* CRMultiRowSelector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CRMultiRowSelector.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07DE6889158E8B5200798DBA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		07DE688B158E8B5200798DBA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -46,6 +48,9 @@
 		07DE68AA158E902900798DBA /* CRTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRTableViewController.m; sourceTree = "<group>"; };
 		07DE68AC158E915300798DBA /* CRTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRTableViewCell.h; sourceTree = "<group>"; };
 		07DE68AD158E915300798DBA /* CRTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRTableViewCell.m; sourceTree = "<group>"; };
+		7B3E00951CC849C89FB12A76 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DCCF26CC1794A50800B57809 /* ReadmeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReadmeViewController.h; sourceTree = "<group>"; };
+		DCCF26CD1794A50800B57809 /* ReadmeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReadmeViewController.m; sourceTree = "<group>"; };
 		DCDFFDCF1714DD0B0059E675 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		DCDFFDD01714DD0B0059E675 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		DCDFFDD21714DE5B0059E675 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -82,6 +87,7 @@
 				07DE688A158E8B5200798DBA /* UIKit.framework in Frameworks */,
 				07DE688C158E8B5200798DBA /* Foundation.framework in Frameworks */,
 				07DE688E158E8B5200798DBA /* CoreGraphics.framework in Frameworks */,
+				BBCD757956454BA39B2A95E8 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,6 +104,7 @@
 				07DE688F158E8B5200798DBA /* CRMultiRowSelector */,
 				07DE6888158E8B5200798DBA /* Frameworks */,
 				07DE6886158E8B5200798DBA /* Products */,
+				012FA78F3DE04984A758D1D0 /* Pods/Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -116,6 +123,7 @@
 				07DE6889158E8B5200798DBA /* UIKit.framework */,
 				07DE688B158E8B5200798DBA /* Foundation.framework */,
 				07DE688D158E8B5200798DBA /* CoreGraphics.framework */,
+				7B3E00951CC849C89FB12A76 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -131,6 +139,8 @@
 				DCDFFDCF1714DD0B0059E675 /* RootViewController.h */,
 				DCDFFDD01714DD0B0059E675 /* RootViewController.m */,
 				07DE68AC158E915300798DBA /* CRTableViewCell.h */,
+				DCCF26CC1794A50800B57809 /* ReadmeViewController.h */,
+				DCCF26CD1794A50800B57809 /* ReadmeViewController.m */,
 				07DE68AD158E915300798DBA /* CRTableViewCell.m */,
 			);
 			path = CRMultiRowSelector;
@@ -181,9 +191,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 07DE689D158E8B5200798DBA /* Build configuration list for PBXNativeTarget "CRMultiRowSelector" */;
 			buildPhases = (
+				40E8110D5EC746AAB50BF099 /* Check Pods Manifest.lock */,
 				07DE6881158E8B5200798DBA /* Sources */,
 				07DE6882158E8B5200798DBA /* Frameworks */,
 				07DE6883158E8B5200798DBA /* Resources */,
+				57945C2CC2564F89A3ABB3BC /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -233,6 +245,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		40E8110D5EC746AAB50BF099 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		57945C2CC2564F89A3ABB3BC /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		07DE6881158E8B5200798DBA /* Sources */ = {
@@ -333,6 +378,7 @@
 		};
 		07DE689E158E8B5200798DBA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 012FA78F3DE04984A758D1D0 /* Pods/Pods.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -345,6 +391,7 @@
 		};
 		07DE689F158E8B5200798DBA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 012FA78F3DE04984A758D1D0 /* Pods/Pods.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
