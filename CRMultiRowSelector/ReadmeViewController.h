@@ -8,10 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ReadmeViewController : UIViewController
+@interface ReadmeViewController : UIViewController <UIWebViewDelegate>
 
-@property (strong, nonatomic) id detailItem;
-
-@property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
+@property (strong, nonatomic) NSURL *url;
+@property (strong, nonatomic) UIWebView *webView;
 
 @end

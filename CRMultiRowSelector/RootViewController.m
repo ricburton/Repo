@@ -1,9 +1,11 @@
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) //What's this for?
 
+#define SERVER 
+
 #import "RootViewController.h"
-//#import "ReadmeViewController.h"
 #import "CRTableViewController.h"
 #import "AFNetworking.h"
+#import "ReadmeViewController.h"
 
 
 @interface RootViewController ()
@@ -19,10 +21,10 @@
     [super viewDidLoad];
     
     //Set up the view
-    self.title = @"GitHub Explore";
+    self.title = @"README";
     
     UIBarButtonItem *langButton = [[UIBarButtonItem alloc]
-                                   initWithTitle:@"Settings"
+                                   initWithTitle:@"Settings" // with image/icon?
                                    style:UIBarButtonItemStyleDone
                                    target:self
                                    action:@selector(settings:)];
@@ -67,7 +69,7 @@
         //Set up the params for the GET request
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: arrayOfLangs, @"languages", nil];
         
-        AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://githubber.herokuapp.com"]];//localhost:9292
+        AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://localhost:9292"]];//githubber.herokuapp.com
         httpClient.parameterEncoding = AFJSONParameterEncoding;
         NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
                                                                 path:@"/readmes"
@@ -84,7 +86,7 @@
             for( NSString* language in arrayOfLangs )
             {
                 //TODO - how to make this work without a hack?
-                NSArray *readmes = [response_data valueForKeyPath:[NSString stringWithFormat:@"%@.readme_raw",language]];
+                NSArray *readmes = [response_data valueForKeyPath:[NSString stringWithFormat:@"%@.readme",language]];
                 NSArray *repo_urls = [response_data valueForKeyPath:[NSString stringWithFormat:@"%@.repo",language]];
                 
                 NSLog(@"Repo_urls: %@ for %@",repo_urls,language);
@@ -138,63 +140,15 @@
 {
     //TODO Remove repetitio
     NSDictionary *dictionary = [dataArray objectAtIndex:indexPath.section];
-    NSArray *readmeArray = [dictionary objectForKey:@"readmes"];
-    NSString *readmeText = [readmeArray objectAtIndex:indexPath.row];
-    
-
-    
-//    ReadmeViewController *readmeView = [[ReadmeViewController alloc] init];
-//    UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:];
-//    self.navigationItem.leftBarButtonItem = closeButton;
+    NSArray *repoArray = [dictionary objectForKey:@"repo"];
+    NSString *repoURL = [repoArray objectAtIndex:indexPath.row];
+//    
+    ReadmeViewController *webView = [[ReadmeViewController alloc] init];
+    webView.url = [NSURL URLWithString:repoURL];
     //    webView.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    
-    UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 460.0f)];
-    
-    // add long text to label
-    myLabel.text = readmeText;
-    myLabel.backgroundColor = [UIColor whiteColor];
-    
-    
-    // start with a raw markdown string
-    NSString *rawText = @"Hello, world. *This* is native Markdown.";
-    
-    // create a font attribute for emphasized text
-    UIFont *emFont = [UIFont fontWithName:@"AvenirNext-MediumItalic" size:15.0];
-    
-    // create a color attribute for paragraph text
-    UIColor *color = [UIColor purpleColor];
-    
-//    // create a dictionary to hold your custom attributes for any Markdown types
-//    NSDictionary *attributes = @{
-//                                 @(EMPH): @{NSFontAttributeName : emFont,},
-//                                 @(PARA): @{NSForegroundColorAttributeName : color,}
-//                                 };
-//    
-//    // parse the markdown
-//    NSAttributedString *prettyText = markdown_to_attr_string(rawText,0,attributes);
-//    
-//    // assign it to a view object
-//    myTextView.attributedText = prettyText;
-    
-    
-    [scrollView addSubview:myLabel];
-    // set line break mode to word wrap
-    myLabel.lineBreakMode = UILineBreakModeWordWrap;
-    // set number of lines to zero
-    myLabel.numberOfLines = 0;
-    // resize label
-    [myLabel sizeToFit];
-    
-    UIViewController *readmeViewController = UIViewController.new;
-    
-    [self.view addSubview:scrollView];
-    
-//    [self presentViewContoller:readmeViewController animated:YES completion:nil];
-    
-//    [self dismissModalViewControllerAnimated:NO];
-    
+    [self presentViewController:webView animated:YES completion:nil];
+
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -214,10 +168,10 @@
     NSString *repoURL = [repoArray objectAtIndex:indexPath.row];
     NSString *repoURLStrip = [repoURL stringByReplacingOccurrencesOfString:@"https://github.com/" withString:@""];
     
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    //TODO - Make the navigation swipe-based.
+    //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.text = repoURLStrip;
     cell.detailTextLabel.text = readmeText;
-    //Todo - change to READMEs within section
 
     return cell;
 }
