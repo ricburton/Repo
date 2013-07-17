@@ -62,25 +62,17 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    //Add the languages
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://githubber.herokuapp.com/languages"]];
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        
-        NSLog(@"Name: %@ %@", [JSON valueForKeyPath:@"top"], [JSON valueForKeyPath:@"all"]);
-        
-        //Top Languages
-        NSArray *topLanguages = (NSArray *) [JSON valueForKeyPath:@"top"];
+
+        NSArray *topLanguages = [NSArray arrayWithObjects:@"JavaScript",@"Ruby",@"Java",@"Shell",@"Python",@"PHP",@"C",@"C++",@"Perl",@"CoffeeScript", nil];
         NSDictionary *topLanguagesDict = [NSDictionary dictionaryWithObject:topLanguages forKey:@"data"];
         [dataArray addObject:topLanguagesDict];
         
         //All Languages section data
-        NSArray *allLanguages = (NSArray *) [JSON valueForKeyPath:@"all"];
+        NSArray *allLanguages = [NSArray arrayWithObjects: @"ABAP",@"ActionScript",@"Ada",@"Apex",@"AppleScript",@"Arc",@"Arduino",@"ASP",@"Assembly",@"Augeas",@"AutoHotkey",@"Awk",@"Boo",@"Bro",@"C#",@"Ceylon",@"CLIPS",@"Clojure",@"ColdFusion",@"Common Lisp",@"Coq",@"D",@"Dart",@"DCPU-16 ASM",@"Delphi",@"DOT",@"Dylan",@"eC",@"Ecl",@"Eiffel",@"Elixir",@"Emacs Lisp",@"Erlang",@"F#",@"Factor",@"Fancy",@"Fantom",@"Forth",@"FORTRAN",@"Go",@"Gosu",@"Groovy",@"Haskell",@"Haxe",@"Io",@"Ioke",@"Julia",@"Kotlin",@"Lasso",@"LiveScript",@"Logos",@"Logtalk",@"Lua",@"M",@"Matlab",@"Max",@"Mirah",@"Monkey",@"MoonScript",@"Nemerle",@"Nimrod",@"Nu",@"Objective-C",@"Objective-J",@"OCaml",@"Omgrofl",@"ooc",@"Opa",@"OpenEdge ABL",@"Parrot",@"Pike",@"PogoScript",@"PowerShell",@"Processing",@"Prolog",@"Puppet",@"Pure Data",@"R",@"Racket",@"Ragel in Ruby Host",@"Rebol",@"Rouge",@"Rust",@"Scala",@"Scheme",@"Scilab",@"Self",@"Smalltalk",@"Standard ML",@"SuperCollider",@"Tcl",@"Turing",@"TXL",@"TypeScript",@"Vala",@"Verilog",@"VHDL",@"VimL",@"Visual Basic",@"wisp",@"XC",@"XML",@"XProc",@"XQuery",@"XSLT",@"Xtend", nil];
         NSDictionary *allLanguagesDict = [NSDictionary dictionaryWithObject:allLanguages forKey:@"data"];
         [dataArray addObject:allLanguagesDict];
         
         [self.tableView reloadData];
-    } failure:nil];//^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {NSLog(@"JSON Error")}; //TODO error message: http://www.raywenderlich.com/30445/afnetworking-crash-course
-    [operation start];
 }
 
 - (void)viewDidUnload

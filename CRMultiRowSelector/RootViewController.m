@@ -69,7 +69,7 @@
         //Set up the params for the GET request
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: arrayOfLangs, @"languages", nil];
         
-        AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://githubber.herokuapp.com"]];//localhost:9292
+        AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://localhost:9292"]];//githubber.herokuapp.com
         httpClient.parameterEncoding = AFJSONParameterEncoding;
         NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
                                                                 path:@"/readmes"
