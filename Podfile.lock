@@ -1,5 +1,6 @@
 PODS:
   - cdebug (0.1.1)
+  - FlurrySDK (4.2.1)
   - FoundationExtension (0.36.4):
     - cdebug (~> 0.1)
     - FoundationExtension/CocoaExtension
@@ -16,10 +17,12 @@ PODS:
     - KLSwitch (~> 1.5)
 
 DEPENDENCIES:
+  - FlurrySDK
   - UI7Kit
 
 SPEC CHECKSUMS:
   cdebug: 8c2ca6363107205eaf777295736c0ec12ba490bd
+  FlurrySDK: 9a38bbb195c9f636a40193190ef38fd07e6b76c5
   FoundationExtension: 91baa402ab13b4b88d4b92f6b8ddc4ccbf018656
   KLSwitch: 8f053fd63305fcd07b7ba24dafe21777a9816245
   UI7Kit: 6b90154008983ce038f3454fdae95eb4f9a02007

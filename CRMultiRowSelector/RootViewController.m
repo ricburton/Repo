@@ -15,6 +15,7 @@
 
 @implementation RootViewController
 @synthesize arrayOfLangs;
+@synthesize arrayOfLangsOld;
 
 - (void)viewDidLoad
 {
@@ -55,6 +56,7 @@
     NSLog(@"DOCUMENTS: %@", self.documents);
     
     arrayOfLangs = [NSMutableArray arrayWithContentsOfFile:self.filePathLangs];
+    arrayOfLangsOld = [[arrayOfLangs valueForKey:@"description"] componentsJoinedByString:@""];
 //    self.arrayOfLangsOld = [NSMutableArray arrayWithContentsOfFile:self.filePathLangs];
     
 
@@ -67,52 +69,72 @@
         NSLog(@"FAIL");
         [self presentViewController:self.langTable animated:YES completion:nil];
     } else { 
-        NSLog(@"PASS");
-                
-        //Set up the params for the GET request
-//        NSArray *arrayWithSpace = 
-        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: arrayOfLangs, @"languages", nil];
-        
-        AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://githubber.herokuapp.com"]];//localhost:9292
-        httpClient.parameterEncoding = AFJSONParameterEncoding;
-        NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
-                                                                path:@"/readmes"
-                                                          parameters:params];
-
-        AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-            
-            NSLog(@"response first: %@", JSON);
-            response_data = JSON;
-            
-            //Prepare the data
-            dataArray = [[NSMutableArray alloc]init];
-            
-            for( NSString* language in arrayOfLangs )
-            {
-                //TODO - how to make this work without a hack?
-                NSArray *readmes = [response_data valueForKeyPath:[NSString stringWithFormat:@"%@.readme",language]];
-                NSArray *repo_urls = [response_data valueForKeyPath:[NSString stringWithFormat:@"%@.repo",language]];
-                
-                NSLog(@"Repo_urls: %@ for %@",repo_urls,language);
-                
-                if (readmes && repo_urls) {
-                    NSMutableDictionary *dataDict = [NSMutableDictionary dictionaryWithObject:readmes forKey:@"readmes"];
-                    [dataDict setObject:repo_urls forKey:@"repo"];
-                    
-                    [dataArray addObject:dataDict];
-                } else {
-                    NSLog(@"Readmes or Repo URLs are empty");
-                }
-            }
-                   
-            [self.activityIndicatorView stopAnimating];
-            [self.tableView setHidden:NO];
-            [self.tableView reloadData];
-        
-        } failure:nil];//^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {NSLog(@"JSON Error")}; //TODO error message: http://www.raywenderlich.com/30445/afnetworking-crash-course
-        [operation start];
+//        [arrayOfLangsOld didChangeValueForKey:<#(NSString *)#>]
+        [self didChangeValueForKey:arrayOfLangsOld];
     }
 }
+
+//+ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)theKey {
+//    
+//    BOOL automatic = NO;
+//    if ([theKey isEqualToString:@"openingBalance"]) {
+//        automatic = NO;
+//    }
+//    else {
+//        automatic = [super automaticallyNotifiesObserversForKey:theKey];
+//    }
+//    return automatic;
+//}
+
+//-didChange:valuesAtIndexes:forKey:
+
+-(void) didChangeValueForKey:(NSString *)key {
+    NSLog(@"PASS");
+    
+    //Set up the params for the GET request
+    //        NSArray *arrayWithSpace =
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: arrayOfLangs, @"languages", nil];
+    
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://githubber.herokuapp.com"]];//localhost:9292
+    httpClient.parameterEncoding = AFJSONParameterEncoding;
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
+                                                            path:@"/readmes"
+                                                      parameters:params];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        [self.activityIndicatorView startAnimating];
+        NSLog(@"response first: %@", JSON);
+        response_data = JSON;
+        
+        //Prepare the data
+        dataArray = [[NSMutableArray alloc]init];
+        
+        for( NSString* language in arrayOfLangs )
+        {
+            //TODO - how to make this work without a hack?
+            NSArray *readmes = [response_data valueForKeyPath:[NSString stringWithFormat:@"%@.readme",language]];
+            NSArray *repo_urls = [response_data valueForKeyPath:[NSString stringWithFormat:@"%@.repo",language]];
+            
+            NSLog(@"Repo_urls: %@ for %@",repo_urls,language);
+            
+            if (readmes && repo_urls) {
+                NSMutableDictionary *dataDict = [NSMutableDictionary dictionaryWithObject:readmes forKey:@"readmes"];
+                [dataDict setObject:repo_urls forKey:@"repo"];
+                
+                [dataArray addObject:dataDict];
+            } else {
+                NSLog(@"Readmes or Repo URLs are empty");
+            }
+        }
+        
+        [self.activityIndicatorView stopAnimating];
+        [self.tableView setHidden:NO];
+        [self.tableView reloadData];
+        
+    } failure:nil];//^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {NSLog(@"JSON Error")}; //TODO error message: http://www.raywenderlich.com/30445/afnetworking-crash-course
+    [operation start];
+}
+
 
 - (void)settings:(id)sender
 {
@@ -146,7 +168,7 @@
     NSDictionary *dictionary = [dataArray objectAtIndex:indexPath.section];
     NSArray *repoArray = [dictionary objectForKey:@"repo"];
     NSString *repoURL = [repoArray objectAtIndex:indexPath.row];
-//    
+    
     ReadmeViewController *webView = [[ReadmeViewController alloc] init];
     webView.url = [NSURL URLWithString:repoURL];
     //    webView.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
@@ -177,10 +199,10 @@
     
     //TODO - Make the navigation swipe-based.
     //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    UIFont *myFont = [ UIFont fontWithName: @"Arial" size: 16.0 ];
-    cell.textLabel.font  = myFont;
+    cell.textLabel.font  = [ UIFont fontWithName: @"Arial" size: 16.0 ];
     cell.textLabel.text = repoTitle;
     cell.detailTextLabel.text = readmeText;
+    cell.detailTextLabel.font = [ UIFont fontWithName: @"Arial" size: 13.0 ];
 
     return cell;
 }

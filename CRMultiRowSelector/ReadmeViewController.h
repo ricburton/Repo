@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ReadmeViewController : UIViewController <UIWebViewDelegate>
+@interface ReadmeViewController : UIViewController <UIWebViewDelegate> {
+    UIActivityIndicatorView *_activityIndicatorView;
+}
 
 @property (strong, nonatomic) NSURL *url;
 @property (strong, nonatomic) UIWebView *webView;
+@property (nonatomic, retain) UIActivityIndicatorView *activityIndicatorView;
 
 @end

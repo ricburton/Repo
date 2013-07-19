@@ -16,16 +16,31 @@
 
 - (id)init {
     self = [super init];
+
+    
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 60, self.view.frame.size.width,self.view.frame.size.height)];
-    [self.view addSubview:self.webView];
+
     
-    UINavigationBar *myBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, 320, 60)];
+    NSArray *versionCompatibility = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
+    
+    UINavigationBar *myBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, 320, 45)];
+    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 45, self.view.frame.size.width,self.view.frame.size.height)];
+    
+    if ( 7 == [[versionCompatibility objectAtIndex:0] intValue] ) { /// iOS7 is installed
+        
+        myBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, 320, 60)];
+        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 60, self.view.frame.size.width,self.view.frame.size.height)];
+        
+    }
+    
+    [self.view addSubview:self.webView];
+
+    
     [self.view addSubview:myBar];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc]
                                    initWithTitle:@"Done"
@@ -40,18 +55,27 @@
     
     NSURLRequest *request = [NSURLRequest requestWithURL:self.url];
     [self.webView loadRequest:request];
+    
+    // Setting Up Activity Indicator View
+    self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.activityIndicatorView.hidesWhenStopped = YES;
+    self.activityIndicatorView.center = self.view.center;
+    [self.view addSubview:self.activityIndicatorView];
+    [self.activityIndicatorView startAnimating];
 
 }
 
 - (void)remove:(id)sender
 {
-    [self dismissModalViewControllerAnimated:TRUE];
+//    [self dismissModalViewControllerAnimated:TRUE];
+    [self dismissViewControllerAnimated:TRUE completion:nil];
     [self.webView stopLoading];
     self.webView.delegate = nil;
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
+    [self.activityIndicatorView stopAnimating];
     NSLog(@"Error");
 }
 
@@ -62,8 +86,15 @@
     
 }
 
+- (BOOL)webView:(UIWebView *)wv shouldStartLoadWithRequest:(NSURLRequest *)rq
+{
+    [self.activityIndicatorView startAnimating];
+    return YES;
+}
+
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     NSLog(@"finish loading");
+    [self.activityIndicatorView stopAnimating];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 

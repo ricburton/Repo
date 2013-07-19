@@ -9,6 +9,7 @@
 #import "CRAppDelegate.h"
 #import "CRTableViewController.h"
 #import "RootViewController.h"
+#import "Flurry.h"
 
 @implementation CRAppDelegate
 
@@ -17,7 +18,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+//    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    [Flurry startSession:@"H23Z9B4RNC39NMF56JP6"];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
