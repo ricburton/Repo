@@ -55,21 +55,25 @@
     NSLog(@"DOCUMENTS: %@", self.documents);
     
     arrayOfLangs = [NSMutableArray arrayWithContentsOfFile:self.filePathLangs];
+//    self.arrayOfLangsOld = [NSMutableArray arrayWithContentsOfFile:self.filePathLangs];
+    
+
     NSLog(@"arrayOfLangs: %@", arrayOfLangs);
+    
+    NSLog((@"arrayOfLangs: %@",[@"Common List" stringByReplacingOccurrencesOfString:@" "
+                                              withString:@"%20"]));
         
     if (arrayOfLangs == nil || arrayOfLangs.count == 0) {
         NSLog(@"FAIL");
-        [self.navigationController presentModalViewController:self.langTable animated:YES];
-    } else {
-        //Fetch latest READMEs
-        
-        //Add them to a grouped TableView
+        [self presentViewController:self.langTable animated:YES completion:nil];
+    } else { 
         NSLog(@"PASS");
                 
         //Set up the params for the GET request
+//        NSArray *arrayWithSpace = 
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: arrayOfLangs, @"languages", nil];
         
-        AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://localhost:9292"]];//githubber.herokuapp.com
+        AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://githubber.herokuapp.com"]];//localhost:9292
         httpClient.parameterEncoding = AFJSONParameterEncoding;
         NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
                                                                 path:@"/readmes"
@@ -112,7 +116,7 @@
 
 - (void)settings:(id)sender
 {
-[self presentModalViewController:self.langTable animated:YES];
+    [self presentViewController:self.langTable animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -173,6 +177,8 @@
     
     //TODO - Make the navigation swipe-based.
     //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    UIFont *myFont = [ UIFont fontWithName: @"Arial" size: 16.0 ];
+    cell.textLabel.font  = myFont;
     cell.textLabel.text = repoTitle;
     cell.detailTextLabel.text = readmeText;
 

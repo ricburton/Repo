@@ -47,6 +47,8 @@
                                          action:@selector(done:)];
         
         self.navigationItem.rightBarButtonItem = rightButton;
+     
+
         
     }
     return self;
@@ -58,21 +60,23 @@
     
     //Initialize the dataArray
     dataArray = [[NSMutableArray alloc] init];
+    
+    
+    NSArray *topLanguages = [NSArray arrayWithObjects:@"JavaScript",@"Ruby",@"Java",@"Shell",@"Python",@"PHP",@"C",@"C++",@"Perl",@"CoffeeScript", nil];
+    NSDictionary *topLanguagesDict = [NSDictionary dictionaryWithObject:topLanguages forKey:@"data"];
+    [dataArray addObject:topLanguagesDict];
+    
+    //All Languages section data
+    NSArray *allLanguages = [NSArray arrayWithObjects: @"ABAP",@"ActionScript",@"Ada",@"Apex",@"AppleScript",@"Arc",@"Arduino",@"ASP",@"Assembly",@"Augeas",@"AutoHotkey",@"Awk",@"Boo",@"Bro",@"C#",@"Ceylon",@"CLIPS",@"Clojure",@"ColdFusion",@"Common Lisp",@"Coq",@"D",@"Dart",@"DCPU-16 ASM",@"Delphi",@"DOT",@"Dylan",@"eC",@"Ecl",@"Eiffel",@"Elixir",@"Emacs Lisp",@"Erlang",@"F#",@"Factor",@"Fancy",@"Fantom",@"Forth",@"FORTRAN",@"Go",@"Gosu",@"Groovy",@"Haskell",@"Haxe",@"Io",@"Ioke",@"Julia",@"Kotlin",@"Lasso",@"LiveScript",@"Logos",@"Logtalk",@"Lua",@"M",@"Matlab",@"Max",@"Mirah",@"Monkey",@"MoonScript",@"Nemerle",@"Nimrod",@"Nu",@"Objective-C",@"Objective-J",@"OCaml",@"Omgrofl",@"ooc",@"Opa",@"OpenEdge ABL",@"Parrot",@"Pike",@"PogoScript",@"PowerShell",@"Processing",@"Prolog",@"Puppet",@"Pure Data",@"R",@"Racket",@"Ragel in Ruby Host",@"Rebol",@"Rouge",@"Rust",@"Scala",@"Scheme",@"Scilab",@"Self",@"Smalltalk",@"Standard ML",@"SuperCollider",@"Tcl",@"Turing",@"TXL",@"TypeScript",@"Vala",@"Verilog",@"VHDL",@"VimL",@"Visual Basic",@"wisp",@"XC",@"XML",@"XProc",@"XQuery",@"XSLT",@"Xtend", nil];
+    NSDictionary *allLanguagesDict = [NSDictionary dictionaryWithObject:allLanguages forKey:@"data"];
+    [dataArray addObject:allLanguagesDict];
+    
+    [self.tableView reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
 
-        NSArray *topLanguages = [NSArray arrayWithObjects:@"JavaScript",@"Ruby",@"Java",@"Shell",@"Python",@"PHP",@"C",@"C++",@"Perl",@"CoffeeScript", nil];
-        NSDictionary *topLanguagesDict = [NSDictionary dictionaryWithObject:topLanguages forKey:@"data"];
-        [dataArray addObject:topLanguagesDict];
-        
-        //All Languages section data
-        NSArray *allLanguages = [NSArray arrayWithObjects: @"ABAP",@"ActionScript",@"Ada",@"Apex",@"AppleScript",@"Arc",@"Arduino",@"ASP",@"Assembly",@"Augeas",@"AutoHotkey",@"Awk",@"Boo",@"Bro",@"C#",@"Ceylon",@"CLIPS",@"Clojure",@"ColdFusion",@"Common Lisp",@"Coq",@"D",@"Dart",@"DCPU-16 ASM",@"Delphi",@"DOT",@"Dylan",@"eC",@"Ecl",@"Eiffel",@"Elixir",@"Emacs Lisp",@"Erlang",@"F#",@"Factor",@"Fancy",@"Fantom",@"Forth",@"FORTRAN",@"Go",@"Gosu",@"Groovy",@"Haskell",@"Haxe",@"Io",@"Ioke",@"Julia",@"Kotlin",@"Lasso",@"LiveScript",@"Logos",@"Logtalk",@"Lua",@"M",@"Matlab",@"Max",@"Mirah",@"Monkey",@"MoonScript",@"Nemerle",@"Nimrod",@"Nu",@"Objective-C",@"Objective-J",@"OCaml",@"Omgrofl",@"ooc",@"Opa",@"OpenEdge ABL",@"Parrot",@"Pike",@"PogoScript",@"PowerShell",@"Processing",@"Prolog",@"Puppet",@"Pure Data",@"R",@"Racket",@"Ragel in Ruby Host",@"Rebol",@"Rouge",@"Rust",@"Scala",@"Scheme",@"Scilab",@"Self",@"Smalltalk",@"Standard ML",@"SuperCollider",@"Tcl",@"Turing",@"TXL",@"TypeScript",@"Vala",@"Verilog",@"VHDL",@"VimL",@"Visual Basic",@"wisp",@"XC",@"XML",@"XProc",@"XQuery",@"XSLT",@"Xtend", nil];
-        NSDictionary *allLanguagesDict = [NSDictionary dictionaryWithObject:allLanguages forKey:@"data"];
-        [dataArray addObject:allLanguagesDict];
-        
-        [self.tableView reloadData];
 }
 
 - (void)viewDidUnload
@@ -89,14 +93,13 @@
 #pragma mark - Methods
 - (void)done:(id)sender
 {
-//    self.prefs = selectedMarks;//TODO Remove this
-    
+ 
     [selectedMarks writeToFile:self.filePathLangs atomically:YES];
     
-    NSArray *loadedLangs = [NSArray arrayWithContentsOfFile:self.filePathLangs];
-    NSLog(@"Languages: %@", loadedLangs);
+//    NSArray *loadedLangs = [NSArray arrayWithContentsOfFile:self.filePathLangs];
     
-    [self dismissModalViewControllerAnimated:TRUE];
+    
+    [self dismissViewControllerAnimated:TRUE completion:nil];
 }
 
 #pragma mark - UITableView Data Source
@@ -115,10 +118,13 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     
-    if(section == 0)
+    if(section == 0){
         return @"Top Languages";
-    if(section == 1)
+    } else if(section == 1){
         return @"All Languages";
+    } else {
+        return nil;   
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

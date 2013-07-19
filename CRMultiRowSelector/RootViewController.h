@@ -15,10 +15,12 @@
     NSMutableArray *dataArray;
     NSDictionary *response_data;
    UIActivityIndicatorView *_activityIndicatorView;
+
 }
 
 //@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic) NSArray *arrayOfLangs;
+@property (nonatomic) NSArray *arrayOfLangsOld;
 @property (strong, nonatomic) NSArray *langPrefs;
 @property (strong, nonatomic) UINavigationController *langTable;
 @property (strong, nonatomic) UITableViewController *langList; // why did this change?
