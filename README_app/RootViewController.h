@@ -11,14 +11,11 @@
 
 @interface RootViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource>
 {
-//     NSArray *arrayOfLangs;
     NSMutableArray *dataArray;
     NSDictionary *response_data;
     UIActivityIndicatorView *_activityIndicatorView;
-
 }
 
-//@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic) NSArray *arrayOfLangs;
 @property (nonatomic) NSString *arrayOfLangsOld;
 @property (strong, nonatomic) NSArray *langPrefs;
