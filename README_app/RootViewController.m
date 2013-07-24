@@ -1,7 +1,3 @@
-#define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) //What's this for?
-
-#define SERVER 
-
 #import "RootViewController.h"
 #import "CRTableViewController.h"
 #import "AFNetworking.h"
@@ -9,13 +5,9 @@
 
 
 @interface RootViewController ()
-//@property (nonatomic, weak) IBOutlet UITableView *tableView;
-
 @end
 
 @implementation RootViewController
-@synthesize arrayOfLangs;
-@synthesize arrayOfLangsOld;
 
 - (void)viewDidLoad
 {
@@ -35,17 +27,6 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    // Setting Up Activity Indicator View
-    self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    self.activityIndicatorView.hidesWhenStopped = YES;
-    self.activityIndicatorView.center = self.view.center;
-    [self.view addSubview:self.activityIndicatorView];
-    [self.activityIndicatorView startAnimating];
-    
-    //Prepare popover language selector
-    self.langList = [[CRTableViewController alloc] initWithStyle:UITableViewStylePlain];
-    self.langTable = [[UINavigationController alloc] initWithRootViewController:_langList];
-    [(CRTableViewController *)self.langList setParent:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -55,21 +36,20 @@
     self.filePathLangs = [self.documents stringByAppendingPathComponent:@"langs.plist"];
     NSLog(@"DOCUMENTS: %@", self.documents);
     
-    arrayOfLangs = [NSMutableArray arrayWithContentsOfFile:self.filePathLangs];
-    arrayOfLangsOld = [[arrayOfLangs valueForKey:@"description"] componentsJoinedByString:@""];
-        
-    if (arrayOfLangs == nil || arrayOfLangs.count == 0) {
-        NSLog(@"FAIL");
-        [self presentViewController:self.langTable animated:YES completion:nil];
-    } else { 
-        [self didChangeValueForKey:arrayOfLangsOld];
-    }
+    self.arrayOfLangs = [NSMutableArray arrayWithContentsOfFile:self.filePathLangs];
+    
+    // Setting Up Activity Indicator View
+    self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.activityIndicatorView.hidesWhenStopped = YES;
+    self.activityIndicatorView.center = self.view.center;
+    [self.view addSubview:self.activityIndicatorView];
+    [self.activityIndicatorView startAnimating];
 }
 
 -(void) didChangeValueForKey:(NSString *)key {
     NSLog(@"PASS");
     
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: arrayOfLangs, @"languages", nil];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: self.arrayOfLangs, @"languages", nil];
     
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://githubber.herokuapp.com"]];
     httpClient.parameterEncoding = AFJSONParameterEncoding;
@@ -80,15 +60,15 @@
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         [self.activityIndicatorView startAnimating];
         NSLog(@"response first: %@", JSON);
-        response_data = JSON;
+        self.response_data = JSON;
         
         //Prepare the data
-        dataArray = [[NSMutableArray alloc]init];
+        self.dataArray = [[NSMutableArray alloc]init];
         
-        for( NSString* language in arrayOfLangs )
+        for( NSString* language in self.arrayOfLangs )
         {
-            NSArray *readmes = [response_data valueForKeyPath:[NSString stringWithFormat:@"%@.readme",language]];
-            NSArray *repo_urls = [response_data valueForKeyPath:[NSString stringWithFormat:@"%@.repo",language]];
+            NSArray *readmes = [self.response_data valueForKeyPath:[NSString stringWithFormat:@"%@.readme",language]];
+            NSArray *repo_urls = [self.response_data valueForKeyPath:[NSString stringWithFormat:@"%@.repo",language]];
             
             NSLog(@"Repo_urls: %@ for %@",repo_urls,language);
             
@@ -96,7 +76,7 @@
                 NSMutableDictionary *dataDict = [NSMutableDictionary dictionaryWithObject:readmes forKey:@"readmes"];
                 [dataDict setObject:repo_urls forKey:@"repo"];
                 
-                [dataArray addObject:dataDict];
+                [self.dataArray addObject:dataDict];
             } else {
                 NSLog(@"Readmes or Repo URLs are empty");
             }
@@ -112,7 +92,12 @@
 
 - (void)settings:(id)sender
 {
-    [self presentViewController:self.langTable animated:YES completion:nil];
+    //Prepare popover language selector
+    CRTableViewController *langList = [[CRTableViewController alloc] initWithStyle:UITableViewStylePlain];
+    UINavigationController *langTable = [[UINavigationController alloc] initWithRootViewController:langList];
+    [self presentViewController:langTable animated:YES completion:nil];
+    
+    [self.activityIndicatorView stopAnimating];
 }
 
 - (void)didReceiveMemoryWarning
@@ -122,23 +107,23 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return dataArray.count;
+    return self.dataArray.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSDictionary *dictionary = [dataArray objectAtIndex:section];
+    NSDictionary *dictionary = [self.dataArray objectAtIndex:section];
     NSArray *array = [dictionary objectForKey:@"readmes"];
     return [array count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return arrayOfLangs[section];
+    return self.arrayOfLangs[section];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *dictionary = [dataArray objectAtIndex:indexPath.section];
+    NSDictionary *dictionary = [self.dataArray objectAtIndex:indexPath.section];
     NSArray *repoArray = [dictionary objectForKey:@"repo"];
     NSString *repoURL = [repoArray objectAtIndex:indexPath.row];
     
@@ -158,7 +143,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
-    NSDictionary *dictionary = [dataArray objectAtIndex:indexPath.section];
+    NSDictionary *dictionary = [self.dataArray objectAtIndex:indexPath.section];
     NSArray *readmeArray = [dictionary objectForKey:@"readmes"];
     NSString *readmeText = [readmeArray objectAtIndex:indexPath.row];
     

@@ -10,22 +10,17 @@
 #import "CRTableViewController.h"
 
 @interface RootViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource>
-{
-    NSMutableArray *dataArray;
-    NSDictionary *response_data;
-    UIActivityIndicatorView *_activityIndicatorView;
-}
 
-@property (nonatomic) NSArray *arrayOfLangs;
-@property (nonatomic) NSString *arrayOfLangsOld;
+@property (strong, nonatomic) NSMutableArray *dataArray;
+@property (strong, nonatomic) UIActivityIndicatorView *activityIndicatorView;
+@property (strong, nonatomic) NSDictionary *response_data;
+
+@property (strong, nonatomic) NSArray *arrayOfLangs;
 @property (strong, nonatomic) NSArray *langPrefs;
-@property (strong, nonatomic) UINavigationController *langTable;
-@property (strong, nonatomic) UITableViewController *langList; // why did this change?
 @property (strong, nonatomic) NSString *langPrefsPath;
 
-@property (nonatomic, strong) NSArray *directories;
-@property (nonatomic, strong) NSString *documents;
-@property (nonatomic, strong) NSString *filePathLangs;
+@property (strong, nonatomic) NSArray *directories;
+@property (strong, nonatomic) NSString *documents;
+@property (strong, nonatomic) NSString *filePathLangs;
 
-@property (nonatomic, retain) UIActivityIndicatorView *activityIndicatorView;
 @end
