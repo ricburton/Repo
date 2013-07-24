@@ -3,8 +3,18 @@
 #import "AFNetworking.h"
 #import "ReadmeViewController.h"
 
+@interface RootViewController () <UITableViewDelegate, UITableViewDataSource>
 
-@interface RootViewController ()
+@property (strong, nonatomic) NSMutableArray *dataArray;
+@property (strong, nonatomic) UIActivityIndicatorView *activityIndicatorView;
+@property (strong, nonatomic) NSDictionary *response_data;
+@property (strong, nonatomic) NSArray *arrayOfLangs;
+@property (strong, nonatomic) NSArray *langPrefs;
+@property (strong, nonatomic) NSString *langPrefsPath;
+@property (strong, nonatomic) NSArray *directories;
+@property (strong, nonatomic) NSString *documents;
+@property (strong, nonatomic) NSString *filePathLangs;
+
 @end
 
 @implementation RootViewController
@@ -25,8 +35,7 @@
     self.navigationItem.rightBarButtonItem = langButton;
     
     self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    
+    self.tableView.dataSource = self;    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -59,6 +68,7 @@
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         [self.activityIndicatorView startAnimating];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         NSLog(@"response first: %@", JSON);
         self.response_data = JSON;
         
@@ -83,6 +93,7 @@
         }
         
         [self.activityIndicatorView stopAnimating];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         [self.tableView setHidden:NO];
         [self.tableView reloadData];
         
@@ -131,7 +142,6 @@
     webView.url = [NSURL URLWithString:repoURL];
     
     [self presentViewController:webView animated:YES completion:nil];
-
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

@@ -4,6 +4,15 @@
 
 @interface CRTableViewController () {}
 
+@property (nonatomic) NSArray *dataSource;
+@property (strong, nonatomic) NSArray *prefs;
+@property (strong, nonatomic) UIViewController *parent;
+@property (strong, nonatomic) NSArray *directories;
+@property (strong, nonatomic) NSString *documents;
+@property (strong, nonatomic) NSString *filePathLangs;
+@property (strong, nonatomic) NSMutableArray *selectedMarks;
+@property (strong, nonatomic) NSMutableArray *dataArray;
+
 @end
 
 @implementation CRTableViewController
@@ -24,21 +33,20 @@
         
         NSMutableArray *loadedLangs = [NSMutableArray arrayWithContentsOfFile:self.filePathLangs];
         if (loadedLangs.count > 0) {
-            selectedMarks = loadedLangs;
+            self.selectedMarks = loadedLangs;
         } else {
-            selectedMarks = [NSMutableArray new];
+            self.selectedMarks = [NSMutableArray new];
         }
         
-        //Set up the view
-        self.title = @"Favorite Languages";
+        self.dataArray = [[NSMutableArray alloc] init];
         
-        UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]
-                                         initWithTitle:@"Done"
-                                         style:UIBarButtonItemStyleDone
-                                         target:self
-                                         action:@selector(done:)];
+        NSArray *topLanguages = [NSArray arrayWithObjects:@"JavaScript",@"Ruby",@"Java",@"Shell",@"Python",@"PHP",@"C",@"C++",@"Perl",@"CoffeeScript", nil];
+        [self.dataArray addObject:topLanguages];
         
-        self.navigationItem.rightBarButtonItem = rightButton;
+        NSArray *allLanguages = [NSArray arrayWithObjects: @"ABAP",@"ActionScript",@"Ada",@"Apex",@"AppleScript",@"Arc",@"Arduino",@"ASP",@"Assembly",@"Augeas",@"AutoHotkey",@"Awk",@"Boo",@"Bro",@"C#",@"Ceylon",@"CLIPS",@"Clojure",@"ColdFusion",@"Common Lisp",@"Coq",@"D",@"Dart",@"DCPU-16 ASM",@"Delphi",@"DOT",@"Dylan",@"eC",@"Ecl",@"Eiffel",@"Elixir",@"Emacs Lisp",@"Erlang",@"F#",@"Factor",@"Fancy",@"Fantom",@"Forth",@"FORTRAN",@"Go",@"Gosu",@"Groovy",@"Haskell",@"Haxe",@"Io",@"Ioke",@"Julia",@"Kotlin",@"Lasso",@"LiveScript",@"Logos",@"Logtalk",@"Lua",@"M",@"Matlab",@"Max",@"Mirah",@"Monkey",@"MoonScript",@"Nemerle",@"Nimrod",@"Nu",@"Objective-C",@"Objective-J",@"OCaml",@"Omgrofl",@"ooc",@"Opa",@"OpenEdge ABL",@"Parrot",@"Pike",@"PogoScript",@"PowerShell",@"Processing",@"Prolog",@"Puppet",@"Pure Data",@"R",@"Racket",@"Ragel in Ruby Host",@"Rebol",@"Rouge",@"Rust",@"Scala",@"Scheme",@"Scilab",@"Self",@"Smalltalk",@"Standard ML",@"SuperCollider",@"Tcl",@"Turing",@"TXL",@"TypeScript",@"Vala",@"Verilog",@"VHDL",@"VimL",@"Visual Basic",@"wisp",@"XC",@"XML",@"XProc",@"XQuery",@"XSLT",@"Xtend", nil];
+        
+        [self.dataArray addObject:allLanguages];
+        
     }
     return self;
 }
@@ -47,17 +55,15 @@
 {
     [super viewDidLoad];
     
-    //Initialize the dataArray
-    dataArray = [[NSMutableArray alloc] init];
+    self.title = @"Favorite Languages";
     
-    NSArray *topLanguages = [NSArray arrayWithObjects:@"JavaScript",@"Ruby",@"Java",@"Shell",@"Python",@"PHP",@"C",@"C++",@"Perl",@"CoffeeScript", nil];
-    NSDictionary *topLanguagesDict = [NSDictionary dictionaryWithObject:topLanguages forKey:@"data"];
-    [dataArray addObject:topLanguagesDict];
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]
+                                    initWithTitle:@"Done"
+                                    style:UIBarButtonItemStyleDone
+                                    target:self
+                                    action:@selector(done:)];
     
-    //All Languages section data
-    NSArray *allLanguages = [NSArray arrayWithObjects: @"ABAP",@"ActionScript",@"Ada",@"Apex",@"AppleScript",@"Arc",@"Arduino",@"ASP",@"Assembly",@"Augeas",@"AutoHotkey",@"Awk",@"Boo",@"Bro",@"C#",@"Ceylon",@"CLIPS",@"Clojure",@"ColdFusion",@"Common Lisp",@"Coq",@"D",@"Dart",@"DCPU-16 ASM",@"Delphi",@"DOT",@"Dylan",@"eC",@"Ecl",@"Eiffel",@"Elixir",@"Emacs Lisp",@"Erlang",@"F#",@"Factor",@"Fancy",@"Fantom",@"Forth",@"FORTRAN",@"Go",@"Gosu",@"Groovy",@"Haskell",@"Haxe",@"Io",@"Ioke",@"Julia",@"Kotlin",@"Lasso",@"LiveScript",@"Logos",@"Logtalk",@"Lua",@"M",@"Matlab",@"Max",@"Mirah",@"Monkey",@"MoonScript",@"Nemerle",@"Nimrod",@"Nu",@"Objective-C",@"Objective-J",@"OCaml",@"Omgrofl",@"ooc",@"Opa",@"OpenEdge ABL",@"Parrot",@"Pike",@"PogoScript",@"PowerShell",@"Processing",@"Prolog",@"Puppet",@"Pure Data",@"R",@"Racket",@"Ragel in Ruby Host",@"Rebol",@"Rouge",@"Rust",@"Scala",@"Scheme",@"Scilab",@"Self",@"Smalltalk",@"Standard ML",@"SuperCollider",@"Tcl",@"Turing",@"TXL",@"TypeScript",@"Vala",@"Verilog",@"VHDL",@"VimL",@"Visual Basic",@"wisp",@"XC",@"XML",@"XProc",@"XQuery",@"XSLT",@"Xtend", nil];
-    NSDictionary *allLanguagesDict = [NSDictionary dictionaryWithObject:allLanguages forKey:@"data"];
-    [dataArray addObject:allLanguagesDict];
+    self.navigationItem.rightBarButtonItem = rightButton;
     
     [self.tableView reloadData];
 }
@@ -73,25 +79,20 @@
     return NO;
 }
 
-#pragma mark - Methods
 - (void)done:(id)sender
 {
-    [selectedMarks writeToFile:self.filePathLangs atomically:YES];
+    [self.selectedMarks writeToFile:self.filePathLangs atomically:YES];
     [self dismissViewControllerAnimated:TRUE completion:nil];
 }
 
-#pragma mark - UITableView Data Source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [dataArray count];
+    return [self.dataArray count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    //Number of rows it should expect should be based on the section
-    NSDictionary *dictionary = [dataArray objectAtIndex:section];
-    NSArray *array = [dictionary objectForKey:@"data"];
-    return [array count];
+    return [[self.dataArray objectAtIndex:section] count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -116,11 +117,9 @@
         cell = [[CRTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CRTableViewCellIdentifier];
     }
     
-    // Check if the cell is currently selected (marked)
-    NSDictionary *dictionary = [dataArray objectAtIndex:indexPath.section];
-    NSArray *array = [dictionary objectForKey:@"data"];
+    NSArray *array = [self.dataArray objectAtIndex:indexPath.section];
     NSString *text = [array objectAtIndex:indexPath.row];
-    cell.isSelected = [selectedMarks containsObject:text] ? YES : NO;
+    cell.isSelected = [self.selectedMarks containsObject:text];
     cell.textLabel.text = text;
     
     return cell;
@@ -131,14 +130,13 @@
 {
     
     NSString *selectedCell = nil;
-    NSDictionary *dictionary = [dataArray objectAtIndex:indexPath.section];
-    NSArray *array = [dictionary objectForKey:@"data"];
+    NSArray *array = [self.dataArray objectAtIndex:indexPath.section];
     selectedCell = [array objectAtIndex:indexPath.row];
     
-    if ([selectedMarks containsObject:selectedCell])// Is selected?
-        [selectedMarks removeObject:selectedCell];
+    if ([self.selectedMarks containsObject:selectedCell])
+        [self.selectedMarks removeObject:selectedCell];
     else
-        [selectedMarks addObject:selectedCell];
+        [self.selectedMarks addObject:selectedCell];
     
     NSLog(@"%@", selectedCell);
     

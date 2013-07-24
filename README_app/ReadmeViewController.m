@@ -1,15 +1,13 @@
 #import "ReadmeViewController.h"
 
-@interface ReadmeViewController ()
+@interface ReadmeViewController () <UIWebViewDelegate>
+
+@property (strong, nonatomic) UIWebView *webView;
+@property (nonatomic, retain) UIActivityIndicatorView *activityIndicatorView;
 
 @end
 
 @implementation ReadmeViewController
-
-- (id)init {
-    self = [super init];    
-    return self;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -23,11 +21,9 @@
         
         myBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, 320, 60)];
         self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 60, self.view.frame.size.width,self.view.frame.size.height)];
-        
     }
     
     [self.view addSubview:self.webView];
-
     
     [self.view addSubview:myBar];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc]
