@@ -17,8 +17,7 @@
     
     NSArray *versionCompatibility = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
     
-    if ( 7 == [[versionCompatibility objectAtIndex:0] intValue] ) { /// iOS7 is installed
-        
+    if ( 7 == [[versionCompatibility objectAtIndex:0] intValue] ) { // iOS7 is installed
         myBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, 320, 60)];
         self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 60, self.view.frame.size.width,self.view.frame.size.height)];
     }
@@ -40,7 +39,6 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:self.url];
     [self.webView loadRequest:request];
     
-    // Setting Up Activity Indicator View
     self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.activityIndicatorView.hidesWhenStopped = YES;
     self.activityIndicatorView.center = self.view.center;

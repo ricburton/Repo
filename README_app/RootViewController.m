@@ -23,7 +23,6 @@
 {
     [super viewDidLoad];
     
-    //Set up the view
     self.title = @"README";
     
     UIBarButtonItem *langButton = [[UIBarButtonItem alloc]
@@ -33,13 +32,12 @@
                                    action:@selector(settings:)];
     
     self.navigationItem.rightBarButtonItem = langButton;
-    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;    
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    //Check to see if some favourite languages have already been set.
+- (void)viewDidAppear:(BOOL)animated
+{
     self.directories   = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     self.documents     = [self.directories lastObject];
     self.filePathLangs = [self.documents stringByAppendingPathComponent:@"langs.plist"];
@@ -47,7 +45,6 @@
     
     self.arrayOfLangs = [NSMutableArray arrayWithContentsOfFile:self.filePathLangs];
     
-    // Setting Up Activity Indicator View
     self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.activityIndicatorView.hidesWhenStopped = YES;
     self.activityIndicatorView.center = self.view.center;
@@ -55,7 +52,8 @@
     [self.activityIndicatorView startAnimating];
 }
 
--(void) didChangeValueForKey:(NSString *)key {
+-(void) didChangeValueForKey:(NSString *)key
+{
     NSLog(@"PASS");
     
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: self.arrayOfLangs, @"languages", nil];
@@ -72,7 +70,6 @@
         NSLog(@"response first: %@", JSON);
         self.response_data = JSON;
         
-        //Prepare the data
         self.dataArray = [[NSMutableArray alloc]init];
         
         for( NSString* language in self.arrayOfLangs )
@@ -103,7 +100,6 @@
 
 - (void)settings:(id)sender
 {
-    //Prepare popover language selector
     CRTableViewController *langList = [[CRTableViewController alloc] initWithStyle:UITableViewStylePlain];
     UINavigationController *langTable = [[UINavigationController alloc] initWithRootViewController:langList];
     [self presentViewController:langTable animated:YES completion:nil];

@@ -19,13 +19,11 @@
 
 @synthesize dataSource;
 
-#pragma mark - Lifecycle
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
         
-        //Check to see if some favourite languages have already been set.
         self.directories   = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         self.documents     = [self.directories lastObject];
         self.filePathLangs = [self.documents stringByAppendingPathComponent:@"langs.plist"];
@@ -95,8 +93,8 @@
     return [[self.dataArray objectAtIndex:section] count];
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{    
     if(section == 0){
         return @"Top Languages";
     } else if(section == 1){
@@ -110,7 +108,6 @@
 {
     static NSString *CRTableViewCellIdentifier = @"cellIdentifier";
     
-    // init the CRTableViewCell
     CRTableViewCell *cell = (CRTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CRTableViewCellIdentifier];
     
     if (cell == nil) {
@@ -125,18 +122,17 @@
     return cell;
 }
 
-#pragma mark - UITableView Delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     NSString *selectedCell = nil;
     NSArray *array = [self.dataArray objectAtIndex:indexPath.section];
     selectedCell = [array objectAtIndex:indexPath.row];
     
-    if ([self.selectedMarks containsObject:selectedCell])
+    if ([self.selectedMarks containsObject:selectedCell]) {
         [self.selectedMarks removeObject:selectedCell];
-    else
+    } else {
         [self.selectedMarks addObject:selectedCell];
+    }
     
     NSLog(@"%@", selectedCell);
     
