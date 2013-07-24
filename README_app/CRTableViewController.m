@@ -27,7 +27,6 @@
         self.directories   = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         self.documents     = [self.directories lastObject];
         self.filePathLangs = [self.documents stringByAppendingPathComponent:@"langs.plist"];
-        NSLog(@"DOCUMENTS &gt; %@", self.documents);
         
         NSMutableArray *loadedLangs = [NSMutableArray arrayWithContentsOfFile:self.filePathLangs];
         if (loadedLangs.count > 0) {
@@ -73,8 +72,11 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    if(interfaceOrientation == UIDeviceOrientationPortrait) return YES;
-    return NO;
+    if(interfaceOrientation == UIDeviceOrientationPortrait){
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 - (void)done:(id)sender

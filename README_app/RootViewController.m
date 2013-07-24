@@ -156,7 +156,7 @@
     NSArray *repoArray = [dictionary objectForKey:@"repo"];
     NSString *repoURL = [repoArray objectAtIndex:indexPath.row];
     NSString *repoURLStrip = [repoURL stringByReplacingOccurrencesOfString:@"https://github.com/" withString:@""];
-    NSRange range = [repoURLStrip rangeOfString:@"/blob/"];
+    NSRange range = [repoURLStrip rangeOfString:@"/blob/"];//FIXME sometimes not a blob.
     NSString *repoTitle = [repoURLStrip substringToIndex:range.location];
     
     cell.textLabel.font  = [UIFont fontWithName: @"Arial" size: 16.0];
