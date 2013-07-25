@@ -15,9 +15,9 @@
 		DCBED8EF1799DF2500BDA5AD /* Documents.plist in Resources */ = {isa = PBXBuildFile; fileRef = DCBED8E21799DF2500BDA5AD /* Documents.plist */; };
 		DCBED8F01799DF2500BDA5AD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCBED8E31799DF2500BDA5AD /* InfoPlist.strings */; };
 		DCDFFDD31714DE5B0059E675 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCDFFDD21714DE5B0059E675 /* Default-568h@2x.png */; };
-		ECC0D3EF17A1CE0100016744 /* CRAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0D3E417A1CE0100016744 /* CRAppDelegate.m */; };
-		ECC0D3F017A1CE0100016744 /* CRTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0D3E617A1CE0100016744 /* CRTableViewCell.m */; };
-		ECC0D3F117A1CE0100016744 /* CRTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0D3E817A1CE0100016744 /* CRTableViewController.m */; };
+		ECC0D3EF17A1CE0100016744 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0D3E417A1CE0100016744 /* AppDelegate.m */; };
+		ECC0D3F017A1CE0100016744 /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0D3E617A1CE0100016744 /* TableViewCell.m */; };
+		ECC0D3F117A1CE0100016744 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0D3E817A1CE0100016744 /* TableViewController.m */; };
 		ECC0D3F217A1CE0100016744 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0D3E917A1CE0100016744 /* main.m */; };
 		ECC0D3F317A1CE0100016744 /* ReadmeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0D3EC17A1CE0100016744 /* ReadmeViewController.m */; };
 		ECC0D3F417A1CE0100016744 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0D3EE17A1CE0100016744 /* RootViewController.m */; };
@@ -35,12 +35,12 @@
 		DCBED8E41799DF2500BDA5AD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DCBED8E61799DF2500BDA5AD /* README-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "README-Info.plist"; sourceTree = "<group>"; };
 		DCDFFDD21714DE5B0059E675 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		ECC0D3E317A1CE0100016744 /* CRAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRAppDelegate.h; sourceTree = "<group>"; };
-		ECC0D3E417A1CE0100016744 /* CRAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRAppDelegate.m; sourceTree = "<group>"; };
-		ECC0D3E517A1CE0100016744 /* CRTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRTableViewCell.h; sourceTree = "<group>"; };
-		ECC0D3E617A1CE0100016744 /* CRTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRTableViewCell.m; sourceTree = "<group>"; };
-		ECC0D3E717A1CE0100016744 /* CRTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRTableViewController.h; sourceTree = "<group>"; };
-		ECC0D3E817A1CE0100016744 /* CRTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRTableViewController.m; sourceTree = "<group>"; };
+		ECC0D3E317A1CE0100016744 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		ECC0D3E417A1CE0100016744 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		ECC0D3E517A1CE0100016744 /* TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewCell.h; sourceTree = "<group>"; };
+		ECC0D3E617A1CE0100016744 /* TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewCell.m; sourceTree = "<group>"; };
+		ECC0D3E717A1CE0100016744 /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
+		ECC0D3E817A1CE0100016744 /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
 		ECC0D3E917A1CE0100016744 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		ECC0D3EA17A1CE0100016744 /* README-prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "README-prefix.pch"; sourceTree = "<group>"; };
 		ECC0D3EB17A1CE0100016744 /* ReadmeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReadmeViewController.h; sourceTree = "<group>"; };
@@ -109,12 +109,12 @@
 		ECC0D3E217A1CE0100016744 /* source */ = {
 			isa = PBXGroup;
 			children = (
-				ECC0D3E317A1CE0100016744 /* CRAppDelegate.h */,
-				ECC0D3E417A1CE0100016744 /* CRAppDelegate.m */,
-				ECC0D3E517A1CE0100016744 /* CRTableViewCell.h */,
-				ECC0D3E617A1CE0100016744 /* CRTableViewCell.m */,
-				ECC0D3E717A1CE0100016744 /* CRTableViewController.h */,
-				ECC0D3E817A1CE0100016744 /* CRTableViewController.m */,
+				ECC0D3E317A1CE0100016744 /* AppDelegate.h */,
+				ECC0D3E417A1CE0100016744 /* AppDelegate.m */,
+				ECC0D3E517A1CE0100016744 /* TableViewCell.h */,
+				ECC0D3E617A1CE0100016744 /* TableViewCell.m */,
+				ECC0D3E717A1CE0100016744 /* TableViewController.h */,
+				ECC0D3E817A1CE0100016744 /* TableViewController.m */,
 				ECC0D3E917A1CE0100016744 /* main.m */,
 				ECC0D3EA17A1CE0100016744 /* README-prefix.pch */,
 				ECC0D3EB17A1CE0100016744 /* ReadmeViewController.h */,
@@ -231,9 +231,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ECC0D3EF17A1CE0100016744 /* CRAppDelegate.m in Sources */,
-				ECC0D3F017A1CE0100016744 /* CRTableViewCell.m in Sources */,
-				ECC0D3F117A1CE0100016744 /* CRTableViewController.m in Sources */,
+				ECC0D3EF17A1CE0100016744 /* AppDelegate.m in Sources */,
+				ECC0D3F017A1CE0100016744 /* TableViewCell.m in Sources */,
+				ECC0D3F117A1CE0100016744 /* TableViewController.m in Sources */,
 				ECC0D3F217A1CE0100016744 /* main.m in Sources */,
 				ECC0D3F317A1CE0100016744 /* ReadmeViewController.m in Sources */,
 				ECC0D3F417A1CE0100016744 /* RootViewController.m in Sources */,

@@ -1,9 +1,9 @@
-#import "CRAppDelegate.h"
-#import "CRTableViewController.h"
+#import "AppDelegate.h"
+#import "TableViewController.h"
 #import "RootViewController.h"
 #import "Flurry.h"
 
-@implementation CRAppDelegate
+@implementation AppDelegate
 
 @synthesize window = _window;
 
