@@ -89,7 +89,7 @@
         label = [[UILabel alloc] initWithFrame:CGRectMake(kMarkCell, .0, self.frame.size.width - kMarkCell, self.frame.size.height)];
         label.textColor = [UIColor blackColor];
         label.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleHeight;
-        label.textAlignment = UITextAlignmentLeft;
+        label.textAlignment = NSTextAlignmentLeft;
         label.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:label];
         
