@@ -317,10 +317,6 @@
 				GCC_PREFIX_HEADER = "README_app/README-Prefix.pch";
 				INFOPLIST_FILE = "README_app/README-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/Flurry",
-				);
 				PRODUCT_NAME = README;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -339,10 +335,6 @@
 				GCC_PREFIX_HEADER = "README_app/README-Prefix.pch";
 				INFOPLIST_FILE = "README_app/README-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/Flurry",
-				);
 				PRODUCT_NAME = README;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
