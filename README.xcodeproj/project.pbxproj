@@ -44,7 +44,7 @@
 		ECC0D3E917A1CE0100016744 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		ECC0D3EA17A1CE0100016744 /* README-prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "README-prefix.pch"; sourceTree = "<group>"; };
 		ECC0D3EB17A1CE0100016744 /* ReadmeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReadmeViewController.h; sourceTree = "<group>"; };
-		ECC0D3EC17A1CE0100016744 /* ReadmeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReadmeViewController.m; sourceTree = "<group>"; };
+		ECC0D3EC17A1CE0100016744 /* ReadmeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = ReadmeViewController.m; sourceTree = "<group>"; };
 		ECC0D3ED17A1CE0100016744 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		ECC0D3EE17A1CE0100016744 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -74,6 +74,7 @@
 				07DE6886158E8B5200798DBA /* Products */,
 				012FA78F3DE04984A758D1D0 /* Pods.xcconfig */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
 		};
 		07DE6886158E8B5200798DBA /* Products */ = {
