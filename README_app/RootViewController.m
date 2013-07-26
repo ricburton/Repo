@@ -50,10 +50,7 @@
     self.activityIndicatorView.center = self.view.center;
     [self.view addSubview:self.activityIndicatorView];
     [self.activityIndicatorView startAnimating];
-}
 
--(void) didChangeValueForKey:(NSString *)key
-{
     NSLog(@"PASS");
     
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: self.arrayOfLangs, @"languages", nil];
