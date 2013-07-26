@@ -1,5 +1,5 @@
 #import "RootViewController.h"
-#import "CRTableViewController.h"
+#import "TableViewController.h"
 #import "AFNetworking.h"
 #import "ReadmeViewController.h"
 
@@ -97,16 +97,11 @@
 
 - (void)settings:(id)sender
 {
-    CRTableViewController *langList = [[CRTableViewController alloc] initWithStyle:UITableViewStylePlain];
+    TableViewController *langList = [[TableViewController alloc] initWithStyle:UITableViewStylePlain];
     UINavigationController *langTable = [[UINavigationController alloc] initWithRootViewController:langList];
     [self presentViewController:langTable animated:YES completion:nil];
     
     [self.activityIndicatorView stopAnimating];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

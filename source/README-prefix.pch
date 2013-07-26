@@ -1,0 +1,14 @@
+#import <Availability.h>
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
+#import <MobileCoreServices/MobileCoreServices.h>
+#import <QuartzCore/QuartzCore.h>
+#import <Security/Security.h>
+#import <SystemConfiguration/SystemConfiguration.h>
+
+#import <AFNetworking/AFNetworking.h>
+#import <FlurrySDK/Flurry.h>
+#import <UI7Kit/UI7Kit.h>
+#endif
