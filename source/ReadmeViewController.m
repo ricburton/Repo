@@ -12,27 +12,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UINavigationBar *myBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, 320, 45)];
-    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 45, self.view.frame.size.width,self.view.frame.size.height)];
-    
-    NSArray *versionCompatibility = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
-    
-    if ( 7 == [[versionCompatibility objectAtIndex:0] intValue] ) {
-        myBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, 320, 60)];
-        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 60, self.view.frame.size.width,self.view.frame.size.height)];
-    }
+    NSArray *versionParts = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
+    BOOL modernStyle = (7 >= [[versionParts objectAtIndex:0] intValue]);
+    CGFloat barHeight = (modernStyle ? 60 : 45);
+    UINavigationBar *bar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, barHeight)];
+    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, barHeight, self.view.frame.size.width,self.view.frame.size.height)];
     
     [self.view addSubview:self.webView];
+    [self.view addSubview:bar];
     
-    [self.view addSubview:myBar];
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc]
-                                   initWithTitle:@"Done"
-                                   style:UIBarButtonItemStyleDone
-                                   target:self
-                                   action:@selector(remove:)];
-    UINavigationItem *item = [[UINavigationItem alloc]init];
+    UIBarButtonItem *backButton =
+    [[UIBarButtonItem alloc] initWithTitle:@"Done"
+                                     style:UIBarButtonItemStyleDone
+                                    target:self
+                                    action:@selector(remove:)];
+    
+    UINavigationItem *item = [[UINavigationItem alloc] init];
     [item setRightBarButtonItem:backButton];
-    [myBar setItems:[NSArray arrayWithObject:item]];
+    [bar setItems:[NSArray arrayWithObject:item]];
 
     self.webView.delegate = self;
     NSURLRequest *request = [NSURLRequest requestWithURL:self.url];
@@ -73,8 +70,4 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
 @end

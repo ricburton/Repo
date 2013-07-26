@@ -1,11 +1,9 @@
-#import "CRAppDelegate.h"
-#import "CRTableViewController.h"
+#import "AppDelegate.h"
+#import "TableViewController.h"
 #import "RootViewController.h"
 #import "Flurry.h"
 
-@implementation CRAppDelegate
-
-@synthesize window = _window;
+@implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

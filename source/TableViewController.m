@@ -1,8 +1,8 @@
-#import "CRTableViewController.h"
-#import "CRTableViewCell.h"
+#import "TableViewController.h"
+#import "TableViewCell.h"
 #import "AFNetworking.h"
 
-@interface CRTableViewController () {}
+@interface TableViewController ()
 
 @property (nonatomic) NSArray *dataSource;
 @property (strong, nonatomic) NSArray *prefs;
@@ -15,9 +15,9 @@
 
 @end
 
-@implementation CRTableViewController
 
-@synthesize dataSource;
+@implementation TableViewController
+
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -110,10 +110,10 @@
 {
     static NSString *CRTableViewCellIdentifier = @"cellIdentifier";
     
-    CRTableViewCell *cell = (CRTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CRTableViewCellIdentifier];
+    TableViewCell *cell = (TableViewCell *)[tableView dequeueReusableCellWithIdentifier:CRTableViewCellIdentifier];
     
     if (cell == nil) {
-        cell = [[CRTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CRTableViewCellIdentifier];
+        cell = [[TableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CRTableViewCellIdentifier];
     }
     
     NSArray *array = [self.dataArray objectAtIndex:indexPath.section];

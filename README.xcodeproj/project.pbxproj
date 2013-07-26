@@ -12,16 +12,15 @@
 		07DE688E158E8B5200798DBA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07DE688D158E8B5200798DBA /* CoreGraphics.framework */; };
 		BBCD757956454BA39B2A95E8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B3E00951CC849C89FB12A76 /* libPods.a */; };
 		DC7120161799E58A00C3C81E /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC7120151799E58A00C3C81E /* Media.xcassets */; };
-		DCBED8EC1799DF2500BDA5AD /* CRAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBED8DD1799DF2500BDA5AD /* CRAppDelegate.m */; };
-		DCBED8ED1799DF2500BDA5AD /* CRTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBED8DF1799DF2500BDA5AD /* CRTableViewCell.m */; };
-		DCBED8EE1799DF2500BDA5AD /* CRTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBED8E11799DF2500BDA5AD /* CRTableViewController.m */; };
 		DCBED8EF1799DF2500BDA5AD /* Documents.plist in Resources */ = {isa = PBXBuildFile; fileRef = DCBED8E21799DF2500BDA5AD /* Documents.plist */; };
 		DCBED8F01799DF2500BDA5AD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCBED8E31799DF2500BDA5AD /* InfoPlist.strings */; };
-		DCBED8F11799DF2500BDA5AD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBED8E51799DF2500BDA5AD /* main.m */; };
-		DCBED8F21799DF2500BDA5AD /* README-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DCBED8E61799DF2500BDA5AD /* README-Info.plist */; };
-		DCBED8F31799DF2500BDA5AD /* ReadmeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBED8E91799DF2500BDA5AD /* ReadmeViewController.m */; };
-		DCBED8F41799DF2500BDA5AD /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBED8EB1799DF2500BDA5AD /* RootViewController.m */; };
 		DCDFFDD31714DE5B0059E675 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCDFFDD21714DE5B0059E675 /* Default-568h@2x.png */; };
+		ECC0D3EF17A1CE0100016744 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0D3E417A1CE0100016744 /* AppDelegate.m */; };
+		ECC0D3F017A1CE0100016744 /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0D3E617A1CE0100016744 /* TableViewCell.m */; };
+		ECC0D3F117A1CE0100016744 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0D3E817A1CE0100016744 /* TableViewController.m */; };
+		ECC0D3F217A1CE0100016744 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0D3E917A1CE0100016744 /* main.m */; };
+		ECC0D3F317A1CE0100016744 /* ReadmeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0D3EC17A1CE0100016744 /* ReadmeViewController.m */; };
+		ECC0D3F417A1CE0100016744 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0D3EE17A1CE0100016744 /* RootViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,23 +30,23 @@
 		07DE688B158E8B5200798DBA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		07DE688D158E8B5200798DBA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		7B3E00951CC849C89FB12A76 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		DC0F49781799E0CE00F76123 /* README-prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "README-prefix.pch"; sourceTree = "<group>"; };
 		DC7120151799E58A00C3C81E /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
-		DCBED8DC1799DF2500BDA5AD /* CRAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRAppDelegate.h; sourceTree = "<group>"; };
-		DCBED8DD1799DF2500BDA5AD /* CRAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRAppDelegate.m; sourceTree = "<group>"; };
-		DCBED8DE1799DF2500BDA5AD /* CRTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRTableViewCell.h; sourceTree = "<group>"; };
-		DCBED8DF1799DF2500BDA5AD /* CRTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRTableViewCell.m; sourceTree = "<group>"; };
-		DCBED8E01799DF2500BDA5AD /* CRTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRTableViewController.h; sourceTree = "<group>"; };
-		DCBED8E11799DF2500BDA5AD /* CRTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRTableViewController.m; sourceTree = "<group>"; };
 		DCBED8E21799DF2500BDA5AD /* Documents.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Documents.plist; sourceTree = "<group>"; };
 		DCBED8E41799DF2500BDA5AD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		DCBED8E51799DF2500BDA5AD /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DCBED8E61799DF2500BDA5AD /* README-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "README-Info.plist"; sourceTree = "<group>"; };
-		DCBED8E81799DF2500BDA5AD /* ReadmeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReadmeViewController.h; sourceTree = "<group>"; };
-		DCBED8E91799DF2500BDA5AD /* ReadmeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReadmeViewController.m; sourceTree = "<group>"; };
-		DCBED8EA1799DF2500BDA5AD /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
-		DCBED8EB1799DF2500BDA5AD /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		DCDFFDD21714DE5B0059E675 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		ECC0D3E317A1CE0100016744 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		ECC0D3E417A1CE0100016744 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		ECC0D3E517A1CE0100016744 /* TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewCell.h; sourceTree = "<group>"; };
+		ECC0D3E617A1CE0100016744 /* TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewCell.m; sourceTree = "<group>"; };
+		ECC0D3E717A1CE0100016744 /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
+		ECC0D3E817A1CE0100016744 /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
+		ECC0D3E917A1CE0100016744 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		ECC0D3EA17A1CE0100016744 /* README-prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "README-prefix.pch"; sourceTree = "<group>"; };
+		ECC0D3EB17A1CE0100016744 /* ReadmeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReadmeViewController.h; sourceTree = "<group>"; };
+		ECC0D3EC17A1CE0100016744 /* ReadmeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = ReadmeViewController.m; sourceTree = "<group>"; };
+		ECC0D3ED17A1CE0100016744 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		ECC0D3EE17A1CE0100016744 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,12 +67,14 @@
 		07DE687A158E8B5200798DBA = {
 			isa = PBXGroup;
 			children = (
+				ECC0D3E217A1CE0100016744 /* source */,
 				DCBED8DB1799DF2500BDA5AD /* README_app */,
 				DCDFFDD21714DE5B0059E675 /* Default-568h@2x.png */,
 				07DE6888158E8B5200798DBA /* Frameworks */,
 				07DE6886158E8B5200798DBA /* Products */,
 				012FA78F3DE04984A758D1D0 /* Pods.xcconfig */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
 		};
 		07DE6886158E8B5200798DBA /* Products */ = {
@@ -99,23 +100,30 @@
 			isa = PBXGroup;
 			children = (
 				DC7120151799E58A00C3C81E /* Media.xcassets */,
-				DCBED8DC1799DF2500BDA5AD /* CRAppDelegate.h */,
-				DCBED8DD1799DF2500BDA5AD /* CRAppDelegate.m */,
-				DCBED8DE1799DF2500BDA5AD /* CRTableViewCell.h */,
-				DCBED8DF1799DF2500BDA5AD /* CRTableViewCell.m */,
-				DCBED8E01799DF2500BDA5AD /* CRTableViewController.h */,
-				DCBED8E11799DF2500BDA5AD /* CRTableViewController.m */,
 				DCBED8E21799DF2500BDA5AD /* Documents.plist */,
 				DCBED8E31799DF2500BDA5AD /* InfoPlist.strings */,
-				DCBED8E51799DF2500BDA5AD /* main.m */,
 				DCBED8E61799DF2500BDA5AD /* README-Info.plist */,
-				DCBED8E81799DF2500BDA5AD /* ReadmeViewController.h */,
-				DCBED8E91799DF2500BDA5AD /* ReadmeViewController.m */,
-				DCBED8EA1799DF2500BDA5AD /* RootViewController.h */,
-				DCBED8EB1799DF2500BDA5AD /* RootViewController.m */,
-				DC0F49781799E0CE00F76123 /* README-prefix.pch */,
 			);
 			path = README_app;
+			sourceTree = "<group>";
+		};
+		ECC0D3E217A1CE0100016744 /* source */ = {
+			isa = PBXGroup;
+			children = (
+				ECC0D3E317A1CE0100016744 /* AppDelegate.h */,
+				ECC0D3E417A1CE0100016744 /* AppDelegate.m */,
+				ECC0D3E517A1CE0100016744 /* TableViewCell.h */,
+				ECC0D3E617A1CE0100016744 /* TableViewCell.m */,
+				ECC0D3E717A1CE0100016744 /* TableViewController.h */,
+				ECC0D3E817A1CE0100016744 /* TableViewController.m */,
+				ECC0D3E917A1CE0100016744 /* main.m */,
+				ECC0D3EA17A1CE0100016744 /* README-prefix.pch */,
+				ECC0D3EB17A1CE0100016744 /* ReadmeViewController.h */,
+				ECC0D3EC17A1CE0100016744 /* ReadmeViewController.m */,
+				ECC0D3ED17A1CE0100016744 /* RootViewController.h */,
+				ECC0D3EE17A1CE0100016744 /* RootViewController.m */,
+			);
+			path = source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -181,7 +189,6 @@
 				DCBED8F01799DF2500BDA5AD /* InfoPlist.strings in Resources */,
 				DCDFFDD31714DE5B0059E675 /* Default-568h@2x.png in Resources */,
 				DCBED8EF1799DF2500BDA5AD /* Documents.plist in Resources */,
-				DCBED8F21799DF2500BDA5AD /* README-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,12 +232,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DCBED8F11799DF2500BDA5AD /* main.m in Sources */,
-				DCBED8F31799DF2500BDA5AD /* ReadmeViewController.m in Sources */,
-				DCBED8F41799DF2500BDA5AD /* RootViewController.m in Sources */,
-				DCBED8ED1799DF2500BDA5AD /* CRTableViewCell.m in Sources */,
-				DCBED8EC1799DF2500BDA5AD /* CRAppDelegate.m in Sources */,
-				DCBED8EE1799DF2500BDA5AD /* CRTableViewController.m in Sources */,
+				ECC0D3EF17A1CE0100016744 /* AppDelegate.m in Sources */,
+				ECC0D3F017A1CE0100016744 /* TableViewCell.m in Sources */,
+				ECC0D3F117A1CE0100016744 /* TableViewController.m in Sources */,
+				ECC0D3F217A1CE0100016744 /* main.m in Sources */,
+				ECC0D3F317A1CE0100016744 /* ReadmeViewController.m in Sources */,
+				ECC0D3F417A1CE0100016744 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,13 +323,9 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Richard Burton (BL99KMXZQQ)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "README_app/README-Prefix.pch";
+				GCC_PREFIX_HEADER = "source/README-Prefix.pch";
 				INFOPLIST_FILE = "README_app/README-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/Flurry",
-				);
 				PRODUCT_NAME = README;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -338,13 +341,9 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Richard Burton (BL99KMXZQQ)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "README_app/README-Prefix.pch";
+				GCC_PREFIX_HEADER = "source/README-Prefix.pch";
 				INFOPLIST_FILE = "README_app/README-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/Flurry",
-				);
 				PRODUCT_NAME = README;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
