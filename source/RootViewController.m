@@ -107,11 +107,6 @@
     [self.activityIndicatorView stopAnimating];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return self.dataArray.count;

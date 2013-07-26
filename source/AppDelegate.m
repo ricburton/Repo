@@ -5,8 +5,6 @@
 
 @implementation AppDelegate
 
-@synthesize window = _window;
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [Flurry startSession:@"H23Z9B4RNC39NMF56JP6"];

@@ -46,10 +46,9 @@
 
 @implementation TableViewCell
 
-@synthesize isSelected = _isSelected;
+// TODO: do these really need to be different ivars than provided by the parent class?
 @synthesize textLabel = label;
 @synthesize imageView = imageView;
-@synthesize renderedMark = _renderedMark;
 
 - (void)drawRect:(CGRect)rect
 {    

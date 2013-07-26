@@ -2,7 +2,7 @@
 #import "TableViewCell.h"
 #import "AFNetworking.h"
 
-@interface TableViewController () {}
+@interface TableViewController ()
 
 @property (nonatomic) NSArray *dataSource;
 @property (strong, nonatomic) NSArray *prefs;
@@ -15,9 +15,9 @@
 
 @end
 
+
 @implementation TableViewController
 
-@synthesize dataSource;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
