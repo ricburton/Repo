@@ -15,6 +15,7 @@
 		DCBED8EF1799DF2500BDA5AD /* Documents.plist in Resources */ = {isa = PBXBuildFile; fileRef = DCBED8E21799DF2500BDA5AD /* Documents.plist */; };
 		DCBED8F01799DF2500BDA5AD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCBED8E31799DF2500BDA5AD /* InfoPlist.strings */; };
 		DCDFFDD31714DE5B0059E675 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCDFFDD21714DE5B0059E675 /* Default-568h@2x.png */; };
+		DCFA473917A326DA00B5E4DA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFA473817A326DA00B5E4DA /* SystemConfiguration.framework */; };
 		ECC0D3EF17A1CE0100016744 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0D3E417A1CE0100016744 /* AppDelegate.m */; };
 		ECC0D3F017A1CE0100016744 /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0D3E617A1CE0100016744 /* TableViewCell.m */; };
 		ECC0D3F117A1CE0100016744 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0D3E817A1CE0100016744 /* TableViewController.m */; };
@@ -35,6 +36,7 @@
 		DCBED8E41799DF2500BDA5AD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DCBED8E61799DF2500BDA5AD /* README-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "README-Info.plist"; sourceTree = "<group>"; };
 		DCDFFDD21714DE5B0059E675 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		DCFA473817A326DA00B5E4DA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		ECC0D3E317A1CE0100016744 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		ECC0D3E417A1CE0100016744 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		ECC0D3E517A1CE0100016744 /* TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewCell.h; sourceTree = "<group>"; };
@@ -54,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DCFA473917A326DA00B5E4DA /* SystemConfiguration.framework in Frameworks */,
 				07DE688A158E8B5200798DBA /* UIKit.framework in Frameworks */,
 				07DE688C158E8B5200798DBA /* Foundation.framework in Frameworks */,
 				07DE688E158E8B5200798DBA /* CoreGraphics.framework in Frameworks */,
@@ -88,6 +91,7 @@
 		07DE6888158E8B5200798DBA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DCFA473817A326DA00B5E4DA /* SystemConfiguration.framework */,
 				07DE6889158E8B5200798DBA /* UIKit.framework */,
 				07DE688B158E8B5200798DBA /* Foundation.framework */,
 				07DE688D158E8B5200798DBA /* CoreGraphics.framework */,
