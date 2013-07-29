@@ -71,18 +71,18 @@
         
         for( NSString* language in self.arrayOfLangs )
         {
-            NSArray *readmes = [self.response_data valueForKeyPath:[NSString stringWithFormat:@"%@.readme",language]];
-            NSArray *repo_urls = [self.response_data valueForKeyPath:[NSString stringWithFormat:@"%@.repo",language]];
+            NSArray *descriptions = [self.response_data valueForKeyPath:[NSString stringWithFormat:@"%@.description",language]];
+            NSArray *readme_urls = [self.response_data valueForKeyPath:[NSString stringWithFormat:@"%@.readme_url",language]];
             
-            NSLog(@"Repo_urls: %@ for %@",repo_urls,language);
+            NSLog(@"Repo_urls: %@ for %@",readme_urls,language);
             
-            if (readmes && repo_urls) {
-                NSMutableDictionary *dataDict = [NSMutableDictionary dictionaryWithObject:readmes forKey:@"readmes"];
-                [dataDict setObject:repo_urls forKey:@"repo"];
+            if (descriptions && readme_urls) {
+                NSMutableDictionary *dataDict = [NSMutableDictionary dictionaryWithObject:descriptions forKey:@"descriptions"];
+                [dataDict setObject:readme_urls forKey:@"readme_url"];
                 
                 [self.dataArray addObject:dataDict];
             } else {
-                NSLog(@"Readmes or Repo URLs are empty");
+                NSLog(@"Readmes or readme_urls are empty");
             }
         }
         
@@ -112,7 +112,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSDictionary *dictionary = [self.dataArray objectAtIndex:section];
-    NSArray *array = [dictionary objectForKey:@"readmes"];
+    NSArray *array = [dictionary objectForKey:@"descriptions"];
     return [array count];
 }
 
@@ -123,11 +123,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *dictionary = [self.dataArray objectAtIndex:indexPath.section];
-    NSArray *repoArray = [dictionary objectForKey:@"repo"];
-    NSString *repoURL = [repoArray objectAtIndex:indexPath.row];
+    NSArray *readmeURLArray = [dictionary objectForKey:@"readme_url"];
+    NSString *readmeURL = [readmeURLArray objectAtIndex:indexPath.row];
     
     ReadmeViewController *webView = [[ReadmeViewController alloc] init];
-    webView.url = [NSURL URLWithString:repoURL];
+    webView.url = [NSURL URLWithString:readmeURL];
     
     [self presentViewController:webView animated:YES completion:nil];
 }
@@ -142,21 +142,27 @@
     }
     
     NSDictionary *dictionary = [self.dataArray objectAtIndex:indexPath.section];
-    NSArray *readmeArray = [dictionary objectForKey:@"readmes"];
+    NSArray *readmeArray = [dictionary objectForKey:@"descriptions"];
     NSString *readmeText = [readmeArray objectAtIndex:indexPath.row];
     
-    NSArray *repoArray = [dictionary objectForKey:@"repo"];
-    NSString *repoURL = [repoArray objectAtIndex:indexPath.row];
-    NSString *repoURLStrip = [repoURL stringByReplacingOccurrencesOfString:@"https://github.com/" withString:@""];
-    NSRange range = [repoURLStrip rangeOfString:@"/blob/"];//FIXME sometimes not a blob.
-    NSString *repoTitle = [repoURLStrip substringToIndex:range.location];
-    
-    cell.textLabel.font  = [UIFont fontWithName: @"Arial" size: 16.0];
-    cell.textLabel.text = repoTitle;
-    cell.detailTextLabel.text = readmeText;
-    cell.detailTextLabel.font = [UIFont fontWithName: @"Arial" size: 13.0];
+    NSArray *readmeURLArray = [dictionary objectForKey:@"readme_url"];
+    NSString *readmeURL = [readmeURLArray objectAtIndex:indexPath.row];
+    NSLog(@"response first: %@", readmeURL);
+    if ([readmeURL  isEqual: @"Readme link unavailable."]) {
+        NSLog(@"No Readme link.");
+        return cell;
+    } else {
+        NSString *readmeURLStrip = [readmeURL stringByReplacingOccurrencesOfString:@"https://github.com/" withString:@""];
+        NSRange range = [readmeURLStrip rangeOfString:@"/blob/"];//FIXME sometimes not a blob.
+        NSString *repoTitle = [readmeURLStrip substringToIndex:range.location];
+        
+        cell.textLabel.font  = [UIFont fontWithName: @"Arial" size: 16.0];
+        cell.textLabel.text = repoTitle;
+        cell.detailTextLabel.text = readmeText;
+        cell.detailTextLabel.font = [UIFont fontWithName: @"Arial" size: 13.0];
 
-    return cell;
+        return cell;
+    }
 }
 
 @end
