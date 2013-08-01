@@ -44,10 +44,12 @@
     self.documents     = [self.directories lastObject];
     self.filePathLangs = [self.documents stringByAppendingPathComponent:@"langs.plist"];
     NSLog(@"DOCUMENTS: %@", self.documents);
-    
+    NSLog(@"Reload?: %hhd", self.shouldReload);
     self.arrayOfLangs = [NSMutableArray arrayWithContentsOfFile:self.filePathLangs];
     if (self.arrayOfLangs.count == 0){
         [self settings:nil];
+    } else if (self.shouldReload == NO ) {
+        NSLog(@"Don't reload!");
     } else {
 
         NSLog(@"PASS");

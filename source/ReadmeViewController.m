@@ -1,5 +1,6 @@
 #import "ReadmeViewController.h"
 #import "MBProgressHUD.h"
+#import "RootViewController.h"
 
 @interface ReadmeViewController () <UIWebViewDelegate>
 
@@ -12,6 +13,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    RootViewController *root;
+    root.shouldReload = NO;
     
     NSArray *versionParts = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
     BOOL modernStyle = (7 >= [[versionParts objectAtIndex:0] intValue]);
