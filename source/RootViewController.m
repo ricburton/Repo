@@ -3,6 +3,7 @@
 #import "AFNetworking.h"
 #import "ReadmeViewController.h"
 #import "RMCustomCell.h"
+#import "MBProgressHUD.h"
 
 @interface RootViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -48,11 +49,6 @@
     if (self.arrayOfLangs.count == 0){
         [self settings:nil];
     } else {
-        self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        self.activityIndicatorView.hidesWhenStopped = YES;
-        self.activityIndicatorView.center = self.view.center;
-        [self.view addSubview:self.activityIndicatorView];
-        [self.activityIndicatorView startAnimating];
 
         NSLog(@"PASS");
         
@@ -65,9 +61,14 @@
                                                           parameters:params];
         NSLog(@"Request: %@",params);
         
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        
         AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-            [self.activityIndicatorView startAnimating];
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    
             NSLog(@"response first: %@", JSON);
             self.response_data = JSON;
             
@@ -99,9 +100,6 @@
                 }
             }
             
-            [self.activityIndicatorView stopAnimating];
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-            [self.tableView setHidden:NO];
             [self.tableView reloadData];
             
         } failure:nil];

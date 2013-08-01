@@ -1,4 +1,5 @@
 #import "ReadmeViewController.h"
+#import "MBProgressHUD.h"
 
 @interface ReadmeViewController () <UIWebViewDelegate>
 
@@ -14,7 +15,7 @@
     
     NSArray *versionParts = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
     BOOL modernStyle = (7 >= [[versionParts objectAtIndex:0] intValue]);
-    CGFloat barHeight = (modernStyle ? 45 : 45);//TODO Why was this necessary before?
+    CGFloat barHeight = (modernStyle ? 60 : 45);
     UINavigationBar *bar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, barHeight)];
     self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, barHeight, self.view.frame.size.width,self.view.frame.size.height)];
     
@@ -35,12 +36,7 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:self.url];
     [self.webView loadRequest:request];
     
-    self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    self.activityIndicatorView.hidesWhenStopped = YES;
-    self.activityIndicatorView.center = self.view.center;
-    [self.view addSubview:self.activityIndicatorView];
-    [self.activityIndicatorView startAnimating];
-
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 
 - (void)remove:(id)sender
@@ -52,7 +48,7 @@
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    [self.activityIndicatorView stopAnimating];
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
@@ -61,12 +57,12 @@
 
 - (BOOL)webView:(UIWebView *)wv shouldStartLoadWithRequest:(NSURLRequest *)rq
 {
-    [self.activityIndicatorView startAnimating];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     return YES;
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-    [self.activityIndicatorView stopAnimating];
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
