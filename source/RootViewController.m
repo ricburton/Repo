@@ -38,6 +38,12 @@
     self.tableView.dataSource = self;    
 }
 
+- (void)addItemViewController:(ReadmeViewController *)controller didFinishEnteringItem:(BOOL)item
+{
+    NSLog(@"This was returned from the ReadmeViewController %hhd",item);
+    self.shouldReload = item;
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     self.directories   = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -63,15 +69,19 @@
                                                           parameters:params];
         NSLog(@"Request: %@",params);
         
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeIndeterminate;
+        hud.animationType = MBProgressHUDAnimationZoomIn;
+        hud.labelText = @"Loading";
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         
         AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
+//            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [hud hide:YES];
             [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     
-            NSLog(@"response first: %@", JSON);
+//            NSLog(@"response first: %@", JSON);
             self.response_data = JSON;
             
             self.dataArray = [[NSMutableArray alloc]init];
@@ -86,7 +96,7 @@
                 
                 NSArray *descriptions = [self.response_data valueForKeyPath:[NSString stringWithFormat:@"%@.description",language]];
                 
-                NSLog(@"Readme_urls: %@ for %@",readme_urls,language);
+//                NSLog(@"Readme_urls: %@ for %@",readme_urls,language);
                 
                 if (descriptions && readme_urls) {
                     NSMutableDictionary *dataDict = [NSMutableDictionary dictionaryWithObject:descriptions forKey:@"descriptions"];
@@ -114,8 +124,7 @@
     TableViewController *langList = [[TableViewController alloc] initWithStyle:UITableViewStylePlain];
     UINavigationController *langTable = [[UINavigationController alloc] initWithRootViewController:langList];
     [self presentViewController:langTable animated:YES completion:nil];
-    
-    [self.activityIndicatorView stopAnimating];
+    self.shouldReload = YES;
 }
 
 
@@ -196,6 +205,7 @@
     
     ReadmeViewController *webView = [[ReadmeViewController alloc] init];
     webView.url = [NSURL URLWithString:readmeURL];
+    webView.delegate = self;
     
     [self presentViewController:webView animated:YES completion:nil];
 }

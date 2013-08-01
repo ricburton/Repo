@@ -10,11 +10,14 @@
 @end
 
 @implementation ReadmeViewController
+{
+    MBProgressHUD *hud;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    RootViewController *root;
-    root.shouldReload = NO;
+    
+    [self.delegate addItemViewController:self didFinishEnteringItem:NO];
     
     NSArray *versionParts = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
     BOOL modernStyle = (7 >= [[versionParts objectAtIndex:0] intValue]);
@@ -23,6 +26,10 @@
     self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, barHeight, self.view.frame.size.width,self.view.frame.size.height)];
     
     [self.view addSubview:self.webView];
+    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.animationType = MBProgressHUDAnimationZoomIn;
+    hud.labelText = @"Loading";
     [self.view addSubview:bar];
     
     UIBarButtonItem *backButton =
@@ -32,14 +39,13 @@
                                     action:@selector(remove:)];
     
     UINavigationItem *item = [[UINavigationItem alloc] init];
+
     [item setRightBarButtonItem:backButton];
     [bar setItems:[NSArray arrayWithObject:item]];
 
     self.webView.delegate = self;
     NSURLRequest *request = [NSURLRequest requestWithURL:self.url];
     [self.webView loadRequest:request];
-    
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 
 - (void)remove:(id)sender
@@ -51,7 +57,7 @@
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    [hud hide: YES];
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
@@ -60,7 +66,7 @@
 
 - (BOOL)webView:(UIWebView *)wv shouldStartLoadWithRequest:(NSURLRequest *)rq
 {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [hud hide: NO];
     return YES;
 }
 

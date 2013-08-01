@@ -13,7 +13,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
     
     RootViewController *rootView = [[RootViewController alloc] init];
-//    rootView.shouldReload = YES;
+    rootView.shouldReload = YES;
     
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:rootView];
     
