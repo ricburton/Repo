@@ -54,7 +54,7 @@
     [self.webView stopLoading];
     self.webView.delegate = nil;
 }
-
+    
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     [hud hide: YES];
