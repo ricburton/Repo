@@ -3,7 +3,7 @@ README.app
 
 README is a simple iPhone app for discovering new and interesting repositories on GitHub.com. Start it up, select the languages you're interested in, and see a feed of the most starred repositories of the day.
 
-![Screenshot](http://i.cloudup.com/soufsQRsQf.png)
+![Screenshot](http://i.cloudup.com/N9KBy4p1I3.png)
 
 When it's ready, README will be free to download on the App Store.
 
