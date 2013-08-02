@@ -4,6 +4,7 @@
 #import "ReadmeViewController.h"
 #import "RMCustomCell.h"
 #import "MBProgressHUD.h"
+#import "Reachability.h"
 
 @interface RootViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -16,10 +17,16 @@
 @property (strong, nonatomic) NSArray *directories;
 @property (strong, nonatomic) NSString *documents;
 @property (strong, nonatomic) NSString *filePathLangs;
+@property (strong, nonatomic) MBProgressHUD *hud;
+@property (strong, nonatomic) MBProgressHUD *sad_hud;
 
 @end
 
 @implementation RootViewController
+{
+    AFJSONRequestOperation *operation;
+    UIBarButtonItem *langButton;
+}
 
 - (void)viewDidLoad
 {
@@ -27,7 +34,7 @@
     
     self.title = @"README";
     
-    UIBarButtonItem *langButton = [[UIBarButtonItem alloc]
+    langButton = [[UIBarButtonItem alloc]
                                    initWithTitle:@"Settings"
                                    style:UIBarButtonItemStyleDone
                                    target:self
@@ -46,81 +53,120 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    self.directories   = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    self.documents     = [self.directories lastObject];
-    self.filePathLangs = [self.documents stringByAppendingPathComponent:@"langs.plist"];
-    NSLog(@"DOCUMENTS: %@", self.documents);
-    NSLog(@"Reload?: %hhd", self.shouldReload);
-    self.arrayOfLangs = [NSMutableArray arrayWithContentsOfFile:self.filePathLangs];
-    if (self.arrayOfLangs.count == 0){
-        [self settings:nil];
-    } else if (self.shouldReload == NO ) {
-        NSLog(@"Don't reload!");
-    } else {
-
-        NSLog(@"PASS");
-        
-        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: self.arrayOfLangs, @"languages", nil];
-        
-        AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://githubber.herokuapp.com"]];
-        httpClient.parameterEncoding = AFJSONParameterEncoding;
-        NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
-                                                                path:@"/readmes"
-                                                          parameters:params];
-        NSLog(@"Request: %@",params);
-        
-        MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.mode = MBProgressHUDModeIndeterminate;
-        hud.animationType = MBProgressHUDAnimationZoomIn;
-        hud.labelText = @"Loading";
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-        
-        AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-
-//            [MBProgressHUD hideHUDForView:self.view animated:YES];
-            [hud hide:YES];
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    
-//            NSLog(@"response first: %@", JSON);
-            self.response_data = JSON;
-            
-            self.dataArray = [[NSMutableArray alloc]init];
-            
-            for( NSString* language in self.arrayOfLangs )
-            {
-                NSString *contests = [self.response_data valueForKeyPath:[NSString stringWithFormat:@"%@.contest",language]];
-                                                                         
-                NSString *readme_url_data = [NSString stringWithFormat:@"%@.readme_url",language];
-                NSLog(@"readme_url_data: %@",readme_url_data);
-                NSArray *readme_urls = [self.response_data valueForKeyPath:readme_url_data];
-                
-                NSArray *descriptions = [self.response_data valueForKeyPath:[NSString stringWithFormat:@"%@.description",language]];
-                
-//                NSLog(@"Readme_urls: %@ for %@",readme_urls,language);
-                
-                if (descriptions && readme_urls) {
-                    NSMutableDictionary *dataDict = [NSMutableDictionary dictionaryWithObject:descriptions forKey:@"descriptions"];
-                    [dataDict setObject:readme_urls forKey:@"readme_url"];
-                    [dataDict setObject:contests forKey:@"contest"];
-                    
-                    [self.dataArray addObject:dataDict];
-                } else {
-                    NSLog(@"No stars or forks");
-                    NSMutableDictionary *dataDict = [NSMutableDictionary dictionaryWithObject:@[@"NOTHING"] forKey:@"descriptions"];
-                    [dataDict setObject:@[@"NOTHING"] forKey:@"readme_url"];
-                    [self.dataArray addObject:dataDict];
-                }
-            }
-            
-            [self.tableView reloadData];
-            
-        } failure:nil];
-        [operation start];
-    }
+    [self testInternetConnection];
 }
+
+- (void)testInternetConnection
+{
+    internetReachableFoo = [Reachability reachabilityWithHostname:@"www.google.com"];
+    
+    internetReachableFoo.reachableBlock = ^(Reachability*reach)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            NSLog(@"Yayyy, we have the interwebs!");
+            
+            [self.sad_hud hide:YES];
+            self.tableView.allowsSelection = YES;
+            self.navigationItem.rightBarButtonItem.enabled = YES;
+            
+            self.directories   = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            self.documents     = [self.directories lastObject];
+            self.filePathLangs = [self.documents stringByAppendingPathComponent:@"langs.plist"];
+            NSLog(@"DOCUMENTS: %@", self.documents);
+            NSLog(@"Reload?: %hhd", self.shouldReload);
+            self.arrayOfLangs = [NSMutableArray arrayWithContentsOfFile:self.filePathLangs];
+            if (self.arrayOfLangs.count == 0){
+                [self settings:nil];
+            } else if (self.shouldReload == NO ) {
+                NSLog(@"Don't reload!");
+            } else {
+                
+                NSLog(@"PASS");
+                
+                NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: self.arrayOfLangs, @"languages", nil];
+                
+                AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://githubber.herokuapp.com"]];
+                httpClient.parameterEncoding = AFJSONParameterEncoding;
+                NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
+                                                                        path:@"/readmes"
+                                                                  parameters:params];
+                NSLog(@"Request: %@",params);
+                
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+                self.hud = [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
+                self.hud.mode = MBProgressHUDModeIndeterminate;
+                self.hud.animationType = MBProgressHUDAnimationZoomIn;
+                self.hud.labelText = @"Loading";
+                
+                operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+                    
+                    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                    
+                    self.response_data = JSON;
+                    
+                    self.dataArray = [[NSMutableArray alloc]init];
+                    
+                    for( NSString* language in self.arrayOfLangs )
+                    {
+                        NSString *contests = [self.response_data valueForKeyPath:[NSString stringWithFormat:@"%@.contest",language]];
+                        
+                        NSString *readme_url_data = [NSString stringWithFormat:@"%@.readme_url",language];
+                        NSLog(@"readme_url_data: %@",readme_url_data);
+                        NSArray *readme_urls = [self.response_data valueForKeyPath:readme_url_data];
+                        
+                        NSArray *descriptions = [self.response_data valueForKeyPath:[NSString stringWithFormat:@"%@.description",language]];
+                        
+                        if (descriptions && readme_urls) {
+                            NSMutableDictionary *dataDict = [NSMutableDictionary dictionaryWithObject:descriptions forKey:@"descriptions"];
+                            [dataDict setObject:readme_urls forKey:@"readme_url"];
+                            [dataDict setObject:contests forKey:@"contest"];
+                            
+                            [self.dataArray addObject:dataDict];
+                        } else {
+                            NSLog(@"No stars or forks");
+                            NSMutableDictionary *dataDict = [NSMutableDictionary dictionaryWithObject:@[@"NOTHING"] forKey:@"descriptions"];
+                            [dataDict setObject:@[@"NOTHING"] forKey:@"readme_url"];
+                            [self.dataArray addObject:dataDict];
+                        }
+                    }
+                    
+                    [self.hud hide:YES];
+                    [self.tableView reloadData];
+                    
+                } failure:nil];
+            }
+            [operation start];
+            if (self.hud.hidden == NO) { //Double check it's gone
+                [self.hud hide:YES];
+            }
+        });
+    };
+    
+    internetReachableFoo.unreachableBlock = ^(Reachability*reach)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"Someone broke the internet :(");
+            
+            self.sad_hud = [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
+            self.sad_hud.mode = MBProgressHUDModeText;
+            self.sad_hud.animationType = MBProgressHUDAnimationZoomIn;
+            self.sad_hud.labelText = @"No internet.";
+            
+            self.tableView.allowsSelection = NO;
+            self.navigationItem.rightBarButtonItem.enabled = NO;
+            
+            [self.hud hide:YES];
+        });
+    };
+    
+    [internetReachableFoo startNotifier];
+}
+
 
 - (void)settings:(id)sender
 {
+    [self.sad_hud hide:YES];
     TableViewController *langList = [[TableViewController alloc] initWithStyle:UITableViewStylePlain];
     UINavigationController *langTable = [[UINavigationController alloc] initWithRootViewController:langList];
     [self presentViewController:langTable animated:YES completion:nil];
@@ -206,6 +252,7 @@
     ReadmeViewController *webView = [[ReadmeViewController alloc] init];
     webView.url = [NSURL URLWithString:readmeURL];
     webView.delegate = self;
+    [self.sad_hud hide:YES];
     
     [self presentViewController:webView animated:YES completion:nil];
 }

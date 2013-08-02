@@ -1,3 +1,4 @@
+pod 'Reachability'
 pod 'MBProgressHUD', '~> 0.7'
 pod 'FlurrySDK'
 pod 'AFNetworking'

@@ -1,6 +1,7 @@
 #import "ReadmeViewController.h"
 #import "MBProgressHUD.h"
 #import "RootViewController.h"
+#import "Reachability.h"
 
 @interface ReadmeViewController () <UIWebViewDelegate>
 
@@ -16,7 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     [self.delegate addItemViewController:self didFinishEnteringItem:NO];
     
     NSArray *versionParts = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
@@ -42,7 +43,7 @@
 
     [item setRightBarButtonItem:backButton];
     [bar setItems:[NSArray arrayWithObject:item]];
-
+    
     self.webView.delegate = self;
     NSURLRequest *request = [NSURLRequest requestWithURL:self.url];
     [self.webView loadRequest:request];
