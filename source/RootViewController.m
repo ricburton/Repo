@@ -273,8 +273,7 @@
         return cell;
     } else if ([readmeURL isEqualToString: @"Readme link unavailable."]){
         return cell;
-    } else {
-        
+    } else {   
         NSString *readmeURLStrip = [readmeURL stringByReplacingOccurrencesOfString:@"https://github.com/" withString:@""];
         NSRange range = [readmeURLStrip rangeOfString:@"/blob/"];//FIXME sometimes not a blob.
         NSString *repoTitleFull = [readmeURLStrip substringToIndex:range.location];
@@ -321,6 +320,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self.sad_hud hide:YES];
     NSDictionary *dictionary = [self.dataArray objectAtIndex:indexPath.section];
     NSArray *readmeURLArray = [dictionary objectForKey:@"readme_url"];
     NSString *readmeURL = [readmeURLArray objectAtIndex:indexPath.row];
@@ -328,8 +328,7 @@
     ReadmeViewController *webView = [[ReadmeViewController alloc] init];
     webView.url = [NSURL URLWithString:readmeURL];
     webView.delegate = self;
-    [self.sad_hud hide:YES];
-    
+
     [self presentViewController:webView animated:YES completion:nil];    
 }
 
