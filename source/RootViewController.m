@@ -32,7 +32,13 @@
 {
     [super viewDidLoad];
     
-    self.title = @"README";
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont fontWithName:@"Helvetica-Bold" size:18.0];
+    label.textColor = [self getUIColorObjectFromHexString:@"#423F37" alpha:1];
+    self.navigationItem.titleView = label;
+    label.text = @"README";
+    [label sizeToFit];
     
     langButton = [[UIBarButtonItem alloc]
                                    initWithTitle:@"Settings"
@@ -174,7 +180,6 @@
     self.shouldReload = YES;
 }
 
-
 - (unsigned int)intFromHexString:(NSString *)hexStr
 {
     unsigned int hexInt = 0;
@@ -185,7 +190,6 @@
     
     return hexInt;
 }
-
 
 - (UIColor *)getUIColorObjectFromHexString:(NSString *)hexStr alpha:(CGFloat)alpha
 {
@@ -304,7 +308,7 @@
         [cell.textLabel setAttributedText:attributedText];
         
         cell.detailTextLabel.text = readmeText;
-        cell.detailTextLabel.textColor  = [self getUIColorObjectFromHexString:@"#555555" alpha:1];//#333335
+        cell.detailTextLabel.textColor = [self getUIColorObjectFromHexString:@"#555555" alpha:1];
         NSLog(@"Contest string: %@",contest);
         if ([contest isEqualToString:@"most_forked_today"]) {
             cell.contestIcon.image    = [UIImage imageNamed:@"most_forked.png"];

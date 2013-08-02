@@ -28,6 +28,7 @@
         self.directories   = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         self.documents     = [self.directories lastObject];
         self.filePathLangs = [self.documents stringByAppendingPathComponent:@"langs.plist"];
+        self.tableView.separatorColor = [self getUIColorObjectFromHexString:@"#CCCCCC" alpha:1];
         
         NSMutableArray *loadedLangs = [NSMutableArray arrayWithContentsOfFile:self.filePathLangs];
         if (loadedLangs.count > 0) {
@@ -49,11 +50,42 @@
     return self;
 }
 
+//TODO - Move this repeated code to a Pod
+- (unsigned int)intFromHexString:(NSString *)hexStr
+{
+    unsigned int hexInt = 0;
+    
+    NSScanner *scanner = [NSScanner scannerWithString:hexStr];
+    [scanner setCharactersToBeSkipped:[NSCharacterSet characterSetWithCharactersInString:@"#"]];
+    [scanner scanHexInt:&hexInt];
+    
+    return hexInt;
+}
+
+- (UIColor *)getUIColorObjectFromHexString:(NSString *)hexStr alpha:(CGFloat)alpha
+{
+    unsigned int hexint = [self intFromHexString:hexStr];
+    
+    UIColor *color =
+    [UIColor colorWithRed:((CGFloat) ((hexint & 0xFF0000) >> 16))/255
+                    green:((CGFloat) ((hexint & 0xFF00) >> 8))/255
+                     blue:((CGFloat) (hexint & 0xFF))/255
+                    alpha:alpha];
+    
+    return color;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    self.title = @"Favorite Languages";
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont fontWithName:@"Helvetica-Bold" size:16.0];
+    label.textColor = [self getUIColorObjectFromHexString:@"#423F37" alpha:1];
+    self.navigationItem.titleView = label;
+    label.text = @"Favourite Languages";
+    [label sizeToFit];
     
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]
                                     initWithTitle:@"Done"
@@ -96,14 +128,38 @@
     return [[self.dataArray objectAtIndex:section] count];
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{    
+//-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    NSString *languageSection;
+//    if(section == 0){
+//         languageSection = @"Top Languages";
+//    } else if(section == 1){
+//         languageSection = @"All Languages";
+//    } else {
+//        return nil;
+//    }
+//    
+//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 0)];
+//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(9, 0, self.tableView.frame.size.width, 35)];
+//    [label setFont:[UIFont fontWithName:@"Helvetica-Bold" size:18]];
+//    [label setTextColor:[self getUIColorObjectFromHexString:@"#ffffff" alpha:1]];
+//    
+//    [label setText:languageSection];
+//    [view addSubview:label];
+//    
+//    [label setBackgroundColor:[self getUIColorObjectFromHexString:@"555555" alpha:1]];
+//    [view setBackgroundColor:[self getUIColorObjectFromHexString:@"555555" alpha:1]];
+//    return view;
+//}
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
     if(section == 0){
         return @"Top Languages";
     } else if(section == 1){
         return @"All Languages";
     } else {
-        return nil;   
+        return nil;
     }
 }
 
@@ -123,8 +179,22 @@
     NSString *formattedLanguage = [text stringByReplacingOccurrencesOfString:@"%20"
                                                                     withString:@" "];
     cell.textLabel.text = formattedLanguage;
+    cell.textLabel.textColor = [self getUIColorObjectFromHexString:@"#555555" alpha:1];
+    cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:16];
+    tableView.separatorColor = [self getUIColorObjectFromHexString:@"#CCCCCC" alpha:1];
     
     return cell;
+}
+
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    CGFloat height = 40;
+//    return height;
+//}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 40;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
