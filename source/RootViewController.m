@@ -243,20 +243,6 @@
     return [array count];
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSDictionary *dictionary = [self.dataArray objectAtIndex:indexPath.section];
-    NSArray *readmeURLArray = [dictionary objectForKey:@"readme_url"];
-    NSString *readmeURL = [readmeURLArray objectAtIndex:indexPath.row];
-    
-    ReadmeViewController *webView = [[ReadmeViewController alloc] init];
-    webView.url = [NSURL URLWithString:readmeURL];
-    webView.delegate = self;
-    [self.sad_hud hide:YES];
-    
-    [self presentViewController:webView animated:YES completion:nil];
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *CellIdentifier = @"Cell Identifier";
@@ -292,6 +278,7 @@
         NSRange range = [readmeURLStrip rangeOfString:@"/blob/"];//FIXME sometimes not a blob.
         NSString *repoTitle = [readmeURLStrip substringToIndex:range.location];
 
+        cell.backgroundColor      = [self getUIColorObjectFromHexString:@"#FBFBFB" alpha:1];
         cell.textLabel.text       = repoTitle;
         cell.textLabel.textColor  = [self getUIColorObjectFromHexString:@"#333335" alpha:1];
         cell.detailTextLabel.text = readmeText;
@@ -307,6 +294,20 @@
          
         return cell;
     }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary *dictionary = [self.dataArray objectAtIndex:indexPath.section];
+    NSArray *readmeURLArray = [dictionary objectForKey:@"readme_url"];
+    NSString *readmeURL = [readmeURLArray objectAtIndex:indexPath.row];
+    
+    ReadmeViewController *webView = [[ReadmeViewController alloc] init];
+    webView.url = [NSURL URLWithString:readmeURL];
+    webView.delegate = self;
+    [self.sad_hud hide:YES];
+    
+    [self presentViewController:webView animated:YES completion:nil];    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

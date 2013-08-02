@@ -19,7 +19,7 @@
         self.textLabel.font = [UIFont fontWithName:@"Arial" size:16.0f];
         [self addSubview:self.textLabel];
         
-        self.detailTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(38, 30, self.frame.size.width - 43, 30)];
+        self.detailTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(38, 25, self.frame.size.width - 43, 30)];
         self.detailTextLabel.font = [UIFont fontWithName:@"Arial" size:13.0f];
         [self addSubview:self.detailTextLabel];
     }
