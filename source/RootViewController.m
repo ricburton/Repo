@@ -293,14 +293,16 @@
         NSString *repoTitle = [readmeURLStrip substringToIndex:range.location];
 
         cell.textLabel.text       = repoTitle;
+        cell.textLabel.textColor  = [self getUIColorObjectFromHexString:@"#333335" alpha:1];
         cell.detailTextLabel.text = readmeText;
+        cell.detailTextLabel.textColor  = [self getUIColorObjectFromHexString:@"#333335" alpha:1];
         NSLog(@"Contest string: %@",contest);
         if ([contest isEqualToString:@"most_forked_today"]) {
             cell.contestIcon.image    = [UIImage imageNamed:@"most_forked.png"];
         } else if ([contest isEqualToString:@"most_starred_today"]) {
             cell.contestIcon.image    = [UIImage imageNamed:@"most_starred.png"];
         } else if ([contest isEqualToString:@"most_starred_and_forked_today"]) {
-            cell.contestIcon.image    = [UIImage imageNamed:@"most_starred_and_forked_beta.png"];
+            cell.contestIcon.image    = [UIImage imageNamed:@"most_starred_and_forked.png"];
         }
          
         return cell;
