@@ -10,18 +10,19 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        self.contestIcon = [[UIImageView alloc] initWithFrame:CGRectMake(4, 18, 30, 30)];
+        self.contestIcon = [[UIImageView alloc] initWithFrame:CGRectMake(6, 18, 28, 28)];
         self.contestIcon.contentMode = UIViewContentModeScaleAspectFit;
         
         [self addSubview:self.contestIcon];
         
-        self.textLabel = [[UILabel alloc] initWithFrame:CGRectMake(38, 5, self.frame.size.width - 43, 30)];
-        self.textLabel.font = [UIFont fontWithName:@"Arial" size:16.0f];
+        self.detailTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(38, 25, self.frame.size.width - 43, 25)];
+        self.detailTextLabel.font = [UIFont fontWithName:@"Helvetica" size:13.0f];
+        [self addSubview:self.detailTextLabel];
+        
+        self.textLabel = [[UILabel alloc] initWithFrame:CGRectMake(38, 8, self.frame.size.width - 43, 25)];
+        self.textLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:16.0f];
         [self addSubview:self.textLabel];
         
-        self.detailTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(38, 25, self.frame.size.width - 43, 30)];
-        self.detailTextLabel.font = [UIFont fontWithName:@"Arial" size:13.0f];
-        [self addSubview:self.detailTextLabel];
     }
     return self;
 }
