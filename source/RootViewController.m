@@ -42,7 +42,8 @@
     
     self.navigationItem.rightBarButtonItem = langButton;
     self.tableView.delegate = self;
-    self.tableView.dataSource = self;    
+    self.tableView.dataSource = self;
+    self.tableView.separatorColor = [self getUIColorObjectFromHexString:@"#CCCCCC" alpha:1];
 }
 
 - (void)addItemViewController:(ReadmeViewController *)controller didFinishEnteringItem:(BOOL)item
