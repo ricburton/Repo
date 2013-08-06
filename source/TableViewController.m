@@ -16,9 +16,7 @@
 
 @end
 
-
 @implementation TableViewController
-
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -28,7 +26,6 @@
         self.directories   = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         self.documents     = [self.directories lastObject];
         self.filePathLangs = [self.documents stringByAppendingPathComponent:@"langs.plist"];
-        self.tableView.separatorColor = [self getUIColorObjectFromHexString:@"#CCCCCC" alpha:1];
         
         NSMutableArray *loadedLangs = [NSMutableArray arrayWithContentsOfFile:self.filePathLangs];
         if (loadedLangs.count > 0) {
@@ -87,15 +84,19 @@
     label.text = @"Favourite Languages";
     [label sizeToFit];
     
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]
-                                    initWithTitle:@"Done"
-                                    style:UIBarButtonItemStyleDone
-                                    target:self
-                                    action:@selector(done:)];
+    UIImage *saveImg = [UIImage imageNamed:@"save.png"];
     
-    self.navigationItem.rightBarButtonItem = rightButton;
+    UIButton *saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [saveBtn setBackgroundImage:saveImg forState:UIControlStateNormal];
+    saveBtn.frame = CGRectMake(0,0,33,19);
+    
+    [saveBtn addTarget:self action:@selector(done:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *saveBarBtn = [[UIBarButtonItem alloc] initWithCustomView:saveBtn];
+    
+    self.navigationItem.rightBarButtonItem = saveBarBtn;
     
     [self.tableView reloadData];
+    self.tableView.separatorColor = [self getUIColorObjectFromHexString:@"#DDDDDD" alpha:.32];
 }
 
 - (void)viewDidUnload
@@ -170,7 +171,6 @@
     cell.textLabel.text = formattedLanguage;
     cell.textLabel.textColor = [self getUIColorObjectFromHexString:@"#555555" alpha:1];
     cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:16];
-    tableView.separatorColor = [self getUIColorObjectFromHexString:@"#CCCCCC" alpha:1];
     
     return cell;
 }

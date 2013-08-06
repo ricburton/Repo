@@ -25,7 +25,6 @@
 @implementation RootViewController
 {
     AFJSONRequestOperation *operation;
-    UIBarButtonItem *langButton;
 }
 
 - (void)viewDidLoad
@@ -40,25 +39,19 @@
     label.text = @"README";
     [label sizeToFit];
     
-    UIImage *gearImg = [UIImage imageNamed:@"gear_icon.png"];
+    UIImage *cogImg = [UIImage imageNamed:@"cog.png"];
     
-    UIButton *customBarBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [customBarBtn setBackgroundImage:gearImg forState:UIControlStateNormal];
-//    [customBarBtn setTitle:@"Langs" forState:UIControlStateNormal];
-    customBarBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 10);
-//    customBarBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
-    customBarBtn.frame = (CGRect) {
-        .size.width = 30,
-        .size.height = 30,
-    };
+    UIButton *settingsBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [settingsBtn setBackgroundImage:cogImg forState:UIControlStateNormal];
+    settingsBtn.frame = CGRectMake(0,0,33,19);
 
-    [customBarBtn addTarget:self action:@selector(settings:) forControlEvents:UIControlEventTouchUpInside];
-    langButton = [[UIBarButtonItem alloc] initWithCustomView:customBarBtn];
+    [settingsBtn addTarget:self action:@selector(settings:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *settingsBarBtn = [[UIBarButtonItem alloc] initWithCustomView:settingsBtn];
 
-    self.navigationItem.rightBarButtonItem = langButton;
+    self.navigationItem.rightBarButtonItem = settingsBarBtn;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.separatorColor = [self getUIColorObjectFromHexString:@"#CCCCCC" alpha:1];
+    self.tableView.separatorColor = [self getUIColorObjectFromHexString:@"#DDDDDD" alpha:1];
 }
 
 - (void)addItemViewController:(ReadmeViewController *)controller didFinishEnteringItem:(BOOL)item
@@ -153,9 +146,10 @@
                 } failure:nil];
             }
             [operation start];
-            if (self.hud.hidden == NO) { //Double check it's gone
-                [self.hud hide:YES];
-            }
+//TODO - What networking on/off bug was this catching?
+//            if (self.hud.hidden == NO) { //Double check it's gone
+//                [self.hud hide:YES];
+//            }
         });
     };
     
@@ -281,6 +275,7 @@
         NSLog(@"No stars or forks");
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.repoTitle.text = @"No projects starred or forked.";
+        cell.repoTitle.textColor = [self getUIColorObjectFromHexString:@"#555555" alpha:1];
         cell.repoDescription.text = @"Go give the language some love :)";
         
         return cell;

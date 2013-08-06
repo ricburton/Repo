@@ -22,7 +22,7 @@
     
     NSArray *versionParts = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
     BOOL modernStyle = (7 >= [[versionParts objectAtIndex:0] intValue]);
-    CGFloat barHeight = (modernStyle ? 45   : 45);
+    CGFloat barHeight = (modernStyle ? 44  : 44);
     UINavigationBar *bar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, barHeight)];
     self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, barHeight, self.view.frame.size.width,self.view.frame.size.height)];
     
@@ -33,15 +33,19 @@
     hud.labelText = @"Loading";
     [self.view addSubview:bar];
     
-    UIBarButtonItem *backButton =
-    [[UIBarButtonItem alloc] initWithTitle:@"Done"
-                                     style:UIBarButtonItemStyleDone
-                                    target:self
-                                    action:@selector(remove:)];
+    UIImage *removeImg = [UIImage imageNamed:@"remove.png"];
+    
+    UIButton *removeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [removeBtn setBackgroundImage:removeImg forState:UIControlStateNormal];
+    removeBtn.frame = CGRectMake(0,0,33,19);
+    
+    [removeBtn addTarget:self action:@selector(remove:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *saveBarBtn = [[UIBarButtonItem alloc] initWithCustomView:removeBtn];
+    
+    self.navigationItem.rightBarButtonItem = saveBarBtn;
     
     UINavigationItem *item = [[UINavigationItem alloc] init];
-
-    [item setRightBarButtonItem:backButton];
+    [item setRightBarButtonItem:saveBarBtn];
     [bar setItems:[NSArray arrayWithObject:item]];
     
     self.webView.delegate = self;
