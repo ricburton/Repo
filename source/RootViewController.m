@@ -40,39 +40,22 @@
     label.text = @"README";
     [label sizeToFit];
     
-       langButton = [[UIBarButtonItem alloc]
-                                                          initWithTitle:@"Settings"
-                                                    style:UIBarButtonItemStyleDone
-                                                    target:self
-                                                       action:@selector(settings:)];
-////    UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithCustomView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yourimage2.jpg"]]]; 
-//    
-//    langButton = [[UIBarButtonItem alloc] initWithCustomView:[[UIImageView alloc]
-//                                                              initWithImage:[UIImage imageNamed:@"gear.png"]]];
-//    langButton.target = self;
-//    langButton.action = @selector(settings:);
-    // building the buttons
-//    UIFont  *buttonFont = [UIFont fontWithName:@"Noteworthy-Bold" size:17.0];
-//    UIColor *buttonColorDefault = [UIColor colorWithRed:90.0f/255.0f green:90.0f/255.0f blue:90.0f/255.0f alpha:1.0];
-//    UIColor *buttonColorHighlight = [UIColor colorWithRed:255.0f/255.0f green:255.0f/255.0f blue:255.0f/255.0f alpha:1.0];
-//
-//    UIImage *btn = [UIImage imageNamed:@"gear.png"];
-//    UIImage *btnh = [UIImage imageNamed:@"gear.png"];
-//    
-//    langButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [langButton addTarget:self action:@selector(settings:) forControlEvents:UIControlEventTouchUpInside];
-//    [langButton setTitle:@"Settings" forState:UIControlStateNormal];
-//    [langButton setFrame:CGRectMake(80.0, 120.0, 162.0, 42.0)];
-//    [langButton setBackgroundImage:btn forState:UIControlStateNormal];
-//    [langButton setBackgroundImage:btnh forState:UIControlStateHighlighted];
-//    
-//    [langButton.titleLabel setFont:buttonFont];
-//    [langButton setTitleColor:buttonColorDefault forState:UIControlStateNormal];
-//    [langButton setTitleColor:buttonColorHighlight forState:UIControlStateHighlighted];
-//    
-//    
+    UIImage *gearImg = [UIImage imageNamed:@"gear_icon.png"];
+    
+    UIButton *customBarBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [customBarBtn setBackgroundImage:gearImg forState:UIControlStateNormal];
+//    [customBarBtn setTitle:@"Langs" forState:UIControlStateNormal];
+    customBarBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 10);
+//    customBarBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
+    customBarBtn.frame = (CGRect) {
+        .size.width = 30,
+        .size.height = 30,
+    };
+
+    [customBarBtn addTarget:self action:@selector(settings:) forControlEvents:UIControlEventTouchUpInside];
+    langButton = [[UIBarButtonItem alloc] initWithCustomView:customBarBtn];
+
     self.navigationItem.rightBarButtonItem = langButton;
-//    [self.navigationItem.rightBarButtonItem setImage:[UIImage imageNamed:@"gear.png"]];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorColor = [self getUIColorObjectFromHexString:@"#CCCCCC" alpha:1];
