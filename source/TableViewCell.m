@@ -21,11 +21,11 @@
 #define kCircleRadioUnselected      23.0
 #define kCircleLeftMargin           13.0
 #define kCircleRect                 CGRectMake(3.5, 2.5, 22.0, 22.0)
-#define kCircleOverlayRect          CGRectMake(1.5, 12.5, 26.0, 23.0)
+#define kCircleOverlayRect          CGRectMake(1.5, 12.5, 26.0, 220.0)
 
 /* Mark constants */
-#define kStrokeWidth                2.0
-#define kShadowRadius               .0
+#define kStrokeWidth                1.0
+#define kShadowRadius               0
 #define kMarkDegrees                70.0
 #define kMarkWidth                  3.0
 #define kMarkHeight                 6.0
@@ -34,7 +34,7 @@
 #define kMarkImageSize              CGSizeMake(30.0, 30.0)
 #define kMarkBase                   CGPointMake(9.0, 13.5)
 #define kMarkDrawPoint              CGPointMake(20.0, 9.5)
-#define kShadowColor                [UIColor colorWithRed:124 green:124 blue:124 alpha:100]
+#define kShadowColor                [UIColor colorWithRed:124 green:124 blue:124 alpha:0]
 #define kMarkShadowColor            [UIColor colorWithRed:124 green:124 blue:124 alpha:100]
 #define kBlueColor                  0x4686C5
 #define kMarkColor                  kBlueColor

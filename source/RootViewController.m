@@ -277,6 +277,7 @@
         cell.repoTitle.text = @"No projects starred or forked.";
         cell.repoTitle.textColor = [self getUIColorObjectFromHexString:@"#555555" alpha:1];
         cell.repoDescription.text = @"Go give the language some love :)";
+        cell.contestIcon.image = [UIImage imageNamed:@"no_repos.png"];
         
         return cell;
     } else if ([readmeURL isEqualToString: @"Readme link unavailable."]){
@@ -333,11 +334,14 @@
     NSArray *readmeURLArray = [dictionary objectForKey:@"readme_url"];
     NSString *readmeURL = [readmeURLArray objectAtIndex:indexPath.row];
     
-    ReadmeViewController *webView = [[ReadmeViewController alloc] init];
-    webView.url = [NSURL URLWithString:readmeURL];
-    webView.delegate = self;
-
-    [self presentViewController:webView animated:YES completion:nil];    
+    if ([readmeURL isEqualToString: @"NOTHING"]) {
+    } else {
+        ReadmeViewController *webView = [[ReadmeViewController alloc] init];
+        webView.url = [NSURL URLWithString:readmeURL];
+        webView.delegate = self;
+        
+        [self presentViewController:webView animated:YES completion:nil];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
