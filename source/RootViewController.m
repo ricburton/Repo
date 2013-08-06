@@ -5,7 +5,6 @@
 #import "RMCustomCell.h"
 #import "MBProgressHUD.h"
 #import "Reachability.h"
-#import "Mixpanel.h"
 
 @interface RootViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -283,11 +282,21 @@
         return cell;
     } else if ([readmeURL isEqualToString: @"Readme link unavailable."]){
         return cell;
-    } else {   
-        NSString *readmeURLStrip = [readmeURL stringByReplacingOccurrencesOfString:@"https://github.com/" withString:@""];
-        NSRange range = [readmeURLStrip rangeOfString:@"/blob/"];//FIXME sometimes not a blob. "https://github.com/mattlawer/MBSwitch/tree/master/README"
-        NSString *repoTitleFull = [readmeURLStrip substringToIndex:range.location];
-        NSString *repoTitle = [repoTitleFull stringByReplacingOccurrencesOfString:@"/" withString:@" / "];
+    } else {
+        NSURL *url = [NSURL URLWithString:readmeURL];
+        
+        NSLog(@"ComPOnents");
+        NSLog(@"components: %@", url.pathComponents[0]);
+//        
+//        NSString *readmeURLStrip = [readmeURL stringByReplacingOccurrencesOfString:@"https://github.com/" withString:@""];
+//        NSRange range = [readmeURLStrip rangeOfString:@"/blob/"];//FIXME sometimes not a blob. "https://github.com/mattlawer/MBSwitch/tree/master/README"
+//        NSString *repoTitleFull = [readmeURLStrip substringToIndex:range.location];
+//        NSString *repoTitle = [repoTitleFull stringByReplacingOccurrencesOfString:@"/" withString:@" / "];
+        NSString *githubUser   = url.pathComponents[1];
+        NSString *repoTitle    = url.pathComponents[2];
+        NSArray *directoryParts = @[githubUser, repoTitle];
+        NSString *repoDirectory = [directoryParts componentsJoinedByString:@" / "];
+//        NSString *repoLocation = @"%@ / %@", githubUser, repoTitle;
 
         const CGFloat fontSize = 13;
         UIFont *boldFont = [UIFont boldSystemFontOfSize:fontSize];
@@ -306,8 +315,7 @@
         const NSRange rangeSlash = [repoTitle rangeOfString:@"/"];
         
         NSMutableAttributedString *attributedText =
-        [[NSMutableAttributedString alloc] initWithString:repoTitle
-                                               attributes:attrs];
+        [[NSMutableAttributedString alloc] initWithString:repoDirectory attributes:attrs];
         [attributedText setAttributes:subAttrs range:rangeSlash];
         
         cell.backgroundColor      = [self getUIColorObjectFromHexString:@"#FBFBFB" alpha:1];
