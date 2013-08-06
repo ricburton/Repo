@@ -1,3 +1,4 @@
+#import "FlurryKey.h"
 #import "AppDelegate.h"
 #import "TableViewController.h"
 #import "RootViewController.h"
@@ -7,7 +8,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [Flurry startSession:@"H23Z9B4RNC39NMF56JP6"];
+    if (flurryKey) [Flurry startSession:flurryKey];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     self.window.backgroundColor = [UIColor whiteColor];
