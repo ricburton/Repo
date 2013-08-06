@@ -14,6 +14,10 @@
 		DC0A572F17AB5F71009EFD0D /* most_starred_and_forked.png in Resources */ = {isa = PBXBuildFile; fileRef = DC0A572D17AB5F71009EFD0D /* most_starred_and_forked.png */; };
 		DC0A573017AB5F71009EFD0D /* most_starred_and_forked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC0A572E17AB5F71009EFD0D /* most_starred_and_forked@2x.png */; };
 		DC1A996C17A857ED0066BD27 /* RMCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1A996B17A854FE0066BD27 /* RMCustomCell.m */; };
+		DC473A7817AF000B009C54E6 /* iPhone Retina.png in Resources */ = {isa = PBXBuildFile; fileRef = DC473A7417AF000B009C54E6 /* iPhone Retina.png */; };
+		DC473A7917AF000B009C54E6 /* iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = DC473A7517AF000B009C54E6 /* iPhone.png */; };
+		DC473A7C17AF0082009C54E6 /* gear.png in Resources */ = {isa = PBXBuildFile; fileRef = DC473A7A17AF0082009C54E6 /* gear.png */; };
+		DC473A7D17AF0082009C54E6 /* gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC473A7B17AF0082009C54E6 /* gear@2x.png */; };
 		DC7120161799E58A00C3C81E /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC7120151799E58A00C3C81E /* Media.xcassets */; };
 		DC8A9E1A17AA129F00C73BEF /* most_forked.png in Resources */ = {isa = PBXBuildFile; fileRef = DC8A9E1417AA129F00C73BEF /* most_forked.png */; };
 		DC8A9E1B17AA129F00C73BEF /* most_forked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC8A9E1517AA129F00C73BEF /* most_forked@2x.png */; };
@@ -42,6 +46,10 @@
 		DC0A572E17AB5F71009EFD0D /* most_starred_and_forked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "most_starred_and_forked@2x.png"; sourceTree = "<group>"; };
 		DC1A996A17A854FE0066BD27 /* RMCustomCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RMCustomCell.h; sourceTree = "<group>"; };
 		DC1A996B17A854FE0066BD27 /* RMCustomCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RMCustomCell.m; sourceTree = "<group>"; };
+		DC473A7417AF000B009C54E6 /* iPhone Retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone Retina.png"; sourceTree = "<group>"; };
+		DC473A7517AF000B009C54E6 /* iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone.png; sourceTree = "<group>"; };
+		DC473A7A17AF0082009C54E6 /* gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gear.png; sourceTree = "<group>"; };
+		DC473A7B17AF0082009C54E6 /* gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gear@2x.png"; sourceTree = "<group>"; };
 		DC7120151799E58A00C3C81E /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		DC8A9E1417AA129F00C73BEF /* most_forked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = most_forked.png; sourceTree = "<group>"; };
 		DC8A9E1517AA129F00C73BEF /* most_forked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "most_forked@2x.png"; sourceTree = "<group>"; };
@@ -119,6 +127,10 @@
 		DC8A9E1317AA129F00C73BEF /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				DC473A7A17AF0082009C54E6 /* gear.png */,
+				DC473A7B17AF0082009C54E6 /* gear@2x.png */,
+				DC473A7417AF000B009C54E6 /* iPhone Retina.png */,
+				DC473A7517AF000B009C54E6 /* iPhone.png */,
 				DC0A572D17AB5F71009EFD0D /* most_starred_and_forked.png */,
 				DC0A572E17AB5F71009EFD0D /* most_starred_and_forked@2x.png */,
 				DC8A9E1417AA129F00C73BEF /* most_forked.png */,
@@ -230,6 +242,10 @@
 				DC8A9E1A17AA129F00C73BEF /* most_forked.png in Resources */,
 				DC0A573017AB5F71009EFD0D /* most_starred_and_forked@2x.png in Resources */,
 				DC8A9E1D17AA129F00C73BEF /* most_starred@2x.png in Resources */,
+				DC473A7817AF000B009C54E6 /* iPhone Retina.png in Resources */,
+				DC473A7917AF000B009C54E6 /* iPhone.png in Resources */,
+				DC473A7C17AF0082009C54E6 /* gear.png in Resources */,
+				DC473A7D17AF0082009C54E6 /* gear@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,7 +323,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Richard Burton (BL99KMXZQQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Richard Burton (BL99KMXZQQ)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -325,6 +342,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "2C21D4F6-8335-4D6B-8B2E-6429EA2CBEEC";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2C21D4F6-8335-4D6B-8B2E-6429EA2CBEEC";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -340,7 +359,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Richard Burton (BL99KMXZQQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Richard Burton (BL99KMXZQQ)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -351,6 +371,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "2C21D4F6-8335-4D6B-8B2E-6429EA2CBEEC";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2C21D4F6-8335-4D6B-8B2E-6429EA2CBEEC";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

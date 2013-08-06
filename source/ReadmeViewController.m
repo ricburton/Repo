@@ -22,7 +22,7 @@
     
     NSArray *versionParts = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
     BOOL modernStyle = (7 >= [[versionParts objectAtIndex:0] intValue]);
-    CGFloat barHeight = (modernStyle ? 60 : 45);
+    CGFloat barHeight = (modernStyle ? 45   : 45);
     UINavigationBar *bar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, barHeight)];
     self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, barHeight, self.view.frame.size.width,self.view.frame.size.height)];
     

@@ -2,8 +2,8 @@
 
 @implementation RMCustomCell
 
-@synthesize textLabel = _textLabel;
-@synthesize detailTextLabel = _detailTextLabel;//Do I need these?
+@synthesize repoTitle = _repoTitle;
+@synthesize repoDescription = _repoDescription;//Do I need these?
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -15,13 +15,13 @@
         
         [self addSubview:self.contestIcon];
         
-        self.detailTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(38, 25, self.frame.size.width - 43, 25)];
-        self.detailTextLabel.font = [UIFont fontWithName:@"Helvetica" size:13.0f];
-        [self addSubview:self.detailTextLabel];
+        self.repoDescription = [[UILabel alloc] initWithFrame:CGRectMake(38, 25, self.frame.size.width - 43, 25)];
+        self.repoDescription.font = [UIFont fontWithName:@"Helvetica" size:13.0f];
+        [self addSubview:self.repoDescription];
         
-        self.textLabel = [[UILabel alloc] initWithFrame:CGRectMake(38, 8, self.frame.size.width - 43, 25)];
-        self.textLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:16.0f];
-        [self addSubview:self.textLabel];
+        self.repoTitle = [[UILabel alloc] initWithFrame:CGRectMake(38, 8, self.frame.size.width - 43, 25)];
+        self.repoTitle.font = [UIFont fontWithName:@"Helvetica-Bold" size:16.0f];
+        [self addSubview:self.repoTitle];
         
     }
     return self;

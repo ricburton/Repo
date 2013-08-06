@@ -40,13 +40,39 @@
     label.text = @"README";
     [label sizeToFit];
     
-    langButton = [[UIBarButtonItem alloc]
-                                   initWithTitle:@"Settings"
-                                   style:UIBarButtonItemStyleDone
-                                   target:self
-                                   action:@selector(settings:)];
-    
+       langButton = [[UIBarButtonItem alloc]
+                                                          initWithTitle:@"Settings"
+                                                    style:UIBarButtonItemStyleDone
+                                                    target:self
+                                                       action:@selector(settings:)];
+////    UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithCustomView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yourimage2.jpg"]]]; 
+//    
+//    langButton = [[UIBarButtonItem alloc] initWithCustomView:[[UIImageView alloc]
+//                                                              initWithImage:[UIImage imageNamed:@"gear.png"]]];
+//    langButton.target = self;
+//    langButton.action = @selector(settings:);
+    // building the buttons
+//    UIFont  *buttonFont = [UIFont fontWithName:@"Noteworthy-Bold" size:17.0];
+//    UIColor *buttonColorDefault = [UIColor colorWithRed:90.0f/255.0f green:90.0f/255.0f blue:90.0f/255.0f alpha:1.0];
+//    UIColor *buttonColorHighlight = [UIColor colorWithRed:255.0f/255.0f green:255.0f/255.0f blue:255.0f/255.0f alpha:1.0];
+//
+//    UIImage *btn = [UIImage imageNamed:@"gear.png"];
+//    UIImage *btnh = [UIImage imageNamed:@"gear.png"];
+//    
+//    langButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [langButton addTarget:self action:@selector(settings:) forControlEvents:UIControlEventTouchUpInside];
+//    [langButton setTitle:@"Settings" forState:UIControlStateNormal];
+//    [langButton setFrame:CGRectMake(80.0, 120.0, 162.0, 42.0)];
+//    [langButton setBackgroundImage:btn forState:UIControlStateNormal];
+//    [langButton setBackgroundImage:btnh forState:UIControlStateHighlighted];
+//    
+//    [langButton.titleLabel setFont:buttonFont];
+//    [langButton setTitleColor:buttonColorDefault forState:UIControlStateNormal];
+//    [langButton setTitleColor:buttonColorHighlight forState:UIControlStateHighlighted];
+//    
+//    
     self.navigationItem.rightBarButtonItem = langButton;
+//    [self.navigationItem.rightBarButtonItem setImage:[UIImage imageNamed:@"gear.png"]];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorColor = [self getUIColorObjectFromHexString:@"#CCCCCC" alpha:1];
@@ -271,15 +297,15 @@
     if ([readmeURL isEqualToString: @"NOTHING"]) {
         NSLog(@"No stars or forks");
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.textLabel.text = @"No projects starred or forked.";
-        cell.detailTextLabel.text = @"Go give the language some love :)";
+        cell.repoTitle.text = @"No projects starred or forked.";
+        cell.repoDescription.text = @"Go give the language some love :)";
         
         return cell;
     } else if ([readmeURL isEqualToString: @"Readme link unavailable."]){
         return cell;
     } else {   
         NSString *readmeURLStrip = [readmeURL stringByReplacingOccurrencesOfString:@"https://github.com/" withString:@""];
-        NSRange range = [readmeURLStrip rangeOfString:@"/blob/"];//FIXME sometimes not a blob.
+        NSRange range = [readmeURLStrip rangeOfString:@"/blob/"];//FIXME sometimes not a blob. "https://github.com/mattlawer/MBSwitch/tree/master/README"
         NSString *repoTitleFull = [readmeURLStrip substringToIndex:range.location];
         NSString *repoTitle = [repoTitleFull stringByReplacingOccurrencesOfString:@"/" withString:@" / "];
 
@@ -305,10 +331,10 @@
         [attributedText setAttributes:subAttrs range:rangeSlash];
         
         cell.backgroundColor      = [self getUIColorObjectFromHexString:@"#FBFBFB" alpha:1];
-        [cell.textLabel setAttributedText:attributedText];
+        [cell.repoTitle setAttributedText:attributedText];
         
-        cell.detailTextLabel.text = readmeText;
-        cell.detailTextLabel.textColor = [self getUIColorObjectFromHexString:@"#555555" alpha:1];
+        cell.repoDescription.text = readmeText;
+        cell.repoDescription.textColor = [self getUIColorObjectFromHexString:@"#555555" alpha:1];
         NSLog(@"Contest string: %@",contest);
         if ([contest isEqualToString:@"most_forked_today"]) {
             cell.contestIcon.image    = [UIImage imageNamed:@"most_forked.png"];

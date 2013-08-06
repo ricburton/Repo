@@ -128,39 +128,28 @@
     return [[self.dataArray objectAtIndex:section] count];
 }
 
-//-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//    NSString *languageSection;
-//    if(section == 0){
-//         languageSection = @"Top Languages";
-//    } else if(section == 1){
-//         languageSection = @"All Languages";
-//    } else {
-//        return nil;
-//    }
-//    
-//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 0)];
-//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(9, 0, self.tableView.frame.size.width, 35)];
-//    [label setFont:[UIFont fontWithName:@"Helvetica-Bold" size:18]];
-//    [label setTextColor:[self getUIColorObjectFromHexString:@"#ffffff" alpha:1]];
-//    
-//    [label setText:languageSection];
-//    [view addSubview:label];
-//    
-//    [label setBackgroundColor:[self getUIColorObjectFromHexString:@"555555" alpha:1]];
-//    [view setBackgroundColor:[self getUIColorObjectFromHexString:@"555555" alpha:1]];
-//    return view;
-//}
-
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    NSString *languageSection;
     if(section == 0){
-        return @"Top Languages";
+         languageSection = @"Top Languages";
     } else if(section == 1){
-        return @"All Languages";
+         languageSection = @"All Languages";
     } else {
         return nil;
     }
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 0)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(9, 0, self.tableView.frame.size.width, 35)];
+    [label setFont:[UIFont fontWithName:@"Helvetica-Bold" size:18]];
+    [label setTextColor:[self getUIColorObjectFromHexString:@"#4E575B" alpha:1]];
+    
+    [label setText:languageSection];
+    [view addSubview:label];
+    
+    [label setBackgroundColor:[self getUIColorObjectFromHexString:@"E6EBED" alpha:1]];
+    [view setBackgroundColor:[self getUIColorObjectFromHexString:@"E6EBED" alpha:1]];
+    return view;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -186,11 +175,11 @@
     return cell;
 }
 
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//    CGFloat height = 40;
-//    return height;
-//}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    CGFloat height = 35;
+    return height;
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {

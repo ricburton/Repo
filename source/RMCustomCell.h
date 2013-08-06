@@ -2,8 +2,8 @@
 
 @interface RMCustomCell : UITableViewCell
 
-@property (nonatomic, strong) UILabel *textLabel;
-@property (nonatomic, strong) UILabel *detailTextLabel;
+@property (nonatomic, strong) UILabel *repoTitle;
+@property (nonatomic, strong) UILabel *repoDescription;
 @property (nonatomic, strong) UIImageView *contestIcon;
 
 @end
