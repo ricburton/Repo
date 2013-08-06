@@ -9,6 +9,6 @@
 #import <SystemConfiguration/SystemConfiguration.h>
 
 #import <AFNetworking/AFNetworking.h>
-#import <FlurrySDK/Flurry.h>
+#import <Mixpanel/Mixpanel.h>
 #import <UI7Kit/UI7Kit.h>
 #endif

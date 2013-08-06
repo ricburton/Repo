@@ -5,6 +5,7 @@
 #import "RMCustomCell.h"
 #import "MBProgressHUD.h"
 #import "Reachability.h"
+#import "Mixpanel.h"
 
 @interface RootViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -339,6 +340,12 @@
         ReadmeViewController *webView = [[ReadmeViewController alloc] init];
         webView.url = [NSURL URLWithString:readmeURL];
         webView.delegate = self;
+        
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        
+        [mixpanel track:@"readme_click" properties:@{
+         @"read": readmeURL
+         }];
         
         [self presentViewController:webView animated:YES completion:nil];
     }

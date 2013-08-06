@@ -1,6 +1,6 @@
+pod 'Mixpanel'
 pod 'Reachability'
 pod 'MBProgressHUD', '~> 0.7'
-pod 'FlurrySDK'
 pod 'AFNetworking'
 platform :ios, '6.0'
 pod 'UI7Kit'

@@ -1,14 +1,14 @@
-#import "FlurryKey.h"
+#import "MixpanelToken.h"
 #import "AppDelegate.h"
 #import "TableViewController.h"
 #import "RootViewController.h"
-#import "Flurry.h"
+#import "Mixpanel.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    if (flurryKey) [Flurry startSession:flurryKey];
+    [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     self.window.backgroundColor = [UIColor whiteColor];

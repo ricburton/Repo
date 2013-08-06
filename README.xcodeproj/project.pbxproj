@@ -24,7 +24,8 @@
 		DC473A9517B0BCC0009C54E6 /* remove@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC473A9317B0BCC0009C54E6 /* remove@2x.png */; };
 		DC473A9817B0C54C009C54E6 /* no_repos.png in Resources */ = {isa = PBXBuildFile; fileRef = DC473A9617B0C54C009C54E6 /* no_repos.png */; };
 		DC473A9917B0C54C009C54E6 /* no_repos@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC473A9717B0C54C009C54E6 /* no_repos@2x.png */; };
-		DC473A9B17B0CBAD009C54E6 /* FlurryKey.h in Sources */ = {isa = PBXBuildFile; fileRef = DC473A9A17B0CBAD009C54E6 /* FlurryKey.h */; };
+		DC473A9D17B0D48A009C54E6 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC473A9C17B0D48A009C54E6 /* AdSupport.framework */; };
+		DC473A9F17B0D496009C54E6 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC473A9E17B0D496009C54E6 /* CoreTelephony.framework */; };
 		DC7120161799E58A00C3C81E /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC7120151799E58A00C3C81E /* Media.xcassets */; };
 		DC8A9E1A17AA129F00C73BEF /* most_forked.png in Resources */ = {isa = PBXBuildFile; fileRef = DC8A9E1417AA129F00C73BEF /* most_forked.png */; };
 		DC8A9E1B17AA129F00C73BEF /* most_forked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC8A9E1517AA129F00C73BEF /* most_forked@2x.png */; };
@@ -63,7 +64,9 @@
 		DC473A9317B0BCC0009C54E6 /* remove@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "remove@2x.png"; sourceTree = "<group>"; };
 		DC473A9617B0C54C009C54E6 /* no_repos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = no_repos.png; sourceTree = "<group>"; };
 		DC473A9717B0C54C009C54E6 /* no_repos@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "no_repos@2x.png"; sourceTree = "<group>"; };
-		DC473A9A17B0CBAD009C54E6 /* FlurryKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryKey.h; sourceTree = "<group>"; };
+		DC473A9A17B0CBAD009C54E6 /* MixpanelToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixpanelToken.h; sourceTree = "<group>"; };
+		DC473A9C17B0D48A009C54E6 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		DC473A9E17B0D496009C54E6 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		DC7120151799E58A00C3C81E /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		DC8A9E1417AA129F00C73BEF /* most_forked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = most_forked.png; sourceTree = "<group>"; };
 		DC8A9E1517AA129F00C73BEF /* most_forked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "most_forked@2x.png"; sourceTree = "<group>"; };
@@ -93,6 +96,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC473A9F17B0D496009C54E6 /* CoreTelephony.framework in Frameworks */,
+				DC473A9D17B0D48A009C54E6 /* AdSupport.framework in Frameworks */,
 				DCFA473917A326DA00B5E4DA /* SystemConfiguration.framework in Frameworks */,
 				07DE688A158E8B5200798DBA /* UIKit.framework in Frameworks */,
 				07DE688C158E8B5200798DBA /* Foundation.framework in Frameworks */,
@@ -107,6 +112,8 @@
 		07DE687A158E8B5200798DBA = {
 			isa = PBXGroup;
 			children = (
+				DC473A9E17B0D496009C54E6 /* CoreTelephony.framework */,
+				DC473A9C17B0D48A009C54E6 /* AdSupport.framework */,
 				DC8A9E1317AA129F00C73BEF /* assets */,
 				ECC0D3E217A1CE0100016744 /* source */,
 				DCBED8DB1799DF2500BDA5AD /* README_app */,
@@ -187,7 +194,7 @@
 				ECC0D3EC17A1CE0100016744 /* ReadmeViewController.m */,
 				ECC0D3ED17A1CE0100016744 /* RootViewController.h */,
 				ECC0D3EE17A1CE0100016744 /* RootViewController.m */,
-				DC473A9A17B0CBAD009C54E6 /* FlurryKey.h */,
+				DC473A9A17B0CBAD009C54E6 /* MixpanelToken.h */,
 				DC1A996A17A854FE0066BD27 /* RMCustomCell.h */,
 				DC1A996B17A854FE0066BD27 /* RMCustomCell.m */,
 			);
@@ -316,7 +323,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC473A9B17B0CBAD009C54E6 /* FlurryKey.h in Sources */,
 				DC1A996C17A857ED0066BD27 /* RMCustomCell.m in Sources */,
 				ECC0D3EF17A1CE0100016744 /* AppDelegate.m in Sources */,
 				ECC0D3F017A1CE0100016744 /* TableViewCell.m in Sources */,
