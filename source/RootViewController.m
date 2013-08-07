@@ -157,7 +157,7 @@
     {
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"Someone broke the internet :(");
-            
+            [self.hud hide:YES];
             self.sad_hud = [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
             self.sad_hud.mode = MBProgressHUDModeText;
             self.sad_hud.animationType = MBProgressHUDAnimationZoomIn;
@@ -166,7 +166,7 @@
             self.tableView.allowsSelection = NO;
             self.navigationItem.rightBarButtonItem.enabled = NO;
             
-            [self.hud hide:YES];
+            
         });
     };
     
@@ -176,7 +176,7 @@
 
 - (void)settings:(id)sender
 {
-    [self.sad_hud hide:YES];
+    [self.hud hide:YES];
     TableViewController *langList = [[TableViewController alloc] initWithStyle:UITableViewStylePlain];
     UINavigationController *langTable = [[UINavigationController alloc] initWithRootViewController:langList];
     [self presentViewController:langTable animated:YES completion:nil];
@@ -284,19 +284,11 @@
         return cell;
     } else {
         NSURL *url = [NSURL URLWithString:readmeURL];
-        
-        NSLog(@"ComPOnents");
-        NSLog(@"components: %@", url.pathComponents[0]);
-//        
-//        NSString *readmeURLStrip = [readmeURL stringByReplacingOccurrencesOfString:@"https://github.com/" withString:@""];
-//        NSRange range = [readmeURLStrip rangeOfString:@"/blob/"];//FIXME sometimes not a blob. "https://github.com/mattlawer/MBSwitch/tree/master/README"
-//        NSString *repoTitleFull = [readmeURLStrip substringToIndex:range.location];
-//        NSString *repoTitle = [repoTitleFull stringByReplacingOccurrencesOfString:@"/" withString:@" / "];
+
         NSString *githubUser   = url.pathComponents[1];
         NSString *repoTitle    = url.pathComponents[2];
         NSArray *directoryParts = @[githubUser, repoTitle];
         NSString *repoDirectory = [directoryParts componentsJoinedByString:@" / "];
-//        NSString *repoLocation = @"%@ / %@", githubUser, repoTitle;
 
         const CGFloat fontSize = 13;
         UIFont *boldFont = [UIFont boldSystemFontOfSize:fontSize];
@@ -338,7 +330,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.sad_hud hide:YES];
+    [self.hud hide:YES];
     NSDictionary *dictionary = [self.dataArray objectAtIndex:indexPath.section];
     NSArray *readmeURLArray = [dictionary objectForKey:@"readme_url"];
     NSString *readmeURL = [readmeURLArray objectAtIndex:indexPath.row];
@@ -354,7 +346,7 @@
         [mixpanel track:@"readme_click" properties:@{
          @"read": readmeURL
          }];
-        
+        [self.sad_hud hide:YES];
         [self presentViewController:webView animated:YES completion:nil];
     }
 }
