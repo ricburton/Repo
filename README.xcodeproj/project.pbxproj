@@ -39,13 +39,13 @@
 		ECC0D3F017A1CE0100016744 /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0D3E617A1CE0100016744 /* TableViewCell.m */; };
 		ECC0D3F117A1CE0100016744 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0D3E817A1CE0100016744 /* TableViewController.m */; };
 		ECC0D3F217A1CE0100016744 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0D3E917A1CE0100016744 /* main.m */; };
-		ECC0D3F317A1CE0100016744 /* ReadmeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0D3EC17A1CE0100016744 /* ReadmeViewController.m */; };
+		ECC0D3F317A1CE0100016744 /* RepoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0D3EC17A1CE0100016744 /* RepoViewController.m */; };
 		ECC0D3F417A1CE0100016744 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0D3EE17A1CE0100016744 /* RootViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		012FA78F3DE04984A758D1D0 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
-		07DE6885158E8B5200798DBA /* README.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = README.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		07DE6885158E8B5200798DBA /* Repo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Repo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07DE6889158E8B5200798DBA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		07DE688B158E8B5200798DBA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		07DE688D158E8B5200798DBA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -85,8 +85,8 @@
 		ECC0D3E817A1CE0100016744 /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
 		ECC0D3E917A1CE0100016744 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		ECC0D3EA17A1CE0100016744 /* README-prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "README-prefix.pch"; sourceTree = "<group>"; };
-		ECC0D3EB17A1CE0100016744 /* ReadmeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReadmeViewController.h; sourceTree = "<group>"; };
-		ECC0D3EC17A1CE0100016744 /* ReadmeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = ReadmeViewController.m; sourceTree = "<group>"; };
+		ECC0D3EB17A1CE0100016744 /* RepoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepoViewController.h; sourceTree = "<group>"; };
+		ECC0D3EC17A1CE0100016744 /* RepoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = RepoViewController.m; sourceTree = "<group>"; };
 		ECC0D3ED17A1CE0100016744 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		ECC0D3EE17A1CE0100016744 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -128,7 +128,7 @@
 		07DE6886158E8B5200798DBA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				07DE6885158E8B5200798DBA /* README.app */,
+				07DE6885158E8B5200798DBA /* Repo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -190,8 +190,8 @@
 				ECC0D3E817A1CE0100016744 /* TableViewController.m */,
 				ECC0D3E917A1CE0100016744 /* main.m */,
 				ECC0D3EA17A1CE0100016744 /* README-prefix.pch */,
-				ECC0D3EB17A1CE0100016744 /* ReadmeViewController.h */,
-				ECC0D3EC17A1CE0100016744 /* ReadmeViewController.m */,
+				ECC0D3EB17A1CE0100016744 /* RepoViewController.h */,
+				ECC0D3EC17A1CE0100016744 /* RepoViewController.m */,
 				ECC0D3ED17A1CE0100016744 /* RootViewController.h */,
 				ECC0D3EE17A1CE0100016744 /* RootViewController.m */,
 				DC473A9A17B0CBAD009C54E6 /* MixpanelToken.h */,
@@ -220,7 +220,7 @@
 			);
 			name = README;
 			productName = CRMultiRowSelector;
-			productReference = 07DE6885158E8B5200798DBA /* README.app */;
+			productReference = 07DE6885158E8B5200798DBA /* Repo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -328,7 +328,7 @@
 				ECC0D3F017A1CE0100016744 /* TableViewCell.m in Sources */,
 				ECC0D3F117A1CE0100016744 /* TableViewController.m in Sources */,
 				ECC0D3F217A1CE0100016744 /* main.m in Sources */,
-				ECC0D3F317A1CE0100016744 /* ReadmeViewController.m in Sources */,
+				ECC0D3F317A1CE0100016744 /* RepoViewController.m in Sources */,
 				ECC0D3F417A1CE0100016744 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -357,8 +357,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Richard Burton (Y2V76WXBUQ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Richard Burton (Y2V76WXBUQ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Richard Burton (BL99KMXZQQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Richard Burton (BL99KMXZQQ)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -376,8 +376,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "58CE318A-B8DD-4115-A68E-E3875DB84BB7";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "58CE318A-B8DD-4115-A68E-E3875DB84BB7";
+				PROVISIONING_PROFILE = "43EB2BFB-DFB7-44B2-9F4C-C5323E37DDED";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "43EB2BFB-DFB7-44B2-9F4C-C5323E37DDED";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -393,7 +393,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Richard Burton (Y2V76WXBUQ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Richard Burton (BL99KMXZQQ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Richard Burton (Y2V76WXBUQ)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -405,7 +405,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "58CE318A-B8DD-4115-A68E-E3875DB84BB7";
+				PROVISIONING_PROFILE = "43EB2BFB-DFB7-44B2-9F4C-C5323E37DDED";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "58CE318A-B8DD-4115-A68E-E3875DB84BB7";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -419,13 +419,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Richard Burton (Y2V76WXBUQ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Richard Burton (BL99KMXZQQ)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "source/README-Prefix.pch";
 				INFOPLIST_FILE = "README_app/README-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				PRODUCT_NAME = README;
-				PROVISIONING_PROFILE = "58CE318A-B8DD-4115-A68E-E3875DB84BB7";
+				PRODUCT_NAME = Repo;
+				PROVISIONING_PROFILE = "DC4BE214-A96D-4DD8-89F0-5C6CE29DD358";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -437,15 +437,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Richard Burton (Y2V76WXBUQ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Richard Burton (Y2V76WXBUQ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Richard Burton (BL99KMXZQQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Richard Burton (BL99KMXZQQ)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "source/README-Prefix.pch";
 				INFOPLIST_FILE = "README_app/README-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				PRODUCT_NAME = README;
-				PROVISIONING_PROFILE = "58CE318A-B8DD-4115-A68E-E3875DB84BB7";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "58CE318A-B8DD-4115-A68E-E3875DB84BB7";
+				PRODUCT_NAME = Repo;
+				PROVISIONING_PROFILE = "DC4BE214-A96D-4DD8-89F0-5C6CE29DD358";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DC4BE214-A96D-4DD8-89F0-5C6CE29DD358";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

@@ -1,7 +1,7 @@
 #import "RootViewController.h"
 #import "TableViewController.h"
 #import "AFNetworking.h"
-#import "ReadmeViewController.h"
+#import "RepoViewController.h"
 #import "RMCustomCell.h"
 #import "MBProgressHUD.h"
 #import "Reachability.h"
@@ -36,7 +36,7 @@
     label.font = [UIFont fontWithName:@"Helvetica-Bold" size:18.0];
     label.textColor = [self getUIColorObjectFromHexString:@"#423F37" alpha:1];
     self.navigationItem.titleView = label;
-    label.text = @"README";
+    label.text = @"Repo";
     [label sizeToFit];
     
     UIImage *cogImg = [UIImage imageNamed:@"cog.png"];
@@ -54,9 +54,9 @@
     self.tableView.separatorColor = [self getUIColorObjectFromHexString:@"#DDDDDD" alpha:1];
 }
 
-- (void)addItemViewController:(ReadmeViewController *)controller didFinishEnteringItem:(BOOL)item
+- (void)addItemViewController:(RepoViewController *)controller didFinishEnteringItem:(BOOL)item
 {
-    NSLog(@"This was returned from the ReadmeViewController %hhd",item);
+    NSLog(@"This was returned from the RepoViewController %hhd",item);
     self.shouldReload = item;
 }
 
@@ -337,7 +337,7 @@
     
     if ([readmeURL isEqualToString: @"NOTHING"]) {
     } else {
-        ReadmeViewController *webView = [[ReadmeViewController alloc] init];
+        RepoViewController *webView = [[RepoViewController alloc] init];
         webView.url = [NSURL URLWithString:readmeURL];
         webView.delegate = self;
         

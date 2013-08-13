@@ -1,16 +1,16 @@
-#import "ReadmeViewController.h"
+#import "RepoViewController.h"
 #import "MBProgressHUD.h"
 #import "RootViewController.h"
 #import "Reachability.h"
 
-@interface ReadmeViewController () <UIWebViewDelegate>
+@interface RepoViewController () <UIWebViewDelegate>
 
 @property (strong, nonatomic) UIWebView *webView;
 @property (nonatomic, retain) UIActivityIndicatorView *activityIndicatorView;
 
 @end
 
-@implementation ReadmeViewController
+@implementation RepoViewController
 {
     MBProgressHUD *hud;
 }

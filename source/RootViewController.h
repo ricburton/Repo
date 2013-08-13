@@ -1,9 +1,9 @@
 #import <UIKit/UIKit.h>
 #import "TableViewController.h"
-#import "ReadmeViewController.h"
+#import "RepoViewController.h"
 #import "Reachability.h"
 
-@interface RootViewController : UITableViewController <ReadmeViewControllerDelegate>
+@interface RootViewController : UITableViewController <RepoViewControllerDelegate>
 {
      Reachability *internetReachableFoo;
 }
