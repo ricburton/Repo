@@ -1,3 +1,4 @@
+pod 'NXOAuth2Client', '~> 1.2.2'
 pod 'Mixpanel'
 pod 'Reachability'
 pod 'MBProgressHUD', '~> 0.7'

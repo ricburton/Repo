@@ -2,6 +2,8 @@
 #import "MBProgressHUD.h"
 #import "RootViewController.h"
 #import "Reachability.h"
+#import "NXOAuth2.h"
+
 
 @interface RepoViewController () <UIWebViewDelegate>
 
@@ -17,7 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     [self.delegate addItemViewController:self didFinishEnteringItem:NO];
     
     NSArray *versionParts = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
@@ -53,19 +55,26 @@
     [self.webView loadRequest:request];
 }
 
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request
+ navigationType:(UIWebViewNavigationType)navigationType
+{
+    NSLog(@"NSURLRequest = %@", [[request URL] absoluteString]);
+}
+
+- (void)webView:(UIWebView *)wv didFailLoadWithError:(NSError *)error
+{
+    [hud hide: YES];
+}
+
 - (void)remove:(id)sender
 {
     [self dismissViewControllerAnimated:TRUE completion:nil];
     [self.webView stopLoading];
     self.webView.delegate = nil;
 }
-    
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
-{
-    [hud hide: YES];
-}
 
-- (void)webViewDidStartLoad:(UIWebView *)webView {
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }
 

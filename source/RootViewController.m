@@ -5,6 +5,7 @@
 #import "RMCustomCell.h"
 #import "MBProgressHUD.h"
 #import "Reachability.h"
+#import "NXOAuth2.h"
 
 @interface RootViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -30,7 +31,43 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+       
+//    [[NXOAuth2AccountStore sharedStore] requestAccessToAccountWithType:@"Repo"
+//                                   withPreparedAuthorizationURLHandler:^(NSURL *preparedURL){
+//                                       RepoViewController *webView = [[RepoViewController alloc] init];
+//                                       [[UIApplication sharedApplication] openURL:preparedURL];
+//
+//        }];
     
+    [[NSNotificationCenter defaultCenter] addObserverForName:NXOAuth2AccountStoreAccountsDidChangeNotification
+                                                      object:[NXOAuth2AccountStore sharedStore]
+                                                       queue:nil
+                                                  usingBlock:^(NSNotification *aNotification){
+                                                      // Update your UI
+                                                      
+                                                      NSLog(@"Sucess");
+//                                                      webviewer.alpha = 0.0;
+                                                  }];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:NXOAuth2AccountStoreDidFailToRequestAccessNotification
+                                                      object:[NXOAuth2AccountStore sharedStore]
+                                                       queue:nil
+                                                  usingBlock:^(NSNotification *aNotification){
+                                                      NSError *error = [aNotification.userInfo objectForKey:NXOAuth2AccountStoreErrorKey];
+                                                      // Do something with the error
+                                                      
+                                                      NSLog(@"Error: %@", error);
+                                                  }];
+    
+    [[NXOAuth2AccountStore sharedStore] requestAccessToAccountWithType:@"Repo"
+                                   withPreparedAuthorizationURLHandler:^(NSURL *preparedURL){
+                                       // Open a web view or similar
+                                       
+                                       [[UIApplication sharedApplication] openURL:preparedURL];
+                                       
+                                   }];
+
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
     label.backgroundColor = [UIColor clearColor];
     label.font = [UIFont fontWithName:@"Helvetica-Bold" size:18.0];
@@ -44,15 +81,19 @@
     UIButton *settingsBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [settingsBtn setBackgroundImage:cogImg forState:UIControlStateNormal];
     settingsBtn.frame = CGRectMake(0,0,33,19);
-
+    
     [settingsBtn addTarget:self action:@selector(settings:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *settingsBarBtn = [[UIBarButtonItem alloc] initWithCustomView:settingsBtn];
-
+    
     self.navigationItem.rightBarButtonItem = settingsBarBtn;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorColor = [self getUIColorObjectFromHexString:@"#DDDDDD" alpha:1];
+        
+    
 }
+
+
 
 - (void)addItemViewController:(RepoViewController *)controller didFinishEnteringItem:(BOOL)item
 {
@@ -62,6 +103,9 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    NSLog(@"Account data");
+ 
+
     [self testInternetConnection];
 }
 
@@ -75,6 +119,10 @@
             
             NSLog(@"Yayyy, we have the interwebs!");
             
+            for (NXOAuth2Account *account in [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"Repo"]) {
+                NSLog(@"Account data %@", account.userData);
+            };
+            
             [self.sad_hud hide:YES];
             self.tableView.allowsSelection = YES;
             self.navigationItem.rightBarButtonItem.enabled = YES;
@@ -86,7 +134,12 @@
             NSLog(@"Reload?: %hhd", self.shouldReload);
             self.arrayOfLangs = [NSMutableArray arrayWithContentsOfFile:self.filePathLangs];
             if (self.arrayOfLangs.count == 0){
-                [self settings:nil];
+//                [self settings:nil];
+//                FIXME: Add some kind of notification here
+                
+                [self.tableView reloadData];
+
+             
             } else if (self.shouldReload == NO ) {
                 NSLog(@"Don't reload!");
             } else {
