@@ -33,6 +33,38 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [[NSNotificationCenter defaultCenter] addObserverForName:NXOAuth2AccountStoreAccountsDidChangeNotification
+                                                      object:[NXOAuth2AccountStore sharedStore]
+                                                       queue:nil
+                                                  usingBlock:^(NSNotification *aNotification){
+                                                      // Update your UI
+                                                      
+                                                      NSLog(@"Sucess");
+                                                      //                                                      webviewer.alpha = 0.0;
+                                                  }];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:NXOAuth2AccountStoreDidFailToRequestAccessNotification
+                                                      object:[NXOAuth2AccountStore sharedStore]
+                                                       queue:nil
+                                                  usingBlock:^(NSNotification *aNotification){
+                                                      NSError *error = [aNotification.userInfo objectForKey:NXOAuth2AccountStoreErrorKey];
+                                                      // Do something with the error
+                                                      
+                                                      NSLog(@"Error: %@", error);
+                                                  }];
+    
+    
+    [[NXOAuth2AccountStore sharedStore] requestAccessToAccountWithType:@"Repo"
+                                   withPreparedAuthorizationURLHandler:^(NSURL *preparedURL){
+                                       // Open a web view or similar
+                                       
+                                       [[UIApplication sharedApplication] openURL:preparedURL];
+                                       
+                                   }];
+    
+    
+    
     [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
