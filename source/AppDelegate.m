@@ -1,4 +1,4 @@
-#import "MixpanelToken.h"
+#import "Tokens.h"
 #import "AppDelegate.h"
 #import "TableViewController.h"
 #import "RootViewController.h"
