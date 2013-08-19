@@ -64,7 +64,6 @@
 		DC473A9317B0BCC0009C54E6 /* remove@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "remove@2x.png"; sourceTree = "<group>"; };
 		DC473A9617B0C54C009C54E6 /* no_repos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = no_repos.png; sourceTree = "<group>"; };
 		DC473A9717B0C54C009C54E6 /* no_repos@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "no_repos@2x.png"; sourceTree = "<group>"; };
-		DC473A9A17B0CBAD009C54E6 /* MixpanelToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixpanelToken.h; sourceTree = "<group>"; };
 		DC473A9C17B0D48A009C54E6 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		DC473A9E17B0D496009C54E6 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		DC7120151799E58A00C3C81E /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
@@ -194,7 +193,6 @@
 				ECC0D3EC17A1CE0100016744 /* RepoViewController.m */,
 				ECC0D3ED17A1CE0100016744 /* RootViewController.h */,
 				ECC0D3EE17A1CE0100016744 /* RootViewController.m */,
-				DC473A9A17B0CBAD009C54E6 /* MixpanelToken.h */,
 				DC1A996A17A854FE0066BD27 /* RMCustomCell.h */,
 				DC1A996B17A854FE0066BD27 /* RMCustomCell.m */,
 			);
