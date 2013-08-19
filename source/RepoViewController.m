@@ -33,6 +33,12 @@
     hud.labelText = @"Loading";
     [self.view addSubview:bar];
     
+    for (id subView in [self.view subviews]) {
+        if ([subView respondsToSelector:@selector(flashScrollIndicators)]) {
+            [subView flashScrollIndicators];
+        }
+    }
+    
     UIImage *removeImg = [UIImage imageNamed:@"remove.png"];
     
     UIButton *removeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
