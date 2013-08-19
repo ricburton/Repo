@@ -1,8 +1,9 @@
-#import "Tokens.h"
 #import "AppDelegate.h"
 #import "TableViewController.h"
 #import "RootViewController.h"
 #import "Mixpanel.h"
+#import "NSURL+OAuthKit.h"
+#import "Tokens.h"
 
 @implementation AppDelegate
 
@@ -21,6 +22,11 @@
     [self.window setRootViewController:navController];
     [self.window makeKeyAndVisible];
     
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"repo" object:self userInfo:[url queryParams]];
     return YES;
 }
 

@@ -14,6 +14,10 @@
 		DC0A572F17AB5F71009EFD0D /* most_starred_and_forked.png in Resources */ = {isa = PBXBuildFile; fileRef = DC0A572D17AB5F71009EFD0D /* most_starred_and_forked.png */; };
 		DC0A573017AB5F71009EFD0D /* most_starred_and_forked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC0A572E17AB5F71009EFD0D /* most_starred_and_forked@2x.png */; };
 		DC1A996C17A857ED0066BD27 /* RMCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1A996B17A854FE0066BD27 /* RMCustomCell.m */; };
+		DC26350217C2BDB2008E0B31 /* OAuthKit.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2634FB17C2BDB2008E0B31 /* OAuthKit.m */; };
+		DC26350317C2BDB2008E0B31 /* GitHubOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2634FD17C2BDB2008E0B31 /* GitHubOAuth.m */; };
+		DC26350417C2BDB2008E0B31 /* NSURL+OAuthKit.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2634FF17C2BDB2008E0B31 /* NSURL+OAuthKit.m */; };
+		DC26350517C2BDB2008E0B31 /* NSString+OAuthkit.m in Sources */ = {isa = PBXBuildFile; fileRef = DC26350117C2BDB2008E0B31 /* NSString+OAuthkit.m */; };
 		DC473A7817AF000B009C54E6 /* iPhone Retina.png in Resources */ = {isa = PBXBuildFile; fileRef = DC473A7417AF000B009C54E6 /* iPhone Retina.png */; };
 		DC473A7917AF000B009C54E6 /* iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = DC473A7517AF000B009C54E6 /* iPhone.png */; };
 		DC473A8817B0B453009C54E6 /* cog.png in Resources */ = {isa = PBXBuildFile; fileRef = DC473A8617B0B453009C54E6 /* cog.png */; };
@@ -54,6 +58,15 @@
 		DC0A572E17AB5F71009EFD0D /* most_starred_and_forked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "most_starred_and_forked@2x.png"; sourceTree = "<group>"; };
 		DC1A996A17A854FE0066BD27 /* RMCustomCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RMCustomCell.h; sourceTree = "<group>"; };
 		DC1A996B17A854FE0066BD27 /* RMCustomCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RMCustomCell.m; sourceTree = "<group>"; };
+		DC2634FA17C2BDB2008E0B31 /* OAuthKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAuthKit.h; sourceTree = "<group>"; };
+		DC2634FB17C2BDB2008E0B31 /* OAuthKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAuthKit.m; sourceTree = "<group>"; };
+		DC2634FC17C2BDB2008E0B31 /* GitHubOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GitHubOAuth.h; sourceTree = "<group>"; };
+		DC2634FD17C2BDB2008E0B31 /* GitHubOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GitHubOAuth.m; sourceTree = "<group>"; };
+		DC2634FE17C2BDB2008E0B31 /* NSURL+OAuthKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+OAuthKit.h"; sourceTree = "<group>"; };
+		DC2634FF17C2BDB2008E0B31 /* NSURL+OAuthKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+OAuthKit.m"; sourceTree = "<group>"; };
+		DC26350017C2BDB2008E0B31 /* NSString+OAuthkit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+OAuthkit.h"; sourceTree = "<group>"; };
+		DC26350117C2BDB2008E0B31 /* NSString+OAuthkit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+OAuthkit.m"; sourceTree = "<group>"; };
+		DC26350717C2BEA7008E0B31 /* Tokens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tokens.h; sourceTree = "<group>"; };
 		DC473A7417AF000B009C54E6 /* iPhone Retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone Retina.png"; sourceTree = "<group>"; };
 		DC473A7517AF000B009C54E6 /* iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone.png; sourceTree = "<group>"; };
 		DC473A8617B0B453009C54E6 /* cog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cog.png; sourceTree = "<group>"; };
@@ -144,6 +157,21 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		DC26350617C2BDBC008E0B31 /* OAuthKit */ = {
+			isa = PBXGroup;
+			children = (
+				DC2634FA17C2BDB2008E0B31 /* OAuthKit.h */,
+				DC2634FB17C2BDB2008E0B31 /* OAuthKit.m */,
+				DC2634FC17C2BDB2008E0B31 /* GitHubOAuth.h */,
+				DC2634FD17C2BDB2008E0B31 /* GitHubOAuth.m */,
+				DC2634FE17C2BDB2008E0B31 /* NSURL+OAuthKit.h */,
+				DC2634FF17C2BDB2008E0B31 /* NSURL+OAuthKit.m */,
+				DC26350017C2BDB2008E0B31 /* NSString+OAuthkit.h */,
+				DC26350117C2BDB2008E0B31 /* NSString+OAuthkit.m */,
+			);
+			name = OAuthKit;
+			sourceTree = "<group>";
+		};
 		DC8A9E1317AA129F00C73BEF /* assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -181,6 +209,8 @@
 		ECC0D3E217A1CE0100016744 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				DC26350717C2BEA7008E0B31 /* Tokens.h */,
+				DC26350617C2BDBC008E0B31 /* OAuthKit */,
 				ECC0D3E317A1CE0100016744 /* AppDelegate.h */,
 				ECC0D3E417A1CE0100016744 /* AppDelegate.m */,
 				ECC0D3E517A1CE0100016744 /* TableViewCell.h */,
@@ -328,6 +358,10 @@
 				ECC0D3F217A1CE0100016744 /* main.m in Sources */,
 				ECC0D3F317A1CE0100016744 /* RepoViewController.m in Sources */,
 				ECC0D3F417A1CE0100016744 /* RootViewController.m in Sources */,
+				DC26350217C2BDB2008E0B31 /* OAuthKit.m in Sources */,
+				DC26350317C2BDB2008E0B31 /* GitHubOAuth.m in Sources */,
+				DC26350417C2BDB2008E0B31 /* NSURL+OAuthKit.m in Sources */,
+				DC26350517C2BDB2008E0B31 /* NSString+OAuthkit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

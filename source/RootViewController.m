@@ -1,10 +1,12 @@
-#import "RootViewController.h"
+    #import "RootViewController.h"
 #import "TableViewController.h"
 #import "AFNetworking.h"
 #import "RepoViewController.h"
 #import "RMCustomCell.h"
 #import "MBProgressHUD.h"
 #import "Reachability.h"
+#import "OctoKit.h"
+#import "GithubOAuth.h"
 
 @interface RootViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -47,12 +49,48 @@
 
     [settingsBtn addTarget:self action:@selector(settings:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *settingsBarBtn = [[UIBarButtonItem alloc] initWithCustomView:settingsBtn];
+    
+    UIBarButtonItem *loginBarBtn = [[UIBarButtonItem alloc] initWithTitle:@"Login" style:UIBarButtonItemStylePlain target:self action:@selector(login:)];
 
     self.navigationItem.rightBarButtonItem = settingsBarBtn;
+    self.navigationItem.leftBarButtonItem = loginBarBtn;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorColor = [self getUIColorObjectFromHexString:@"#DDDDDD" alpha:1];
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"repo" object:nil queue:nil usingBlock:^(NSNotification *event) {
+        NSString *code = [[event userInfo] objectForKey:@"code"];
+        [self receiveCode:code];
+        NSLog(@"OAuthCode = %@",code);
+        NSLog(@"Received the code!");
+    }];
 }
+
+- (void) receiveCode:(NSString*)code {
+    if ( !code ) {
+        NSLog(@"Code issue");
+        return;
+    };
+    
+    [[GitHubOAuth sharedClient] requestAccessToken:code completionHandler:^(NSString *token, AFHTTPRequestOperation *operation, NSError *error) {
+        [self receiveToken:token];
+    }];
+}
+
+- (void) receiveToken:(NSString*)token {
+    NSLog(@"Got token %@", token);
+    
+    OCTClient *client = [[OCTClient alloc] initWithServer:OCTServer.dotComServer];
+    [client setDefaultHeader:@"Authorization" value:[NSString stringWithFormat:@"Bearer %@", token]];
+    
+    [client putPath:@"/user/starred/Wolfr/clank" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Starred successfully");
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+}
+
 
 - (void)addItemViewController:(RepoViewController *)controller didFinishEnteringItem:(BOOL)item
 {
@@ -181,6 +219,11 @@
     UINavigationController *langTable = [[UINavigationController alloc] initWithRootViewController:langList];
     [self presentViewController:langTable animated:YES completion:nil];
     self.shouldReload = YES;
+}
+
+- (void)login:(id)sender
+{
+    [[GitHubOAuth sharedClient] authorizeWithParams:@{@"scope": @"public_repo"}];
 }
 
 - (unsigned int)intFromHexString:(NSString *)hexStr
