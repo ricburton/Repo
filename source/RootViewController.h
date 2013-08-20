@@ -8,4 +8,5 @@
      Reachability *internetReachableFoo;
 }
 @property (nonatomic) BOOL shouldReload;
+@property (nonatomic) NSString *keychainToken;
 @end

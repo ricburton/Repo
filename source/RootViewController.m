@@ -1,4 +1,4 @@
-    #import "RootViewController.h"
+#import "RootViewController.h"
 #import "TableViewController.h"
 #import "AFNetworking.h"
 #import "RepoViewController.h"
@@ -7,6 +7,7 @@
 #import "Reachability.h"
 #import "OctoKit.h"
 #import "GithubOAuth.h"
+#import "RFKeychain.h"
 
 @interface RootViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -27,6 +28,7 @@
 @implementation RootViewController
 {
     AFJSONRequestOperation *operation;
+    UIBarButtonItem *loginBarBtn;
 }
 
 - (void)viewDidLoad
@@ -50,10 +52,8 @@
     [settingsBtn addTarget:self action:@selector(settings:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *settingsBarBtn = [[UIBarButtonItem alloc] initWithCustomView:settingsBtn];
     
-    UIBarButtonItem *loginBarBtn = [[UIBarButtonItem alloc] initWithTitle:@"Login" style:UIBarButtonItemStylePlain target:self action:@selector(login:)];
-
     self.navigationItem.rightBarButtonItem = settingsBarBtn;
-    self.navigationItem.leftBarButtonItem = loginBarBtn;
+
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorColor = [self getUIColorObjectFromHexString:@"#DDDDDD" alpha:1];
@@ -64,6 +64,9 @@
         NSLog(@"OAuthCode = %@",code);
         NSLog(@"Received the code!");
     }];
+    
+//    //testing delete method.
+//    [RFKeychain deletePasswordForAccount:@"GitHub" service:@"Repo"];
 }
 
 - (void) receiveCode:(NSString*)code {
@@ -73,24 +76,67 @@
     };
     
     [[GitHubOAuth sharedClient] requestAccessToken:code completionHandler:^(NSString *token, AFHTTPRequestOperation *operation, NSError *error) {
-        [self receiveToken:token];
+//        [self receiveToken:token];
+        NSLog(@"Got token %@", token);
+        
+        [RFKeychain setPassword:token account:@"GitHub" service:@"Repo"];
+        [self createClient:token];
     }];
+    
 }
 
-- (void) receiveToken:(NSString*)token {
-    NSLog(@"Got token %@", token);
-    
+- (void) createClient:(NSString *)token {
     OCTClient *client = [[OCTClient alloc] initWithServer:OCTServer.dotComServer];
     [client setDefaultHeader:@"Authorization" value:[NSString stringWithFormat:@"Bearer %@", token]];
+}
+
+- (void) checkSkies {
     
-    [client putPath:@"/user/starred/Wolfr/clank" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+}
+
+- (void) star:(NSString *)repository client:(OCTClient *)client {
+    //PUT /user/starred/:owner/:repo
+    NSString *path = [@"/user/starred/%@" stringByAppendingString:repository];
+    [client putPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"Starred successfully");
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+        NSLog(@"Unsuccessful stargazing");
     }];
 }
 
+- (void) unstar:(NSString *)repository client:(OCTClient *)client {
+    //DELETE /user/starred/:owner/:repo
+    NSString *path = [@"/user/starred/%@" stringByAppendingString:repository];
+    [client deletePath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Unstarred successfully");
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Unsuccessful unstarring");
+    }];
+}
+
+- (void) gazingRepos:(OCTClient *)client completionHandler:(void (^)(id))handler  {
+    [client getPath:@"/user/starred" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        handler(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Gazing request failed.");
+    }];
+}
+
+//    NSLog(@"Unsuccessful unstarring");
+
+//    switch (status) {
+//        case 204:
+//            
+//            break;
+//            
+//        case 404:
+//            break;
+//    }
+//    if responseObject
+    
+//}
+
+//GET /user/starred
 
 - (void)addItemViewController:(RepoViewController *)controller didFinishEnteringItem:(BOOL)item
 {
@@ -101,6 +147,18 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [self testInternetConnection];
+    
+    //See if they're authorized
+    self.keychainToken = [RFKeychain passwordForAccount:@"GitHub" service:@"Repo"];
+    
+    if (self.keychainToken) {
+        NSLog(@"The user is authorized.");
+        NSLog(@"The token is: %@", self.keychainToken);
+        loginBarBtn = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logout:)];
+    } else {
+        loginBarBtn = [[UIBarButtonItem alloc] initWithTitle:@"Login" style:UIBarButtonItemStylePlain target:self action:@selector(login:)];
+    }
+    self.navigationItem.leftBarButtonItem = loginBarBtn;
 }
 
 - (void)testInternetConnection
@@ -226,6 +284,12 @@
     [[GitHubOAuth sharedClient] authorizeWithParams:@{@"scope": @"public_repo"}];
 }
 
+- (void)logout:(id)sender
+{
+    //TODO Log out
+    //    [[GitHubOAuth sharedClient] authorizeWithParams:@{@"scope": @"public_repo"}];
+}
+
 - (unsigned int)intFromHexString:(NSString *)hexStr
 {
     unsigned int hexInt = 0;
@@ -256,7 +320,7 @@
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
+{//TODO constants here
     NSDictionary *colorDic = @{@"Arduino":@"#bd79d1",@"Java":@"#b07219",@"VHDL":@"#543978",@"Scala":@"#7dd3b0",@"Emacs Lisp":@"#c065db",@"Delphi":@"#b0ce4e",@"Ada":@"#02f88c",@"VimL":@"#199c4b",@"Perl":@"#0298c3",@"Lua":@"#fa1fa1",@"Rebol":@"#358a5b",@"Verilog":@"#848bf3",@"Factor":@"#636746",@"Ioke":@"#078193",@"R":@"#198ce7",@"Erlang":@"#949e0e",@"Nu":@"#c9df40",@"AutoHotkey":@"#6594b9",@"Clojure":@"#db5855",@"Shell":@"#5861ce",@"Assembly":@"#a67219",@"Parrot":@"#f3ca0a",@"C#":@"#5a25a2",@"Turing":@"#45f715",@"AppleScript":@"#3581ba",@"Eiffel":@"#946d57",@"Common%20Lisp":@"#3fb68b",@"Dart":@"#cccccc",@"SuperCollider":@"#46390b",@"CoffeeScript":@"#244776",@"XQuery":@"#2700e2",@"Haskell":@"#29b544",@"Racket":@"#ae17ff",@"Elixir":@"#6e4a7e",@"HaXe":@"#346d51",@"Ruby":@"#701516",@"Self":@"#0579aa",@"Fantom":@"#dbded5",@"Groovy":@"#e69f56",@"C":@"#555",@"JavaScript":@"#f15501",@"D":@"#fcd46d",@"ooc":@"#b0b77e",@"C++":@"#f34b7d",@"Dylan":@"#3ebc27",@"Nimrod":@"#37775b",@"Standard ML":@"#dc566d",@"Objective-C":@"#438eff",@"Nemerle":@"#0d3c6e",@"Mirah":@"#c7a938",@"Boo":@"#d4bec1",@"Objective-J":@"#ff0c5a",@"Rust":@"#dea584",@"Prolog":@"#74283c",@"Ecl":@"#8a1267",@"Gosu":@"#82937f",@"FORTRAN":@"#4d41b1",@"ColdFusion":@"#ed2cd6",@"OCaml":@"#3be133",@"Fancy":@"#7b9db4",@"Pure%20Data":@"#f15501",@"Python":@"#3581ba",@"Tcl":@"#e4cc98",@"Arc":@"#ca2afe",@"Puppet":@"#cc5555",@"Io":@"#a9188d",@"Max":@"#ce279c",@"Go":@"#8d04eb",@"ASP":@"#6a40fd",@"Visual Basic":@"#945db7",@"PHP":@"#6e03c1",@"Scheme":@"#1e4aec",@"Vala":@"#3581ba",@"Smalltalk":@"#596706",@"Matlab":@"#bb92ac",@"C#":@"#bb92af"};
 
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 0)];
@@ -400,4 +464,3 @@
 }
 
 @end
-
