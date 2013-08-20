@@ -42,7 +42,7 @@
 			<string></string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>repo</string>
+				<string>Repo</string>
 			</array>
 		</dict>
 	</array>

@@ -8,6 +8,7 @@
 #import "OctoKit.h"
 #import "GithubOAuth.h"
 #import "RFKeychain.h"
+#import "KGModal.h"
 
 @interface RootViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -58,7 +59,7 @@
     self.tableView.dataSource = self;
     self.tableView.separatorColor = [self getUIColorObjectFromHexString:@"#DDDDDD" alpha:1];
     
-    [[NSNotificationCenter defaultCenter] addObserverForName:@"repo" object:nil queue:nil usingBlock:^(NSNotification *event) {
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"Repo" object:nil queue:nil usingBlock:^(NSNotification *event) {
         NSString *code = [[event userInfo] objectForKey:@"code"];
         [self receiveCode:code];
         NSLog(@"OAuthCode = %@",code);
@@ -151,13 +152,13 @@
     //See if they're authorized
     self.keychainToken = [RFKeychain passwordForAccount:@"GitHub" service:@"Repo"];
     
-    if (self.keychainToken) {
-        NSLog(@"The user is authorized.");
-        NSLog(@"The token is: %@", self.keychainToken);
-        loginBarBtn = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logout:)];
-    } else {
+//    if (self.keychainToken) {
+//        NSLog(@"The user is authorized.");
+//        NSLog(@"The token is: %@", self.keychainToken);
+//        loginBarBtn = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logout:)];
+//    } else {
         loginBarBtn = [[UIBarButtonItem alloc] initWithTitle:@"Login" style:UIBarButtonItemStylePlain target:self action:@selector(login:)];
-    }
+//    }
     self.navigationItem.leftBarButtonItem = loginBarBtn;
 }
 
@@ -279,9 +280,55 @@
     self.shouldReload = YES;
 }
 
+- (void)connect:(id)sender {
+    [[GitHubOAuth sharedClient] authorizeWithParams:@{@"scope": @"public_repo"}];
+}
+
 - (void)login:(id)sender
 {
-    [[GitHubOAuth sharedClient] authorizeWithParams:@{@"scope": @"public_repo"}];
+        UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 110)];
+        
+        CGRect welcomeLabelRect = contentView.bounds;
+//        welcomeLabelRect.origin.y = 50;
+//        welcomeLabelRect.size.height = 40;
+        UIImage *connectWithGitHub = [UIImage imageNamed:@"connect_with_github_white.png"];
+        
+        UIButton *connectButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [connectButton setBackgroundImage:connectWithGitHub forState:UIControlStateNormal];
+        connectButton.frame = CGRectMake(22,15,228,40);
+        
+        [connectButton addTarget:self action:@selector(connect:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [contentView addSubview:connectButton];
+
+//        UIFont *welcomeLabelFont = [UIFont boldSystemFontOfSize:17];
+//        UILabel *welcomeLabel = [[UILabel alloc] initWithFrame:welcomeLabelRect];
+//        welcomeLabel.text = @"Welcome to KGModal!";
+//        welcomeLabel.font = welcomeLabelFont;
+//        welcomeLabel.textColor = [UIColor whiteColor];
+//        welcomeLabel.textAlignment = NSTextAlignmentCenter;
+//        welcomeLabel.backgroundColor = [UIColor clearColor];
+//        welcomeLabel.shadowColor = [UIColor blackColor];
+//        welcomeLabel.shadowOffset = CGSizeMake(0, 1);
+//        [contentView addSubview:welcomeLabel];
+    
+    
+        CGRect infoLabelRect = CGRectInset(contentView.bounds, 5, 25);
+        infoLabelRect.origin.y = CGRectGetMaxY(welcomeLabelRect)+5;
+        infoLabelRect.size.height -= CGRectGetMinY(infoLabelRect);
+        UILabel *infoLabel = [[UILabel alloc] initWithFrame:infoLabelRect];
+        infoLabel.text = @"Connect your GitHub account using OAuth to star repositories you like";
+        infoLabel.numberOfLines = 3;
+        infoLabel.textColor = [self getUIColorObjectFromHexString:@"C1C1C1" alpha:1];
+        infoLabel.textAlignment = NSTextAlignmentCenter;
+        infoLabel.backgroundColor = [UIColor clearColor];
+        UIFont *infoFont = [UIFont boldSystemFontOfSize:13];
+        infoLabel.font = infoFont;
+//        infoLabel.shadowColor = [UIColor blackColor];
+//        infoLabel.shadowOffset = CGSizeMake(0, 1);
+        [contentView addSubview:infoLabel];
+        
+        [[KGModal sharedInstance] showWithContentView:contentView andAnimated:YES];
 }
 
 - (void)logout:(id)sender

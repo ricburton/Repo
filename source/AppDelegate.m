@@ -26,7 +26,7 @@
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"repo" object:self userInfo:[url queryParams]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"Repo" object:self userInfo:[url queryParams]];
     return YES;
 }
 

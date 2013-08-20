@@ -5,6 +5,7 @@ pod 'AFNetworking'
 pod 'AFNetworking', '1.3.2'
 pod 'OctoKit', '~> 0.1.1'
 pod 'RFKeychain', '~> 0.1'
+pod 'KGModal', '~> 0.0.1'
 
 platform :ios, '6.0'
 pod 'UI7Kit'

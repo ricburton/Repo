@@ -18,6 +18,10 @@
 		DC26350317C2BDB2008E0B31 /* GitHubOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2634FD17C2BDB2008E0B31 /* GitHubOAuth.m */; };
 		DC26350417C2BDB2008E0B31 /* NSURL+OAuthKit.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2634FF17C2BDB2008E0B31 /* NSURL+OAuthKit.m */; };
 		DC26350517C2BDB2008E0B31 /* NSString+OAuthkit.m in Sources */ = {isa = PBXBuildFile; fileRef = DC26350117C2BDB2008E0B31 /* NSString+OAuthkit.m */; };
+		DC26350A17C4096C008E0B31 /* connect_with_github_white.png in Resources */ = {isa = PBXBuildFile; fileRef = DC26350817C4096C008E0B31 /* connect_with_github_white.png */; };
+		DC26350B17C4096C008E0B31 /* connect_with_github_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC26350917C4096C008E0B31 /* connect_with_github_white@2x.png */; };
+		DC26350E17C41697008E0B31 /* x_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = DC26350C17C41697008E0B31 /* x_circle.png */; };
+		DC26350F17C41697008E0B31 /* x_circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC26350D17C41697008E0B31 /* x_circle@2x.png */; };
 		DC473A7817AF000B009C54E6 /* iPhone Retina.png in Resources */ = {isa = PBXBuildFile; fileRef = DC473A7417AF000B009C54E6 /* iPhone Retina.png */; };
 		DC473A7917AF000B009C54E6 /* iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = DC473A7517AF000B009C54E6 /* iPhone.png */; };
 		DC473A8817B0B453009C54E6 /* cog.png in Resources */ = {isa = PBXBuildFile; fileRef = DC473A8617B0B453009C54E6 /* cog.png */; };
@@ -67,6 +71,10 @@
 		DC26350017C2BDB2008E0B31 /* NSString+OAuthkit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+OAuthkit.h"; sourceTree = "<group>"; };
 		DC26350117C2BDB2008E0B31 /* NSString+OAuthkit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+OAuthkit.m"; sourceTree = "<group>"; };
 		DC26350717C2BEA7008E0B31 /* Tokens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tokens.h; sourceTree = "<group>"; };
+		DC26350817C4096C008E0B31 /* connect_with_github_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connect_with_github_white.png; sourceTree = "<group>"; };
+		DC26350917C4096C008E0B31 /* connect_with_github_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "connect_with_github_white@2x.png"; sourceTree = "<group>"; };
+		DC26350C17C41697008E0B31 /* x_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = x_circle.png; sourceTree = "<group>"; };
+		DC26350D17C41697008E0B31 /* x_circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "x_circle@2x.png"; sourceTree = "<group>"; };
 		DC473A7417AF000B009C54E6 /* iPhone Retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone Retina.png"; sourceTree = "<group>"; };
 		DC473A7517AF000B009C54E6 /* iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone.png; sourceTree = "<group>"; };
 		DC473A8617B0B453009C54E6 /* cog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cog.png; sourceTree = "<group>"; };
@@ -175,6 +183,10 @@
 		DC8A9E1317AA129F00C73BEF /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				DC26350C17C41697008E0B31 /* x_circle.png */,
+				DC26350D17C41697008E0B31 /* x_circle@2x.png */,
+				DC26350817C4096C008E0B31 /* connect_with_github_white.png */,
+				DC26350917C4096C008E0B31 /* connect_with_github_white@2x.png */,
 				DC473A9617B0C54C009C54E6 /* no_repos.png */,
 				DC473A9717B0C54C009C54E6 /* no_repos@2x.png */,
 				DC473A9217B0BCC0009C54E6 /* remove.png */,
@@ -308,6 +320,10 @@
 				DC473A9517B0BCC0009C54E6 /* remove@2x.png in Resources */,
 				DC473A9817B0C54C009C54E6 /* no_repos.png in Resources */,
 				DC473A9917B0C54C009C54E6 /* no_repos@2x.png in Resources */,
+				DC26350A17C4096C008E0B31 /* connect_with_github_white.png in Resources */,
+				DC26350B17C4096C008E0B31 /* connect_with_github_white@2x.png in Resources */,
+				DC26350E17C41697008E0B31 /* x_circle.png in Resources */,
+				DC26350F17C41697008E0B31 /* x_circle@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
