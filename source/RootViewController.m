@@ -159,10 +159,10 @@
                 
                 NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: self.arrayOfLangs, @"languages", nil];
                 
-                AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://githubber.herokuapp.com"]];
+                AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://githubtrending.herokuapp.com"]];
                 httpClient.parameterEncoding = AFJSONParameterEncoding;
                 NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
-                                                                        path:@"/readmes"
+                                                                        path:@"/trending"
                                                                   parameters:params];
                 NSLog(@"Request: %@",params);
                 
@@ -180,12 +180,15 @@
                     
                     self.dataArray = [[NSMutableArray alloc]init];
                     
-                    for( NSString* language in self.arrayOfLangs )
+                    for( NSString* rawLanguage in self.arrayOfLangs )
                     {
-                        NSString *contests = [self.response_data valueForKeyPath:[NSString stringWithFormat:@"%@.contest",language]];
+                        //TODO Fix language-naming across the app.
+                        NSString *languageWithoutPercent = [rawLanguage stringByReplacingOccurrencesOfString:@"%20" withString:@"-"];
+                        NSString *languageWithoutSpace = [languageWithoutPercent stringByReplacingOccurrencesOfString:@" " withString:@"-"];
+                        NSString *language = [languageWithoutSpace lowercaseString];
                         
-                        NSString *readme_url_data = [NSString stringWithFormat:@"%@.readme_url",language];
-                        NSLog(@"readme_url_data: %@",readme_url_data);
+                        NSString *readme_url_data = [NSString stringWithFormat:@"%@.readme",language];
+                        NSLog(@"Readme URL%@",readme_url_data);
                         NSArray *readme_urls = [self.response_data valueForKeyPath:readme_url_data];
                         
                         NSArray *descriptions = [self.response_data valueForKeyPath:[NSString stringWithFormat:@"%@.description",language]];
@@ -193,7 +196,6 @@
                         if (descriptions && readme_urls) {
                             NSMutableDictionary *dataDict = [NSMutableDictionary dictionaryWithObject:descriptions forKey:@"descriptions"];
                             [dataDict setObject:readme_urls forKey:@"readme_url"];
-                            [dataDict setObject:contests forKey:@"contest"];
                             
                             [self.dataArray addObject:dataDict];
                         } else {
@@ -269,19 +271,6 @@
             welcomeLabel.textAlignment = NSTextAlignmentCenter;
             welcomeLabel.backgroundColor = [UIColor clearColor];
             [contentView addSubview:welcomeLabel];
-            
-//            CGRect infoLabelRect = CGRectInset(contentView.bounds, 5, 5);
-//            infoLabelRect.origin.y = CGRectGetMaxY(welcomeLabelRect)+5;
-//            infoLabelRect.size.height -= CGRectGetMinY(infoLabelRect);
-//            UILabel *infoLabel = [[UILabel alloc] initWithFrame:infoLabelRect];
-//            infoLabel.text = @"You have connected to GitHub.";
-//            infoLabel.numberOfLines = 2;
-//            infoLabel.textColor = [UIColor whiteColor];
-//            infoLabel.textAlignment = NSTextAlignmentCenter;
-//            infoLabel.backgroundColor = [UIColor clearColor];
-//            infoLabel.shadowColor = [UIColor blackColor];
-//            infoLabel.shadowOffset = CGSizeMake(0, 1);
-//            [contentView addSubview:infoLabel];
             
         } else {
             CGRect welcomeLabelRect = contentView.bounds;
@@ -403,10 +392,7 @@
     
     NSArray *readmeURLArray = [dictionary objectForKey:@"readme_url"];
     NSString *readmeURL = [readmeURLArray objectAtIndex:indexPath.row];
-    
-    NSArray *contestArray = [dictionary objectForKey:@"contest"];
-    NSString *contest = [contestArray objectAtIndex:indexPath.row];
-    
+        
     NSLog(@"readmeURL: %@", readmeURL);
     if ([readmeURL isEqualToString: @"NOTHING"]) {
         NSLog(@"No stars or forks");
@@ -452,14 +438,7 @@
         
         cell.repoDescription.text = readmeText;
         cell.repoDescription.textColor = [self getUIColorObjectFromHexString:@"#555555" alpha:1];
-        NSLog(@"Contest string: %@",contest);
-        if ([contest isEqualToString:@"most_forked_today"]) {
-            cell.contestIcon.image    = [UIImage imageNamed:@"most_forked.png"];
-        } else if ([contest isEqualToString:@"most_starred_today"]) {
-            cell.contestIcon.image    = [UIImage imageNamed:@"most_starred.png"];
-        } else if ([contest isEqualToString:@"most_starred_and_forked_today"]) {
-            cell.contestIcon.image    = [UIImage imageNamed:@"most_starred_and_forked.png"];
-        }
+        cell.contestIcon.image    = [UIImage imageNamed:@"repo_icon.png"];
          
         return cell;
     }
