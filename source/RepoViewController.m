@@ -43,32 +43,34 @@
     
     UIImage *removeImg = [UIImage imageNamed:@"x_circle.png"];
     UIButton *removeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [removeBtn setBackgroundImage:removeImg forState:UIControlStateNormal];
-    removeBtn.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width - 47.5,[[UIScreen mainScreen] bounds].size.height - 63.65,33,33);
+    [removeBtn setImage:removeImg forState:UIControlStateNormal];
+    [removeBtn setFrame:CGRectMake([[UIScreen mainScreen] bounds].size.width - 133,[[UIScreen mainScreen] bounds].size.height - 73.65,133,53)];
+    [removeBtn setContentMode:UIViewContentModeCenter];
+    [removeBtn setContentEdgeInsets:UIEdgeInsetsMake(10, 85.5, 10, 14.5)];
     [removeBtn addTarget:self action:@selector(remove:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:removeBtn];
-    
     
     if (self.client) {//TODO View did appear.
         //Starred already?
         
 //        NSData *stargazer = [self gazing:@selector(gazing:completionHandler:) completionHandler:ch];
-        
         self.starBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         
         BOOL *stargazer = FALSE;
         if (stargazer) {
             UIImage *starImg = [UIImage imageNamed:@"star_circle.png"];
-            [self.starBtn setBackgroundImage:starImg forState:UIControlStateNormal];
+            [self.starBtn setImage:starImg forState:UIControlStateNormal];
             
             [self.starBtn addTarget:self action:@selector(star:) forControlEvents:UIControlEventTouchUpInside];
 
         } else {
             UIImage *starImg = [UIImage imageNamed:@"unstar_circle.png"];
-            [self.starBtn setBackgroundImage:starImg forState:UIControlStateNormal];
+            [self.starBtn setImage:starImg forState:UIControlStateNormal];
         }
         
-        self.starBtn.frame = CGRectMake(14.5,[[UIScreen mainScreen] bounds].size.height - 63.65,33,33);
+        [self.starBtn setFrame: CGRectMake(0,[[UIScreen mainScreen] bounds].size.height - 73.65,133,53)];
+        [self.starBtn setContentMode:UIViewContentModeCenter];
+        [self.starBtn setImageEdgeInsets:UIEdgeInsetsMake(10, 14.5, 10, 85.5)];
         [self.view addSubview:self.starBtn];
     } else {
         //Not logged in so no starring.

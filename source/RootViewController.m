@@ -58,17 +58,19 @@
     
     UIImage *settingsImg = [UIImage imageNamed:@"settings_circle.png"];
     self.settingsBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.settingsBtn setBackgroundImage:settingsImg forState:UIControlStateNormal];
-    self.settingsBtn.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width - 47.5,[[UIScreen mainScreen] bounds].size.height - 63.65,33,33);
+    [self.settingsBtn setImage:settingsImg forState:UIControlStateNormal];
+    [self.settingsBtn setFrame: CGRectMake([[UIScreen mainScreen] bounds].size.width - 133,[[UIScreen mainScreen] bounds].size.height - 73.65,133,53)];//TODO bounds shortcut?
+    [self.settingsBtn setContentMode:UIViewContentModeCenter];
+    [self.settingsBtn setContentEdgeInsets:UIEdgeInsetsMake(10, 85.5, 10, 14.5)];
     [self.settingsBtn addTarget:self action:@selector(settings:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.settingsBtn];
     
     UIImage *githubImg = [UIImage imageNamed:@"github_circle.png"];
     self.githubBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.githubBtn setImage:githubImg forState:UIControlStateNormal];
-    [self.githubBtn setFrame: CGRectMake(14.5,[[UIScreen mainScreen] bounds].size.height - 63.65,33,33)];
-//    self.githubBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, spacing);
-//    self.githubBtn.imageEdgeInsets = UIEdgeInsetsMake(100, 150, 100, 100);
+    [self.githubBtn setFrame: CGRectMake(0,[[UIScreen mainScreen] bounds].size.height - 73.65,133,53)];
+    [self.githubBtn setContentMode:UIViewContentModeCenter];
+    [self.githubBtn setImageEdgeInsets:UIEdgeInsetsMake(10, 14.5, 10, 85.5)];
     [self.githubBtn addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.githubBtn];
 }
@@ -76,11 +78,11 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGRect fixedFrame = self.settingsBtn.frame;
-    fixedFrame.origin.y = ([[UIScreen mainScreen] bounds].size.height - 63.65) + scrollView.contentOffset.y;
+    fixedFrame.origin.y = ([[UIScreen mainScreen] bounds].size.height - 73.65) + scrollView.contentOffset.y;
     self.settingsBtn.frame = fixedFrame;
     
     CGRect fixedGitHubFrame = self.githubBtn.frame;
-    fixedGitHubFrame.origin.y = ([[UIScreen mainScreen] bounds].size.height - 63.65) + scrollView.contentOffset.y;
+    fixedGitHubFrame.origin.y = ([[UIScreen mainScreen] bounds].size.height - 73.65) + scrollView.contentOffset.y;
     self.githubBtn.frame = fixedGitHubFrame;
 }
 
@@ -124,6 +126,7 @@
     } else {
         self.client = nil;
     }
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 }
 
 - (void)testInternetConnection
