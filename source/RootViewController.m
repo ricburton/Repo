@@ -36,28 +36,19 @@
 {
     [super viewDidLoad];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-    label.backgroundColor = [UIColor clearColor];
-    label.font = [UIFont fontWithName:@"Helvetica-Bold" size:18.0];
-    label.textColor = [self getUIColorObjectFromHexString:@"#423F37" alpha:1];
-    self.navigationItem.titleView = label;
-    label.text = @"Repo";
-    [label sizeToFit];
-    
-    UIImage *cogImg = [UIImage imageNamed:@"cog.png"];
-    
-    UIButton *settingsBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [settingsBtn setBackgroundImage:cogImg forState:UIControlStateNormal];
-    settingsBtn.frame = CGRectMake(0,0,33,19);
-
-    [settingsBtn addTarget:self action:@selector(settings:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *settingsBarBtn = [[UIBarButtonItem alloc] initWithCustomView:settingsBtn];
-    
-    self.navigationItem.rightBarButtonItem = settingsBarBtn;
+    [[self navigationController] setNavigationBarHidden:YES];
 
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorColor = [self getUIColorObjectFromHexString:@"#DDDDDD" alpha:1];
+    
+    //Add the settings button //TODO - Move to a different section?
+    UIImage *settingsImg = [UIImage imageNamed:@"settings_circle.png"];
+    UIButton *settingsBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [settingsBtn setBackgroundImage:settingsImg forState:UIControlStateNormal];
+    settingsBtn.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width - 38,[[UIScreen mainScreen] bounds].size.height - 63,33,33);//
+    [settingsBtn addTarget:self action:@selector(settings:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:settingsBtn];
     
     [[NSNotificationCenter defaultCenter] addObserverForName:@"Repo" object:nil queue:nil usingBlock:^(NSNotification *event) {
         NSString *code = [[event userInfo] objectForKey:@"code"];
@@ -66,9 +57,8 @@
         NSLog(@"Received the code!");
     }];
     
-//    //testing delete method.
-//    [RFKeychain deletePasswordForAccount:@"GitHub" service:@"Repo"];
 }
+
 
 - (void) receiveCode:(NSString*)code {
     if ( !code ) {
@@ -152,14 +142,14 @@
     //See if they're authorized
     self.keychainToken = [RFKeychain passwordForAccount:@"GitHub" service:@"Repo"];
     
-//    if (self.keychainToken) {
-//        NSLog(@"The user is authorized.");
-//        NSLog(@"The token is: %@", self.keychainToken);
-//        loginBarBtn = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logout:)];
-//    } else {
-        loginBarBtn = [[UIBarButtonItem alloc] initWithTitle:@"Login" style:UIBarButtonItemStylePlain target:self action:@selector(login:)];
-//    }
-    self.navigationItem.leftBarButtonItem = loginBarBtn;
+////    if (self.keychainToken) {
+////        NSLog(@"The user is authorized.");
+////        NSLog(@"The token is: %@", self.keychainToken);
+////        loginBarBtn = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logout:)];
+////    } else {
+//        loginBarBtn = [[UIBarButtonItem alloc] initWithTitle:@"Login" style:UIBarButtonItemStylePlain target:self action:@selector(login:)];
+////    }
+//    self.navigationItem.leftBarButtonItem = loginBarBtn;
 }
 
 - (void)testInternetConnection
@@ -240,6 +230,9 @@
                     [self.hud hide:YES];
                     [self.tableView reloadData];
                     
+
+
+                    
                 } failure:nil];
             }
             [operation start];
@@ -247,6 +240,8 @@
 //            if (self.hud.hidden == NO) { //Double check it's gone
 //                [self.hud hide:YES];
 //            }
+            
+
         });
     };
     
@@ -269,7 +264,6 @@
     
     [internetReachableFoo startNotifier];
 }
-
 
 - (void)settings:(id)sender
 {
@@ -300,18 +294,6 @@
         [connectButton addTarget:self action:@selector(connect:) forControlEvents:UIControlEventTouchUpInside];
         
         [contentView addSubview:connectButton];
-
-//        UIFont *welcomeLabelFont = [UIFont boldSystemFontOfSize:17];
-//        UILabel *welcomeLabel = [[UILabel alloc] initWithFrame:welcomeLabelRect];
-//        welcomeLabel.text = @"Welcome to KGModal!";
-//        welcomeLabel.font = welcomeLabelFont;
-//        welcomeLabel.textColor = [UIColor whiteColor];
-//        welcomeLabel.textAlignment = NSTextAlignmentCenter;
-//        welcomeLabel.backgroundColor = [UIColor clearColor];
-//        welcomeLabel.shadowColor = [UIColor blackColor];
-//        welcomeLabel.shadowOffset = CGSizeMake(0, 1);
-//        [contentView addSubview:welcomeLabel];
-    
     
         CGRect infoLabelRect = CGRectInset(contentView.bounds, 5, 25);
         infoLabelRect.origin.y = CGRectGetMaxY(welcomeLabelRect)+5;
