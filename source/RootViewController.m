@@ -39,9 +39,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,320,[[UIScreen mainScreen] bounds].size.height) style:UITableViewStylePlain];
+    [self.view addSubview:self.tableView];
     [[self navigationController] setNavigationBarHidden:YES];
-    //TODO Hide/reveal table on load
     self.tableView.tableFooterView = [[UIView alloc]init];
 
     self.tableView.delegate = self;
