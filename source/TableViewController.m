@@ -83,9 +83,10 @@
     UIImage *settingsImg = [UIImage imageNamed:@"save_circle.png"];
     self.saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.saveBtn setBackgroundImage:settingsImg forState:UIControlStateNormal];
-    self.saveBtn.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width - 38,[[UIScreen mainScreen] bounds].size.height - 63,33,33);//
+    self.saveBtn.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width - 47.5,[[UIScreen mainScreen] bounds].size.height - 63.65,33,33);
     [self.saveBtn addTarget:self action:@selector(done:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.saveBtn];
+    
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView

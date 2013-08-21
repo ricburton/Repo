@@ -24,6 +24,9 @@
 @property (strong, nonatomic) MBProgressHUD *hud;
 @property (strong, nonatomic) MBProgressHUD *sad_hud;
 @property (strong, nonatomic) UIButton *settingsBtn;
+@property (strong, nonatomic) UIButton *githubBtn;
+@property (strong, nonatomic) NSString *repoDirectory;
+//@property (strong, nonatomic) UITableView *tableView;TODO fix sections?
 
 @end
 
@@ -31,7 +34,6 @@
 {
     AFJSONRequestOperation *operation;
     UIBarButtonItem *loginBarBtn;
-    
 }
 
 - (void)viewDidLoad
@@ -39,6 +41,8 @@
     [super viewDidLoad];
     
     [[self navigationController] setNavigationBarHidden:YES];
+    //TODO Hide/reveal table on load
+    self.tableView.tableFooterView = [[UIView alloc]init];
 
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -51,20 +55,33 @@
         NSLog(@"Received the code!");
     }];
     
+    
     UIImage *settingsImg = [UIImage imageNamed:@"settings_circle.png"];
     self.settingsBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.settingsBtn setBackgroundImage:settingsImg forState:UIControlStateNormal];
-    self.settingsBtn.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width - 38,[[UIScreen mainScreen] bounds].size.height - 63,33,33);//
+    self.settingsBtn.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width - 47.5,[[UIScreen mainScreen] bounds].size.height - 63.65,33,33);
     [self.settingsBtn addTarget:self action:@selector(settings:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.settingsBtn];
     
+    UIImage *githubImg = [UIImage imageNamed:@"github_circle.png"];
+    self.githubBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.githubBtn setImage:githubImg forState:UIControlStateNormal];
+    [self.githubBtn setFrame: CGRectMake(14.5,[[UIScreen mainScreen] bounds].size.height - 63.65,33,33)];
+//    self.githubBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, spacing);
+//    self.githubBtn.imageEdgeInsets = UIEdgeInsetsMake(100, 150, 100, 100);
+    [self.githubBtn addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.githubBtn];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGRect fixedFrame = self.settingsBtn.frame;
-    fixedFrame.origin.y = ([[UIScreen mainScreen] bounds].size.height - 63) + scrollView.contentOffset.y;
+    fixedFrame.origin.y = ([[UIScreen mainScreen] bounds].size.height - 63.65) + scrollView.contentOffset.y;
     self.settingsBtn.frame = fixedFrame;
+    
+    CGRect fixedGitHubFrame = self.githubBtn.frame;
+    fixedGitHubFrame.origin.y = ([[UIScreen mainScreen] bounds].size.height - 63.65) + scrollView.contentOffset.y;
+    self.githubBtn.frame = fixedGitHubFrame;
 }
 
 
@@ -75,7 +92,6 @@
     };
     
     [[GitHubOAuth sharedClient] requestAccessToken:code completionHandler:^(NSString *token, AFHTTPRequestOperation *operation, NSError *error) {
-//        [self receiveToken:token];
         NSLog(@"Got token %@", token);
         
         [RFKeychain setPassword:token account:@"GitHub" service:@"Repo"];
@@ -85,57 +101,9 @@
 }
 
 - (void) createClient:(NSString *)token {
-    OCTClient *client = [[OCTClient alloc] initWithServer:OCTServer.dotComServer];
-    [client setDefaultHeader:@"Authorization" value:[NSString stringWithFormat:@"Bearer %@", token]];
+    self.client = [[OCTClient alloc] initWithServer:OCTServer.dotComServer];
+    [self.client setDefaultHeader:@"Authorization" value:[NSString stringWithFormat:@"Bearer %@", token]];
 }
-
-- (void) checkSkies {
-    
-}
-
-- (void) star:(NSString *)repository client:(OCTClient *)client {
-    //PUT /user/starred/:owner/:repo
-    NSString *path = [@"/user/starred/%@" stringByAppendingString:repository];
-    [client putPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Starred successfully");
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Unsuccessful stargazing");
-    }];
-}
-
-- (void) unstar:(NSString *)repository client:(OCTClient *)client {
-    //DELETE /user/starred/:owner/:repo
-    NSString *path = [@"/user/starred/%@" stringByAppendingString:repository];
-    [client deletePath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Unstarred successfully");
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Unsuccessful unstarring");
-    }];
-}
-
-- (void) gazingRepos:(OCTClient *)client completionHandler:(void (^)(id))handler  {
-    [client getPath:@"/user/starred" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        handler(responseObject);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Gazing request failed.");
-    }];
-}
-
-//    NSLog(@"Unsuccessful unstarring");
-
-//    switch (status) {
-//        case 204:
-//            
-//            break;
-//            
-//        case 404:
-//            break;
-//    }
-//    if responseObject
-    
-//}
-
-//GET /user/starred
 
 - (void)addItemViewController:(RepoViewController *)controller didFinishEnteringItem:(BOOL)item
 {
@@ -150,14 +118,12 @@
     //See if they're authorized
     self.keychainToken = [RFKeychain passwordForAccount:@"GitHub" service:@"Repo"];
     
-////    if (self.keychainToken) {
-////        NSLog(@"The user is authorized.");
-////        NSLog(@"The token is: %@", self.keychainToken);
-////        loginBarBtn = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logout:)];
-////    } else {
-//        loginBarBtn = [[UIBarButtonItem alloc] initWithTitle:@"Login" style:UIBarButtonItemStylePlain target:self action:@selector(login:)];
-////    }
-//    self.navigationItem.leftBarButtonItem = loginBarBtn;
+    if (self.keychainToken) {
+        NSLog(@"Creating the client");
+        [self createClient:self.keychainToken]; //TODO — should I recreate the client each time?
+    } else {
+        self.client = nil;
+    }
 }
 
 - (void)testInternetConnection
@@ -237,10 +203,7 @@
                     
                     [self.hud hide:YES];
                     [self.tableView reloadData];
-                    
-
-
-                    
+                    [self.tableView setHidden: NO];
                 } failure:nil];
             }
             [operation start];
@@ -289,36 +252,63 @@
 - (void)login:(id)sender
 {
         UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 110)];
-        
-        CGRect welcomeLabelRect = contentView.bounds;
-//        welcomeLabelRect.origin.y = 50;
-//        welcomeLabelRect.size.height = 40;
-        UIImage *connectWithGitHub = [UIImage imageNamed:@"connect_with_github_white.png"];
-        
-        UIButton *connectButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [connectButton setBackgroundImage:connectWithGitHub forState:UIControlStateNormal];
-        connectButton.frame = CGRectMake(22,15,228,40);
-        
-        [connectButton addTarget:self action:@selector(connect:) forControlEvents:UIControlEventTouchUpInside];
-        
-        [contentView addSubview:connectButton];
+        if (self.client) {
+            
+            contentView.frame = CGRectMake(0, 0, 280, 60);
+            CGRect welcomeLabelRect = contentView.bounds;
+            welcomeLabelRect.origin.y = 20;
+            welcomeLabelRect.size.height = 20;
+            UIFont *welcomeLabelFont = [UIFont boldSystemFontOfSize:17];
+            UILabel *welcomeLabel = [[UILabel alloc] initWithFrame:welcomeLabelRect];
+            welcomeLabel.text = @"You've connected.";
+            welcomeLabel.font = welcomeLabelFont;
+            welcomeLabel.textColor = [UIColor whiteColor];
+            welcomeLabel.textAlignment = NSTextAlignmentCenter;
+            welcomeLabel.backgroundColor = [UIColor clearColor];
+            [contentView addSubview:welcomeLabel];
+            
+//            CGRect infoLabelRect = CGRectInset(contentView.bounds, 5, 5);
+//            infoLabelRect.origin.y = CGRectGetMaxY(welcomeLabelRect)+5;
+//            infoLabelRect.size.height -= CGRectGetMinY(infoLabelRect);
+//            UILabel *infoLabel = [[UILabel alloc] initWithFrame:infoLabelRect];
+//            infoLabel.text = @"You have connected to GitHub.";
+//            infoLabel.numberOfLines = 2;
+//            infoLabel.textColor = [UIColor whiteColor];
+//            infoLabel.textAlignment = NSTextAlignmentCenter;
+//            infoLabel.backgroundColor = [UIColor clearColor];
+//            infoLabel.shadowColor = [UIColor blackColor];
+//            infoLabel.shadowOffset = CGSizeMake(0, 1);
+//            [contentView addSubview:infoLabel];
+            
+        } else {
+            CGRect welcomeLabelRect = contentView.bounds;
+            UIImage *connectWithGitHub = [UIImage imageNamed:@"connect_with_github_white.png"];
+            
+            UIButton *connectButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            [connectButton setBackgroundImage:connectWithGitHub forState:UIControlStateNormal];
+            connectButton.frame = CGRectMake(22,15,228,40);
+            
+            [connectButton addTarget:self action:@selector(connect:) forControlEvents:UIControlEventTouchUpInside];
+            
+            [contentView addSubview:connectButton];
+            
+            CGRect infoLabelRect = CGRectInset(contentView.bounds, 5, 25);
+            infoLabelRect.origin.y = CGRectGetMaxY(welcomeLabelRect)+5;
+            infoLabelRect.size.height -= CGRectGetMinY(infoLabelRect);
+            UILabel *infoLabel = [[UILabel alloc] initWithFrame:infoLabelRect];
+            infoLabel.text = @"Connect your GitHub account using OAuth to star the repositories you like.";
+            infoLabel.numberOfLines = 3;
+            infoLabel.textColor = [self getUIColorObjectFromHexString:@"C1C1C1" alpha:1];
+            infoLabel.textAlignment = NSTextAlignmentCenter;
+            infoLabel.backgroundColor = [UIColor clearColor];
+            UIFont *infoFont = [UIFont boldSystemFontOfSize:13];
+            infoLabel.font = infoFont;
+            [contentView addSubview:infoLabel];
+        }
     
-        CGRect infoLabelRect = CGRectInset(contentView.bounds, 5, 25);
-        infoLabelRect.origin.y = CGRectGetMaxY(welcomeLabelRect)+5;
-        infoLabelRect.size.height -= CGRectGetMinY(infoLabelRect);
-        UILabel *infoLabel = [[UILabel alloc] initWithFrame:infoLabelRect];
-        infoLabel.text = @"Connect your GitHub account using OAuth to star repositories you like";
-        infoLabel.numberOfLines = 3;
-        infoLabel.textColor = [self getUIColorObjectFromHexString:@"C1C1C1" alpha:1];
-        infoLabel.textAlignment = NSTextAlignmentCenter;
-        infoLabel.backgroundColor = [UIColor clearColor];
-        UIFont *infoFont = [UIFont boldSystemFontOfSize:13];
-        infoLabel.font = infoFont;
-//        infoLabel.shadowColor = [UIColor blackColor];
-//        infoLabel.shadowOffset = CGSizeMake(0, 1);
-        [contentView addSubview:infoLabel];
-        
-        [[KGModal sharedInstance] showWithContentView:contentView andAnimated:YES];
+        KGModal *modal = [KGModal sharedInstance];
+        modal.modalBackgroundColor = [self getUIColorObjectFromHexString:@"262626" alpha:0.96];
+       [modal showWithContentView:contentView andAnimated:YES];
 }
 
 - (void)logout:(id)sender
@@ -432,7 +422,7 @@
         NSString *githubUser   = url.pathComponents[1];
         NSString *repoTitle    = url.pathComponents[2];
         NSArray *directoryParts = @[githubUser, repoTitle];
-        NSString *repoDirectory = [directoryParts componentsJoinedByString:@" / "];
+        self.repoDirectory = [directoryParts componentsJoinedByString:@" / "];
 
         const CGFloat fontSize = 13;
         UIFont *boldFont = [UIFont boldSystemFontOfSize:fontSize];
@@ -451,7 +441,7 @@
         const NSRange rangeSlash = [repoTitle rangeOfString:@"/"];
         
         NSMutableAttributedString *attributedText =
-        [[NSMutableAttributedString alloc] initWithString:repoDirectory attributes:attrs];
+        [[NSMutableAttributedString alloc] initWithString:self.repoDirectory attributes:attrs];
         [attributedText setAttributes:subAttrs range:rangeSlash];
         
         cell.backgroundColor      = [self getUIColorObjectFromHexString:@"#FBFBFB" alpha:1];
@@ -483,6 +473,10 @@
     } else {
         RepoViewController *webView = [[RepoViewController alloc] init];
         webView.url = [NSURL URLWithString:readmeURL];
+        webView.repo = [self.repoDirectory stringByReplacingOccurrencesOfString:@" " withString:@""];
+        if (self.client) {
+            webView.client = self.client;
+        }
         webView.delegate = self;
         
         Mixpanel *mixpanel = [Mixpanel sharedInstance];

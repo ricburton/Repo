@@ -2,11 +2,14 @@
 #import "MBProgressHUD.h"
 #import "RootViewController.h"
 #import "Reachability.h"
+#import "GitHubOAuth.h"
+#import "Octokit.h"
 
 @interface RepoViewController () <UIWebViewDelegate>
 
 @property (strong, nonatomic) UIWebView *webView;
 @property (nonatomic, retain) UIActivityIndicatorView *activityIndicatorView;
+@property (nonatomic, retain) UIButton *starBtn;
 
 @end
 
@@ -23,13 +26,6 @@
     
     [self.view addSubview:self.webView];
     
-    UIImage *removeImg = [UIImage imageNamed:@"x_circle.png"];
-    UIButton *removeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [removeBtn setBackgroundImage:removeImg forState:UIControlStateNormal];
-    removeBtn.frame = CGRectMake(8,8,33,33);
-    [removeBtn addTarget:self action:@selector(remove:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:removeBtn];
-    
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.animationType = MBProgressHUDAnimationZoomIn;
@@ -44,7 +40,106 @@
     self.webView.delegate = self;
     NSURLRequest *request = [NSURLRequest requestWithURL:self.url];
     [self.webView loadRequest:request];
+    
+    UIImage *removeImg = [UIImage imageNamed:@"x_circle.png"];
+    UIButton *removeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [removeBtn setBackgroundImage:removeImg forState:UIControlStateNormal];
+    removeBtn.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width - 47.5,[[UIScreen mainScreen] bounds].size.height - 63.65,33,33);
+    [removeBtn addTarget:self action:@selector(remove:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:removeBtn];
+    
+    
+    if (self.client) {//TODO View did appear.
+        //Starred already?
+        
+//        NSData *stargazer = [self gazing:@selector(gazing:completionHandler:) completionHandler:ch];
+        
+        self.starBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+        BOOL *stargazer = FALSE;
+        if (stargazer) {
+            UIImage *starImg = [UIImage imageNamed:@"star_circle.png"];
+            [self.starBtn setBackgroundImage:starImg forState:UIControlStateNormal];
+            
+            [self.starBtn addTarget:self action:@selector(star:) forControlEvents:UIControlEventTouchUpInside];
+
+        } else {
+            UIImage *starImg = [UIImage imageNamed:@"unstar_circle.png"];
+            [self.starBtn setBackgroundImage:starImg forState:UIControlStateNormal];
+        }
+        
+        self.starBtn.frame = CGRectMake(14.5,[[UIScreen mainScreen] bounds].size.height - 63.65,33,33);
+        [self.view addSubview:self.starBtn];
+    } else {
+        //Not logged in so no starring.
+    }
 }
+
+- (void) star:(id)sender
+{
+//    (NSString *)repository client:(OCTClient *)client
+    NSString *repository = self.repo;
+    OCTClient *client = self.client;
+
+    //PUT /user/starred/:owner/:repo
+    NSString *path = [@"/user/starred/%@" stringByAppendingString:repository];
+    [client putPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Starred successfully");
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Unsuccessful stargazing");
+    }];
+}
+
+- (void) unstar:(id)sender
+{
+    NSString *repository = self.repo;
+    OCTClient *client = self.client;
+    
+    //DELETE /user/starred/:owner/:repo
+    NSString *path = [@"/user/starred/%@" stringByAppendingString:repository];
+    [client deletePath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Unstarred successfully");
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Unsuccessful unstarring");
+    }];
+}
+
+- (BOOL) gazing:(id)sender completionHandler:(void (^)(id))handler
+{
+    NSString *repository = self.repo;
+    OCTClient *client = self.client;
+    
+    //GET /user/starred/:owner/:repo
+    NSString *path = [@"/user/starred/%@" stringByAppendingString:repository];
+    [client getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Unstarred successfully");
+        handler(responseObject);
+//        handler(return TRUE);
+//        NSInteger *status = [operation.response statusCode];
+//        return TRUE;
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Unsuccessful unstarring");
+}];
+    
+    
+    
+//    -- (void) gazingRepos:(OCTClient *)client completionHandler:(void (^)(id))handler  {
+//        -    [client getPath:@"/user/starred" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//            -        handler(responseObject);
+//            -    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                -        NSLog(@"Gazing request failed.");
+//                -    }];
+    
+//    client.?/
+    
+//    if (status == 204) {
+//        return TRUE;
+//    } else {
+//        return FALSE;
+//    }
+    
+}
+
 
 - (void)remove:(id)sender
 {
