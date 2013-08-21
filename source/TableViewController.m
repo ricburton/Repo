@@ -13,6 +13,7 @@
 @property (strong, nonatomic) NSString *filePathLangs;
 @property (strong, nonatomic) NSMutableArray *selectedMarks;
 @property (strong, nonatomic) NSMutableArray *dataArray;
+@property (strong, nonatomic) UIButton *saveBtn;
 
 @end
 
@@ -75,28 +76,23 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-    label.backgroundColor = [UIColor clearColor];
-    label.font = [UIFont fontWithName:@"Helvetica-Bold" size:16.0];
-    label.textColor = [self getUIColorObjectFromHexString:@"#423F37" alpha:1];
-    self.navigationItem.titleView = label;
-    label.text = @"Favourite Languages";
-    [label sizeToFit];
-    
-    UIImage *saveImg = [UIImage imageNamed:@"save.png"];
-    
-    UIButton *saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [saveBtn setBackgroundImage:saveImg forState:UIControlStateNormal];
-    saveBtn.frame = CGRectMake(0,0,33,19);
-    
-    [saveBtn addTarget:self action:@selector(done:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *saveBarBtn = [[UIBarButtonItem alloc] initWithCustomView:saveBtn];
-    
-    self.navigationItem.rightBarButtonItem = saveBarBtn;
-    
+    [[self navigationController] setNavigationBarHidden:YES];
     [self.tableView reloadData];
     self.tableView.separatorColor = [self getUIColorObjectFromHexString:@"#DDDDDD" alpha:.32];
+    
+    UIImage *settingsImg = [UIImage imageNamed:@"save_circle.png"];
+    self.saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.saveBtn setBackgroundImage:settingsImg forState:UIControlStateNormal];
+    self.saveBtn.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width - 38,[[UIScreen mainScreen] bounds].size.height - 63,33,33);//
+    [self.saveBtn addTarget:self action:@selector(done:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.saveBtn];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGRect fixedFrame = self.saveBtn.frame;
+    fixedFrame.origin.y = ([[UIScreen mainScreen] bounds].size.height - 63) + scrollView.contentOffset.y;
+    self.saveBtn.frame = fixedFrame;
 }
 
 - (void)viewDidUnload

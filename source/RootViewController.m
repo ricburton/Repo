@@ -23,6 +23,7 @@
 @property (strong, nonatomic) NSString *filePathLangs;
 @property (strong, nonatomic) MBProgressHUD *hud;
 @property (strong, nonatomic) MBProgressHUD *sad_hud;
+@property (strong, nonatomic) UIButton *settingsBtn;
 
 @end
 
@@ -30,6 +31,7 @@
 {
     AFJSONRequestOperation *operation;
     UIBarButtonItem *loginBarBtn;
+    
 }
 
 - (void)viewDidLoad
@@ -42,14 +44,6 @@
     self.tableView.dataSource = self;
     self.tableView.separatorColor = [self getUIColorObjectFromHexString:@"#DDDDDD" alpha:1];
     
-    //Add the settings button //TODO - Move to a different section?
-    UIImage *settingsImg = [UIImage imageNamed:@"settings_circle.png"];
-    UIButton *settingsBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [settingsBtn setBackgroundImage:settingsImg forState:UIControlStateNormal];
-    settingsBtn.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width - 38,[[UIScreen mainScreen] bounds].size.height - 63,33,33);//
-    [settingsBtn addTarget:self action:@selector(settings:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:settingsBtn];
-    
     [[NSNotificationCenter defaultCenter] addObserverForName:@"Repo" object:nil queue:nil usingBlock:^(NSNotification *event) {
         NSString *code = [[event userInfo] objectForKey:@"code"];
         [self receiveCode:code];
@@ -57,6 +51,20 @@
         NSLog(@"Received the code!");
     }];
     
+    UIImage *settingsImg = [UIImage imageNamed:@"settings_circle.png"];
+    self.settingsBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.settingsBtn setBackgroundImage:settingsImg forState:UIControlStateNormal];
+    self.settingsBtn.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width - 38,[[UIScreen mainScreen] bounds].size.height - 63,33,33);//
+    [self.settingsBtn addTarget:self action:@selector(settings:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.settingsBtn];
+    
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGRect fixedFrame = self.settingsBtn.frame;
+    fixedFrame.origin.y = ([[UIScreen mainScreen] bounds].size.height - 63) + scrollView.contentOffset.y;
+    self.settingsBtn.frame = fixedFrame;
 }
 
 
