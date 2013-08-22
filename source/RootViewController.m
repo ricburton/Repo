@@ -26,6 +26,7 @@
 @property (strong, nonatomic) UIButton *settingsBtn;
 @property (strong, nonatomic) UIButton *githubBtn;
 @property (strong, nonatomic) NSString *username;
+@property (strong, nonatomic) KGModal *modal;
 //@property (strong, nonatomic) UITableView *tableView;TODO fix sections?
 
 @end
@@ -50,6 +51,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserverForName:@"Repo" object:nil queue:nil usingBlock:^(NSNotification *event) {
         NSString *code = [[event userInfo] objectForKey:@"code"];
+        [self.modal hide];
         [self receiveCode:code];
         NSLog(@"OAuthCode = %@",code);
     }];
@@ -99,6 +101,35 @@
         [self createClient:token];
     }];
     
+}
+
+- (void) pushStarred {
+    [self.client getPath:@"/user/starred" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        "full_name": "square/apropos",
+//        /"description": "A simple way to serve up appropriate images for every visitor.",
+//        "url": "https://api.github.com/repos/square/apropos",
+        
+//        NSString *readme_url_data = [NSString stringWithFormat:@"%@.readme",language];
+//        NSLog(@"Readme URL%@",readme_url_data);
+//        NSArray *readme_urls = [self.response_data valueForKeyPath:readme_url_data];
+        self.dataArray = [[NSMutableArray alloc]init];
+                                    
+        NSArray *readme_urls = [responseObject valueForKeyPath:@"html_url"];
+        NSLog(@"urls: %@", readme_urls);
+        NSArray *descriptions = [responseObject valueForKeyPath:[NSString stringWithFormat:@"description"]];
+        NSLog(@"descriptions: %@", descriptions);
+        
+        NSMutableDictionary *dataDict = [NSMutableDictionary dictionaryWithObject:descriptions forKey:@"descriptions"];
+        [dataDict setObject:readme_urls forKey:@"readme_url"];
+        
+        self.arrayOfLangs = @[@"What you've starred"];
+        [self.dataArray addObject:dataDict];
+        [self.tableView reloadData];
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Username not retrieved.");
+    }];
 }
 
 - (void) createClient:(NSString *)token {
@@ -232,7 +263,6 @@
 //                [self.hud hide:YES];
 //            }
             
-
         });
     };
     
@@ -273,18 +303,7 @@
         UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 110)];
         if (self.client) {
             
-            contentView.frame = CGRectMake(0, 0, 280, 60);
-            CGRect welcomeLabelRect = contentView.bounds;
-            welcomeLabelRect.origin.y = 20;
-            welcomeLabelRect.size.height = 20;
-            UIFont *welcomeLabelFont = [UIFont boldSystemFontOfSize:17];
-            UILabel *welcomeLabel = [[UILabel alloc] initWithFrame:welcomeLabelRect];
-            welcomeLabel.text = @"You've connected.";
-            welcomeLabel.font = welcomeLabelFont;
-            welcomeLabel.textColor = [UIColor whiteColor];
-            welcomeLabel.textAlignment = NSTextAlignmentCenter;
-            welcomeLabel.backgroundColor = [UIColor clearColor];
-            [contentView addSubview:welcomeLabel];
+            [self pushStarred];
             
         } else {
             CGRect welcomeLabelRect = contentView.bounds;
@@ -312,9 +331,9 @@
             [contentView addSubview:infoLabel];
         }
     
-        KGModal *modal = [KGModal sharedInstance];
-        modal.modalBackgroundColor = [self getUIColorObjectFromHexString:@"262626" alpha:0.96];
-       [modal showWithContentView:contentView andAnimated:YES];
+        self.modal = [KGModal sharedInstance];
+        self.modal.modalBackgroundColor = [self getUIColorObjectFromHexString:@"262626" alpha:0.96];
+        [self.modal showWithContentView:contentView andAnimated:YES];
 }
 
 - (void)logout:(id)sender
@@ -354,7 +373,7 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {//TODO constants here
-    NSDictionary *colorDic = @{@"Arduino":@"#bd79d1",@"Java":@"#b07219",@"VHDL":@"#543978",@"Scala":@"#7dd3b0",@"Emacs Lisp":@"#c065db",@"Delphi":@"#b0ce4e",@"Ada":@"#02f88c",@"VimL":@"#199c4b",@"Perl":@"#0298c3",@"Lua":@"#fa1fa1",@"Rebol":@"#358a5b",@"Verilog":@"#848bf3",@"Factor":@"#636746",@"Ioke":@"#078193",@"R":@"#198ce7",@"Erlang":@"#949e0e",@"Nu":@"#c9df40",@"AutoHotkey":@"#6594b9",@"Clojure":@"#db5855",@"Shell":@"#5861ce",@"Assembly":@"#a67219",@"Parrot":@"#f3ca0a",@"C#":@"#5a25a2",@"Turing":@"#45f715",@"AppleScript":@"#3581ba",@"Eiffel":@"#946d57",@"Common%20Lisp":@"#3fb68b",@"Dart":@"#cccccc",@"SuperCollider":@"#46390b",@"CoffeeScript":@"#244776",@"XQuery":@"#2700e2",@"Haskell":@"#29b544",@"Racket":@"#ae17ff",@"Elixir":@"#6e4a7e",@"HaXe":@"#346d51",@"Ruby":@"#701516",@"Self":@"#0579aa",@"Fantom":@"#dbded5",@"Groovy":@"#e69f56",@"C":@"#555",@"JavaScript":@"#f15501",@"D":@"#fcd46d",@"ooc":@"#b0b77e",@"C++":@"#f34b7d",@"Dylan":@"#3ebc27",@"Nimrod":@"#37775b",@"Standard ML":@"#dc566d",@"Objective-C":@"#438eff",@"Nemerle":@"#0d3c6e",@"Mirah":@"#c7a938",@"Boo":@"#d4bec1",@"Objective-J":@"#ff0c5a",@"Rust":@"#dea584",@"Prolog":@"#74283c",@"Ecl":@"#8a1267",@"Gosu":@"#82937f",@"FORTRAN":@"#4d41b1",@"ColdFusion":@"#ed2cd6",@"OCaml":@"#3be133",@"Fancy":@"#7b9db4",@"Pure%20Data":@"#f15501",@"Python":@"#3581ba",@"Tcl":@"#e4cc98",@"Arc":@"#ca2afe",@"Puppet":@"#cc5555",@"Io":@"#a9188d",@"Max":@"#ce279c",@"Go":@"#8d04eb",@"ASP":@"#6a40fd",@"Visual Basic":@"#945db7",@"PHP":@"#6e03c1",@"Scheme":@"#1e4aec",@"Vala":@"#3581ba",@"Smalltalk":@"#596706",@"Matlab":@"#bb92ac",@"C#":@"#bb92af"};
+    NSDictionary *colorDic = @{@"Arduino":@"#bd79d1",@"Java":@"#b07219",@"VHDL":@"#543978",@"Scala":@"#7dd3b0",@"Emacs Lisp":@"#c065db",@"Delphi":@"#b0ce4e",@"Ada":@"#02f88c",@"VimL":@"#199c4b",@"Perl":@"#0298c3",@"Lua":@"#fa1fa1",@"Rebol":@"#358a5b",@"Verilog":@"#848bf3",@"Factor":@"#636746",@"Ioke":@"#078193",@"R":@"#198ce7",@"Erlang":@"#949e0e",@"Nu":@"#c9df40",@"AutoHotkey":@"#6594b9",@"Clojure":@"#db5855",@"Shell":@"#5861ce",@"Assembly":@"#a67219",@"Parrot":@"#f3ca0a",@"C#":@"#5a25a2",@"Turing":@"#45f715",@"AppleScript":@"#3581ba",@"Eiffel":@"#946d57",@"Common%20Lisp":@"#3fb68b",@"Dart":@"#cccccc",@"SuperCollider":@"#46390b",@"CoffeeScript":@"#244776",@"XQuery":@"#2700e2",@"Haskell":@"#29b544",@"Racket":@"#ae17ff",@"Elixir":@"#6e4a7e",@"HaXe":@"#346d51",@"Ruby":@"#701516",@"Self":@"#0579aa",@"Fantom":@"#dbded5",@"Groovy":@"#e69f56",@"C":@"#555",@"JavaScript":@"#f15501",@"D":@"#fcd46d",@"ooc":@"#b0b77e",@"C++":@"#f34b7d",@"Dylan":@"#3ebc27",@"Nimrod":@"#37775b",@"Standard ML":@"#dc566d",@"Objective-C":@"#438eff",@"Nemerle":@"#0d3c6e",@"Mirah":@"#c7a938",@"Boo":@"#d4bec1",@"Objective-J":@"#ff0c5a",@"Rust":@"#dea584",@"Prolog":@"#74283c",@"Ecl":@"#8a1267",@"Gosu":@"#82937f",@"FORTRAN":@"#4d41b1",@"ColdFusion":@"#ed2cd6",@"OCaml":@"#3be133",@"Fancy":@"#7b9db4",@"Pure%20Data":@"#f15501",@"Python":@"#3581ba",@"Tcl":@"#e4cc98",@"Arc":@"#ca2afe",@"Puppet":@"#cc5555",@"Io":@"#a9188d",@"Max":@"#ce279c",@"Go":@"#8d04eb",@"ASP":@"#6a40fd",@"Visual Basic":@"#945db7",@"PHP":@"#6e03c1",@"Scheme":@"#1e4aec",@"Vala":@"#3581ba",@"Smalltalk":@"#596706",@"Matlab":@"#bb92ac",@"C#":@"#bb92af",@"What you've starred":@"#FBC900"};
 
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 0)];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(9, 0, self.tableView.frame.size.width, 35)];
@@ -402,12 +421,20 @@
     
     NSDictionary *dictionary = [self.dataArray objectAtIndex:indexPath.section];
     NSArray *readmeArray = [dictionary objectForKey:@"descriptions"];
-    NSString *readmeText = [readmeArray objectAtIndex:indexPath.row];
+    NSString *description = [readmeArray objectAtIndex:indexPath.row]; //TODO keep language consistent.
+    NSString *readmeText;
+    if (description == (id)[NSNull null] || description.length == 0 ) {
+        readmeText = @"No description available.";
+    } else {
+        readmeText = description;
+    }
     
     NSArray *readmeURLArray = [dictionary objectForKey:@"readme_url"];
     NSString *readmeURL = [readmeURLArray objectAtIndex:indexPath.row];
         
     NSLog(@"readmeURL: %@", readmeURL);
+    NSLog(@"description: %@", description);
+    NSLog(@"description: %@", readmeText);
     if ([readmeURL isEqualToString: @"NOTHING"]) {
         NSLog(@"No stars or forks");
         cell.selectionStyle = UITableViewCellSelectionStyleNone;

@@ -73,6 +73,8 @@
     [self.saveBtn setContentMode:UIViewContentModeCenter];
     [self.saveBtn addTarget:self action:@selector(done:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.saveBtn];
+    
+    [self.tableView bringSubviewToFront:self.saveBtn];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -92,13 +94,6 @@
     
     [self.dataArray addObject:allLanguages];
     [self.tableView reloadData];
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    CGRect fixedFrame = self.saveBtn.frame;
-    fixedFrame.origin.y = ([[UIScreen mainScreen] bounds].size.height - 73.65) + scrollView.contentOffset.y;
-    self.saveBtn.frame = fixedFrame;
 }
 
 - (void)viewDidUnload
