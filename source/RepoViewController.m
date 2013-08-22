@@ -55,15 +55,16 @@
     [removeBtn addTarget:self action:@selector(remove:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:removeBtn];
     
-    
-    self.starBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.starBtn setFrame: CGRectMake(0,[[UIScreen mainScreen] bounds].size.height - 73.65,133,53)];
-    [self.starBtn setContentMode:UIViewContentModeCenter];
-    [self.starBtn setImageEdgeInsets:UIEdgeInsetsMake(10, 14.5, 10, 85.5)];
-    [self.starBtn setImage:[UIImage imageNamed:@"star_circle.png"] forState:UIControlStateNormal];
-    [self.starBtn setImage:[UIImage imageNamed:@"unstar_circle.png"] forState:UIControlStateSelected];
+    if  (self.client) {
+        self.starBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.starBtn setFrame: CGRectMake(0,[[UIScreen mainScreen] bounds].size.height - 73.65,133,53)];
+        [self.starBtn setContentMode:UIViewContentModeCenter];
+        [self.starBtn setImageEdgeInsets:UIEdgeInsetsMake(10, 14.5, 10, 85.5)];
+        [self.starBtn setImage:[UIImage imageNamed:@"star_circle.png"] forState:UIControlStateNormal];
+        [self.starBtn setImage:[UIImage imageNamed:@"unstar_circle.png"] forState:UIControlStateSelected];
 
-    [self.view addSubview:self.starBtn];
+        [self.view addSubview:self.starBtn];
+    }
 }
 
 - (void) viewDidAppear:(BOOL)animated {

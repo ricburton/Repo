@@ -36,6 +36,8 @@
 		DC473A9F17B0D496009C54E6 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC473A9E17B0D496009C54E6 /* CoreTelephony.framework */; };
 		DC968EC517C681FB00A84A51 /* iPhone Retina.png in Resources */ = {isa = PBXBuildFile; fileRef = DC968EC417C681FB00A84A51 /* iPhone Retina.png */; };
 		DC968EC717C6823400A84A51 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC968EC617C6823400A84A51 /* Icon.png */; };
+		DC968ECA17C6BA5800A84A51 /* trending_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = DC968EC817C6BA5800A84A51 /* trending_circle.png */; };
+		DC968ECB17C6BA5800A84A51 /* trending_circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC968EC917C6BA5800A84A51 /* trending_circle@2x.png */; };
 		DCBED8EF1799DF2500BDA5AD /* Documents.plist in Resources */ = {isa = PBXBuildFile; fileRef = DCBED8E21799DF2500BDA5AD /* Documents.plist */; };
 		DCBED8F01799DF2500BDA5AD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCBED8E31799DF2500BDA5AD /* InfoPlist.strings */; };
 		DCDFFDD31714DE5B0059E675 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCDFFDD21714DE5B0059E675 /* Default-568h@2x.png */; };
@@ -90,6 +92,8 @@
 		DC473A9E17B0D496009C54E6 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		DC968EC417C681FB00A84A51 /* iPhone Retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone Retina.png"; sourceTree = "<group>"; };
 		DC968EC617C6823400A84A51 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		DC968EC817C6BA5800A84A51 /* trending_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trending_circle.png; sourceTree = "<group>"; };
+		DC968EC917C6BA5800A84A51 /* trending_circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "trending_circle@2x.png"; sourceTree = "<group>"; };
 		DCBED8E21799DF2500BDA5AD /* Documents.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Documents.plist; sourceTree = "<group>"; };
 		DCBED8E41799DF2500BDA5AD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DCBED8E61799DF2500BDA5AD /* README-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "README-Info.plist"; sourceTree = "<group>"; };
@@ -205,6 +209,8 @@
 				DC26351117C42875008E0B31 /* settings_circle@2x.png */,
 				DC26350C17C41697008E0B31 /* x_circle.png */,
 				DC26350D17C41697008E0B31 /* x_circle@2x.png */,
+				DC968EC817C6BA5800A84A51 /* trending_circle.png */,
+				DC968EC917C6BA5800A84A51 /* trending_circle@2x.png */,
 				DC26350817C4096C008E0B31 /* connect_with_github_white.png */,
 				DC26350917C4096C008E0B31 /* connect_with_github_white@2x.png */,
 				DC473A9617B0C54C009C54E6 /* no_repos.png */,
@@ -328,6 +334,8 @@
 				DCEFC3E517C5554A00318EC3 /* repo_icon@2x.png in Resources */,
 				DC968EC517C681FB00A84A51 /* iPhone Retina.png in Resources */,
 				DC968EC717C6823400A84A51 /* Icon.png in Resources */,
+				DC968ECA17C6BA5800A84A51 /* trending_circle.png in Resources */,
+				DC968ECB17C6BA5800A84A51 /* trending_circle@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

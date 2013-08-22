@@ -25,6 +25,7 @@
 @property (strong, nonatomic) MBProgressHUD *sad_hud;
 @property (strong, nonatomic) UIButton *settingsBtn;
 @property (strong, nonatomic) UIButton *githubBtn;
+@property (strong, nonatomic) UIButton *trendingBtn;
 @property (strong, nonatomic) NSString *username;
 @property (strong, nonatomic) KGModal *modal;
 //@property (strong, nonatomic) UITableView *tableView;TODO fix sections?
@@ -85,6 +86,10 @@
     CGRect fixedGitHubFrame = self.githubBtn.frame;
     fixedGitHubFrame.origin.y = ([[UIScreen mainScreen] bounds].size.height - 73.65) + scrollView.contentOffset.y;
     self.githubBtn.frame = fixedGitHubFrame;
+    
+    CGRect fixedTrendingFrame = self.trendingBtn.frame;
+    fixedTrendingFrame.origin.y = ([[UIScreen mainScreen] bounds].size.height - 73.65) + scrollView.contentOffset.y;
+    self.trendingBtn.frame = fixedTrendingFrame;
 }
 
 
@@ -100,19 +105,16 @@
         [RFKeychain setPassword:token account:@"GitHub" service:@"Repo"];
         [self createClient:token];
     }];
-    
 }
 
 - (void) pushStarred {
+    self.hud = [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
+    self.hud.mode = MBProgressHUDModeIndeterminate;
+    self.hud.animationType = MBProgressHUDAnimationZoomIn;
+    self.hud.labelText = @"Loading";
+    self.dataArray = [[NSMutableArray alloc]init];
+    
     [self.client getPath:@"/user/starred" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        "full_name": "square/apropos",
-//        /"description": "A simple way to serve up appropriate images for every visitor.",
-//        "url": "https://api.github.com/repos/square/apropos",
-        
-//        NSString *readme_url_data = [NSString stringWithFormat:@"%@.readme",language];
-//        NSLog(@"Readme URL%@",readme_url_data);
-//        NSArray *readme_urls = [self.response_data valueForKeyPath:readme_url_data];
-        self.dataArray = [[NSMutableArray alloc]init];
                                     
         NSArray *readme_urls = [responseObject valueForKeyPath:@"html_url"];
         NSLog(@"urls: %@", readme_urls);
@@ -126,10 +128,31 @@
         [self.dataArray addObject:dataDict];
         [self.tableView reloadData];
         
+        UIImage *trendingImg = [UIImage imageNamed:@"trending_circle.png"];
+        self.trendingBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.trendingBtn setImage:trendingImg forState:UIControlStateNormal];
+        [self.trendingBtn setFrame: CGRectMake(0,[[UIScreen mainScreen] bounds].size.height - 73.65,133,53)];
+        [self.trendingBtn setContentMode:UIViewContentModeCenter];
+        [self.trendingBtn setImageEdgeInsets:UIEdgeInsetsMake(10, 14.5, 10, 85.5)];
+        [self.trendingBtn addTarget:self action:@selector(trending:) forControlEvents:UIControlEventTouchUpInside];
+        [self.githubBtn removeFromSuperview];
+        [self.settingsBtn removeFromSuperview];
+
+        [self.view addSubview:self.trendingBtn];
+        [self.hud hide:YES];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Username not retrieved.");
     }];
+}
+
+- (void)trending:(id)sender
+{
+    self.shouldReload = TRUE;
+    [self testInternetConnection];
+    [self.view addSubview:self.githubBtn];
+    [self.view addSubview:self.settingsBtn];
+    [self.trendingBtn removeFromSuperview];
 }
 
 - (void) createClient:(NSString *)token {
@@ -302,8 +325,10 @@
 {
         UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 110)];
         if (self.client) {
-            
             [self pushStarred];
+            
+            Mixpanel *mixpanel = [Mixpanel sharedInstance];
+            [mixpanel track:@"starred_click"];
             
         } else {
             CGRect welcomeLabelRect = contentView.bounds;
@@ -329,11 +354,14 @@
             UIFont *infoFont = [UIFont boldSystemFontOfSize:13];
             infoLabel.font = infoFont;
             [contentView addSubview:infoLabel];
+            
+            self.modal = [KGModal sharedInstance];
+            self.modal.modalBackgroundColor = [self getUIColorObjectFromHexString:@"262626" alpha:0.96];
+            [self.modal showWithContentView:contentView andAnimated:YES];
+            
+            Mixpanel *mixpanel = [Mixpanel sharedInstance];
+            [mixpanel track:@"connect_with_github_click"];
         }
-    
-        self.modal = [KGModal sharedInstance];
-        self.modal.modalBackgroundColor = [self getUIColorObjectFromHexString:@"262626" alpha:0.96];
-        [self.modal showWithContentView:contentView andAnimated:YES];
 }
 
 - (void)logout:(id)sender
