@@ -9,6 +9,7 @@
 #import "GithubOAuth.h"
 #import "RFKeychain.h"
 #import "KGModal.h"
+#import "Mixpanel.h"
 
 @interface RootViewController () <UITableViewDelegate, UITableViewDataSource>
 
