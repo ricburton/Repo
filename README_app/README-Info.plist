@@ -18,6 +18,7 @@
 			<array>
 				<string>iPhone Retina.png</string>
 				<string>iPhone.png</string>
+				<string>Icon.png</string>
 			</array>
 			<key>UIPrerenderedIcon</key>
 			<true/>

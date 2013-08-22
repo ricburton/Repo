@@ -1,5 +1,5 @@
 #import <UIKit/UIKit.h>
-#import "TableViewController.h"
+#import "LanguageController.h"
 #import "RepoViewController.h"
 #import "Reachability.h"
 #import "OctoKit.h"

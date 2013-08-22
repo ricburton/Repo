@@ -78,8 +78,6 @@
         NSString *repository = self.repo;
         OCTClient *client = self.client;
         
-
-        
         //GET /user/starred/:owner/:repo
         NSString *path = [@"/user/starred/" stringByAppendingString:repository];
         NSLog(@"path: %@", path);
@@ -100,8 +98,6 @@
         //Not logged in so no starring.
     }
 }
-
-
 
 - (void) star:(id)sender
 {
@@ -149,46 +145,8 @@
      @"unstarred": self.url
      }];
     
-    
     [self updateStarButton];
 }
-
-- (BOOL) gazing:(id)sender completionHandler:(void (^)(id))handler
-{
-    NSString *repository = self.repo;
-    OCTClient *client = self.client;
-    
-    //GET /user/starred/:owner/:repo
-    NSString *path = [@"/user/starred/" stringByAppendingString:repository];
-    [client getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Unstarred successfully");
-        handler(responseObject);
-//        handler(return TRUE);
-//        NSInteger *status = [operation.response statusCode];
-//        return TRUE;
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Unsuccessful unstarring");
-}];
-    
-    
-    
-//    -- (void) gazingRepos:(OCTClient *)client completionHandler:(void (^)(id))handler  {
-//        -    [client getPath:@"/user/starred" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//            -        handler(responseObject);
-//            -    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                -        NSLog(@"Gazing request failed.");
-//                -    }];
-    
-//    client.?/
-    
-//    if (status == 204) {
-//        return TRUE;
-//    } else {
-//        return FALSE;
-//    }
-    
-}
-
 
 - (void)remove:(id)sender
 {

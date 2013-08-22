@@ -1,9 +1,9 @@
-#import "TableViewController.h"
+#import "LanguageController.h"
 #import "TableViewCell.h"
 #import "AFNetworking.h"
 #import "RootViewController.h"
 
-@interface TableViewController ()
+@interface LanguageController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic) NSArray *dataSource;
 @property (strong, nonatomic) NSArray *prefs;
@@ -17,36 +17,7 @@
 
 @end
 
-@implementation TableViewController
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        
-        self.directories   = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        self.documents     = [self.directories lastObject];
-        self.filePathLangs = [self.documents stringByAppendingPathComponent:@"langs.plist"];
-        
-        NSMutableArray *loadedLangs = [NSMutableArray arrayWithContentsOfFile:self.filePathLangs];
-        if (loadedLangs.count > 0) {
-            self.selectedMarks = loadedLangs;
-        } else {
-            self.selectedMarks = [NSMutableArray new];
-        }
-        
-        self.dataArray = [[NSMutableArray alloc] init];
-        
-        NSArray *topLanguages = [NSArray arrayWithObjects:@"JavaScript",@"Ruby",@"Java",@"Shell",@"Python",@"PHP",@"C",@"C++",@"Perl",@"CoffeeScript", nil];
-        [self.dataArray addObject:topLanguages];
-        
-        NSArray *allLanguages = [NSArray arrayWithObjects: @"ABAP",@"ActionScript",@"Ada",@"Apex",@"AppleScript",@"Arc",@"Arduino",@"ASP",@"Assembly",@"Augeas",@"AutoHotkey",@"Awk",@"Boo",@"Bro",@"C#",@"Ceylon",@"CLIPS",@"Clojure",@"ColdFusion",@"Common%20Lisp",@"Coq",@"D",@"Dart",@"DCPU-16%20ASM",@"Delphi",@"DOT",@"Dylan",@"eC",@"Ecl",@"Eiffel",@"Elixir",@"Emacs%20Lisp",@"Erlang",@"F#",@"Factor",@"Fancy",@"Fantom",@"Forth",@"FORTRAN",@"Go",@"Gosu",@"Groovy",@"Haskell",@"Haxe",@"Io",@"Ioke",@"Julia",@"Kotlin",@"Lasso",@"LiveScript",@"Logos",@"Logtalk",@"Lua",@"M",@"Matlab",@"Max",@"Mirah",@"Monkey",@"MoonScript",@"Nemerle",@"Nimrod",@"Nu",@"Objective-C",@"Objective-J",@"OCaml",@"Omgrofl",@"ooc",@"Opa",@"OpenEdge%20ABL",@"Parrot",@"Pike",@"PogoScript",@"PowerShell",@"Processing",@"Prolog",@"Puppet",@"Pure%20Data",@"R",@"Racket",@"Ragel%20in%20Ruby%20Host",@"Rebol",@"Rouge",@"Rust",@"Scala",@"Scheme",@"Scilab",@"Self",@"Smalltalk",@"Standard%20ML",@"SuperCollider",@"Tcl",@"Turing",@"TXL",@"TypeScript",@"Vala",@"Verilog",@"VHDL",@"VimL",@"Visual%20Basic",@"wisp",@"XC",@"XML",@"XProc",@"XQuery",@"XSLT",@"Xtend", nil];
-        
-        [self.dataArray addObject:allLanguages];
-        
-    }
-    return self;
-}
+@implementation LanguageController
 
 //TODO - Move this repeated code to a Pod
 - (unsigned int)intFromHexString:(NSString *)hexStr
@@ -76,9 +47,23 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[self navigationController] setNavigationBarHidden:YES];
-    [self.tableView reloadData];
+    
+    self.directories   = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    self.documents     = [self.directories lastObject];
+    self.filePathLangs = [self.documents stringByAppendingPathComponent:@"langs.plist"];
+    
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,320,[[UIScreen mainScreen] bounds].size.height - 20) style:UITableViewStylePlain];
+    [self.view addSubview:self.tableView];
+    
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
     self.tableView.separatorColor = [self getUIColorObjectFromHexString:@"#DDDDDD" alpha:.32];
+    
+    [[self navigationController] setNavigationBarHidden:YES];
+
+    
+
+
     
     UIImage *settingsImg = [UIImage imageNamed:@"save_circle.png"];
     self.saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -88,6 +73,25 @@
     [self.saveBtn setContentMode:UIViewContentModeCenter];
     [self.saveBtn addTarget:self action:@selector(done:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.saveBtn];
+}
+
+- (void) viewDidAppear:(BOOL)animated {
+    NSMutableArray *loadedLangs = [NSMutableArray arrayWithContentsOfFile:self.filePathLangs];
+    if (loadedLangs.count > 0) {
+        self.selectedMarks = loadedLangs;
+    } else {
+        self.selectedMarks = [NSMutableArray new];
+    }
+    
+    self.dataArray = [[NSMutableArray alloc] init];
+    
+    NSArray *topLanguages = [NSArray arrayWithObjects:@"JavaScript",@"Ruby",@"Java",@"Shell",@"Python",@"PHP",@"C",@"C++",@"Perl",@"CoffeeScript", nil];
+    [self.dataArray addObject:topLanguages];
+    
+    NSArray *allLanguages = [NSArray arrayWithObjects: @"ABAP",@"ActionScript",@"Ada",@"Apex",@"AppleScript",@"Arc",@"Arduino",@"ASP",@"Assembly",@"Augeas",@"AutoHotkey",@"Awk",@"Boo",@"Bro",@"C#",@"Ceylon",@"CLIPS",@"Clojure",@"ColdFusion",@"Common%20Lisp",@"Coq",@"D",@"Dart",@"DCPU-16%20ASM",@"Delphi",@"DOT",@"Dylan",@"eC",@"Ecl",@"Eiffel",@"Elixir",@"Emacs%20Lisp",@"Erlang",@"F#",@"Factor",@"Fancy",@"Fantom",@"Forth",@"FORTRAN",@"Go",@"Gosu",@"Groovy",@"Haskell",@"Haxe",@"Io",@"Ioke",@"Julia",@"Kotlin",@"Lasso",@"LiveScript",@"Logos",@"Logtalk",@"Lua",@"M",@"Matlab",@"Max",@"Mirah",@"Monkey",@"MoonScript",@"Nemerle",@"Nimrod",@"Nu",@"Objective-C",@"Objective-J",@"OCaml",@"Omgrofl",@"ooc",@"Opa",@"OpenEdge%20ABL",@"Parrot",@"Pike",@"PogoScript",@"PowerShell",@"Processing",@"Prolog",@"Puppet",@"Pure%20Data",@"R",@"Racket",@"Ragel%20in%20Ruby%20Host",@"Rebol",@"Rouge",@"Rust",@"Scala",@"Scheme",@"Scilab",@"Self",@"Smalltalk",@"Standard%20ML",@"SuperCollider",@"Tcl",@"Turing",@"TXL",@"TypeScript",@"Vala",@"Verilog",@"VHDL",@"VimL",@"Visual%20Basic",@"wisp",@"XC",@"XML",@"XProc",@"XQuery",@"XSLT",@"Xtend", nil];
+    
+    [self.dataArray addObject:allLanguages];
+    [self.tableView reloadData];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView

@@ -1,5 +1,5 @@
 #import "AppDelegate.h"
-#import "TableViewController.h"
+#import "LanguageController.h"
 #import "RootViewController.h"
 #import "Mixpanel.h"
 #import "NSURL+OAuthKit.h"

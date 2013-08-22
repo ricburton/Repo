@@ -1,5 +1,5 @@
 #import "RootViewController.h"
-#import "TableViewController.h"
+#import "LanguageController.h"
 #import "AFNetworking.h"
 #import "RepoViewController.h"
 #import "RMCustomCell.h"
@@ -39,7 +39,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,320,[[UIScreen mainScreen] bounds].size.height) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,320,[[UIScreen mainScreen] bounds].size.height - 20) style:UITableViewStylePlain];
     [self.view addSubview:self.tableView];
     [[self navigationController] setNavigationBarHidden:YES];
     self.tableView.tableFooterView = [[UIView alloc]init];
@@ -259,9 +259,8 @@
 - (void)settings:(id)sender
 {
     [self.hud hide:YES];
-    TableViewController *langList = [[TableViewController alloc] initWithStyle:UITableViewStylePlain];
-    UINavigationController *langTable = [[UINavigationController alloc] initWithRootViewController:langList];
-    [self presentViewController:langTable animated:YES completion:nil];
+    UIViewController *langList = LanguageController.new;
+    [self presentViewController:langList animated:YES completion:nil];
     self.shouldReload = YES;
 }
 
