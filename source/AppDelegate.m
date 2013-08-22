@@ -4,11 +4,19 @@
 #import "Mixpanel.h"
 #import "NSURL+OAuthKit.h"
 #import "Tokens.h"
+#import "RFKeychain.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //Clear keychain on first run in case of reinstallation
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"FirstRun"]) {
+        // Delete values from keychain here
+        [RFKeychain deletePasswordForAccount:@"GitHub" service:@"Repo"];
+        [[NSUserDefaults standardUserDefaults] setValue:@"1strun" forKey:@"FirstRun"];
+    }
+    
     [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
