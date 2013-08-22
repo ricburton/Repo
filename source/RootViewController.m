@@ -25,7 +25,7 @@
 @property (strong, nonatomic) MBProgressHUD *sad_hud;
 @property (strong, nonatomic) UIButton *settingsBtn;
 @property (strong, nonatomic) UIButton *githubBtn;
-@property (strong, nonatomic) NSString *repoDirectory;
+@property (strong, nonatomic) NSString *username;
 //@property (strong, nonatomic) UITableView *tableView;TODO fix sections?
 
 @end
@@ -52,7 +52,6 @@
         NSString *code = [[event userInfo] objectForKey:@"code"];
         [self receiveCode:code];
         NSLog(@"OAuthCode = %@",code);
-        NSLog(@"Received the code!");
     }];
     
     
@@ -105,6 +104,19 @@
 - (void) createClient:(NSString *)token {
     self.client = [[OCTClient alloc] initWithServer:OCTServer.dotComServer];
     [self.client setDefaultHeader:@"Authorization" value:[NSString stringWithFormat:@"Bearer %@", token]];
+    //GET /user/starred/:owner/:repo
+    if (self.client) {
+
+        [self.client getPath:@"/user" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            self.username = [responseObject objectForKey:@"login"];
+            NSLog(@"Username: %@", self.username);
+            Mixpanel *mixpanel = [Mixpanel sharedInstance]; //TODO do i have to repeat this?
+            [mixpanel identify:self.username];
+            [mixpanel.people set:@"Opened the app" to:[NSDate date]];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Username not retrieved.");
+        }];
+    }
 }
 
 - (void)addItemViewController:(RepoViewController *)controller didFinishEnteringItem:(BOOL)item
@@ -122,7 +134,7 @@
     
     if (self.keychainToken) {
         NSLog(@"Creating the client");
-        [self createClient:self.keychainToken]; //TODO — should I recreate the client each time?
+        [self createClient:self.keychainToken];
     } else {
         self.client = nil;
     }
@@ -411,7 +423,7 @@
         NSString *githubUser   = url.pathComponents[1];
         NSString *repoTitle    = url.pathComponents[2];
         NSArray *directoryParts = @[githubUser, repoTitle];
-        self.repoDirectory = [directoryParts componentsJoinedByString:@" / "];
+        NSString *repoDirectory = [directoryParts componentsJoinedByString:@" / "];
 
         const CGFloat fontSize = 13;
         UIFont *boldFont = [UIFont boldSystemFontOfSize:fontSize];
@@ -430,7 +442,7 @@
         const NSRange rangeSlash = [repoTitle rangeOfString:@"/"];
         
         NSMutableAttributedString *attributedText =
-        [[NSMutableAttributedString alloc] initWithString:self.repoDirectory attributes:attrs];
+        [[NSMutableAttributedString alloc] initWithString:repoDirectory attributes:attrs];
         [attributedText setAttributes:subAttrs range:rangeSlash];
         
         cell.backgroundColor      = [self getUIColorObjectFromHexString:@"#FBFBFB" alpha:1];
@@ -454,15 +466,20 @@
     if ([readmeURL isEqualToString: @"NOTHING"]) {
     } else {
         RepoViewController *webView = [[RepoViewController alloc] init];
-        webView.url = [NSURL URLWithString:readmeURL];
-        webView.repo = [self.repoDirectory stringByReplacingOccurrencesOfString:@" " withString:@""];
+        NSURL *url = [NSURL URLWithString:readmeURL]; //TODO Tidy this up
+        webView.url = url;
+        NSString *githubUser   = url.pathComponents[1];
+        NSString *repoTitle    = url.pathComponents[2];
+        NSArray *directoryParts = @[githubUser, repoTitle];
+        NSString *repoDirectory = [directoryParts componentsJoinedByString:@"/"];
+        webView.repo = repoDirectory;
+        
         if (self.client) {
             webView.client = self.client;
         }
         webView.delegate = self;
         
         Mixpanel *mixpanel = [Mixpanel sharedInstance];
-        
         [mixpanel track:@"readme_click" properties:@{
          @"read": readmeURL
          }];

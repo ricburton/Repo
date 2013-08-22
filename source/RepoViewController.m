@@ -9,7 +9,9 @@
 
 @property (strong, nonatomic) UIWebView *webView;
 @property (nonatomic, retain) UIActivityIndicatorView *activityIndicatorView;
-@property (nonatomic, retain) UIButton *starBtn;
+@property (nonatomic, strong) UIButton *starBtn;
+@property (strong, nonatomic) MBProgressHUD *starHud;
+@property (strong, nonatomic) MBProgressHUD *unstarHud;
 
 @end
 
@@ -20,6 +22,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSLog(@"repo: %@",self.repo);
+    NSLog(@"url: %@",self.url);
 
     [self.delegate addItemViewController:self didFinishEnteringItem:NO];
     self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,self.view.frame.size.height)];
@@ -49,24 +54,37 @@
     [removeBtn setContentEdgeInsets:UIEdgeInsetsMake(10, 85.5, 10, 14.5)];
     [removeBtn addTarget:self action:@selector(remove:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:removeBtn];
-    
-    if (self.client) {//TODO View did appear.
+}
+
+- (void) viewDidAppear:(BOOL)animated {
+    [self updateStarButton];
+}
+
+- (void) updateStarButton {
+    if (self.client)
+    {
         //Starred already?
-        
-//        NSData *stargazer = [self gazing:@selector(gazing:completionHandler:) completionHandler:ch];
         self.starBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         
-        BOOL *stargazer = FALSE;
-        if (stargazer) {
-            UIImage *starImg = [UIImage imageNamed:@"star_circle.png"];
-            [self.starBtn setImage:starImg forState:UIControlStateNormal];
-            
-            [self.starBtn addTarget:self action:@selector(star:) forControlEvents:UIControlEventTouchUpInside];
+        [self.starBtn setImage:[UIImage imageNamed:@"star_circle.png"] forState:UIControlStateNormal];
+        [self.starBtn setImage:[UIImage imageNamed:@"unstar_circle.png"] forState:UIControlStateSelected];
+        
+        NSString *repository = self.repo;
+        OCTClient *client = self.client;
+        
+        //GET /user/starred/:owner/:repo
+        NSString *path = [@"/user/starred/" stringByAppendingString:repository];
+        NSLog(@"path: %@", path);
+        [client getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"Is a stargazer");
+            [self.starBtn addTarget:self action:@selector(unstar:) forControlEvents:UIControlEventTouchUpInside];
+            self.starBtn.selected = TRUE;
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Not a stargazer");
 
-        } else {
-            UIImage *starImg = [UIImage imageNamed:@"unstar_circle.png"];
-            [self.starBtn setImage:starImg forState:UIControlStateNormal];
-        }
+            [self.starBtn addTarget:self action:@selector(star:) forControlEvents:UIControlEventTouchUpInside];
+            self.starBtn.selected = FALSE;
+        }];
         
         [self.starBtn setFrame: CGRectMake(0,[[UIScreen mainScreen] bounds].size.height - 73.65,133,53)];
         [self.starBtn setContentMode:UIViewContentModeCenter];
@@ -77,19 +95,34 @@
     }
 }
 
+
+
 - (void) star:(id)sender
 {
-//    (NSString *)repository client:(OCTClient *)client
+    self.starHud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.starHud.mode = MBProgressHUDModeIndeterminate;
+    self.starHud.animationType = MBProgressHUDAnimationZoomIn;
+    self.starHud.labelText = @"Starring";
+    
     NSString *repository = self.repo;
     OCTClient *client = self.client;
 
     //PUT /user/starred/:owner/:repo
-    NSString *path = [@"/user/starred/%@" stringByAppendingString:repository];
+    NSString *path = [@"/user/starred/" stringByAppendingString:repository];
     [client putPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"Starred successfully");
+        [self.starBtn setSelected: TRUE];
+        [self.starHud hide:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Unsuccessful stargazing");
     }];
+    
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"star_click" properties:@{
+     @"starred": self.url
+     }];
+    
+    [self updateStarButton];
 }
 
 - (void) unstar:(id)sender
@@ -97,13 +130,28 @@
     NSString *repository = self.repo;
     OCTClient *client = self.client;
     
+    self.starHud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.starHud.mode = MBProgressHUDModeIndeterminate;
+    self.starHud.animationType = MBProgressHUDAnimationZoomIn;
+    self.starHud.labelText = @"Unstarring";
+
     //DELETE /user/starred/:owner/:repo
-    NSString *path = [@"/user/starred/%@" stringByAppendingString:repository];
+    NSString *path = [@"/user/starred/" stringByAppendingString:repository];
     [client deletePath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"Unstarred successfully");
+        [self.starBtn setSelected: FALSE];
+        [self.starHud hide:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Unsuccessful unstarring");
     }];
+    
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"star_click" properties:@{
+     @"unstarred": self.url
+     }];
+    
+    
+    [self updateStarButton];
 }
 
 - (BOOL) gazing:(id)sender completionHandler:(void (^)(id))handler
@@ -112,7 +160,7 @@
     OCTClient *client = self.client;
     
     //GET /user/starred/:owner/:repo
-    NSString *path = [@"/user/starred/%@" stringByAppendingString:repository];
+    NSString *path = [@"/user/starred/" stringByAppendingString:repository];
     [client getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"Unstarred successfully");
         handler(responseObject);
