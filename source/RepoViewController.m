@@ -54,6 +54,16 @@
     [removeBtn setContentEdgeInsets:UIEdgeInsetsMake(10, 85.5, 10, 14.5)];
     [removeBtn addTarget:self action:@selector(remove:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:removeBtn];
+    
+    
+    self.starBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.starBtn setFrame: CGRectMake(0,[[UIScreen mainScreen] bounds].size.height - 73.65,133,53)];
+    [self.starBtn setContentMode:UIViewContentModeCenter];
+    [self.starBtn setImageEdgeInsets:UIEdgeInsetsMake(10, 14.5, 10, 85.5)];
+    [self.starBtn setImage:[UIImage imageNamed:@"star_circle.png"] forState:UIControlStateNormal];
+    [self.starBtn setImage:[UIImage imageNamed:@"unstar_circle.png"] forState:UIControlStateSelected];
+
+    [self.view addSubview:self.starBtn];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -64,13 +74,11 @@
     if (self.client)
     {
         //Starred already?
-        self.starBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        
-        [self.starBtn setImage:[UIImage imageNamed:@"star_circle.png"] forState:UIControlStateNormal];
-        [self.starBtn setImage:[UIImage imageNamed:@"unstar_circle.png"] forState:UIControlStateSelected];
         
         NSString *repository = self.repo;
         OCTClient *client = self.client;
+        
+
         
         //GET /user/starred/:owner/:repo
         NSString *path = [@"/user/starred/" stringByAppendingString:repository];
@@ -85,11 +93,9 @@
             [self.starBtn addTarget:self action:@selector(star:) forControlEvents:UIControlEventTouchUpInside];
             self.starBtn.selected = FALSE;
         }];
-        
-        [self.starBtn setFrame: CGRectMake(0,[[UIScreen mainScreen] bounds].size.height - 73.65,133,53)];
-        [self.starBtn setContentMode:UIViewContentModeCenter];
-        [self.starBtn setImageEdgeInsets:UIEdgeInsetsMake(10, 14.5, 10, 85.5)];
-        [self.view addSubview:self.starBtn];
+//        [self.starHud hide:YES];
+//        [self.unstarHud hide:YES];
+
     } else {
         //Not logged in so no starring.
     }
@@ -99,10 +105,9 @@
 
 - (void) star:(id)sender
 {
-    self.starHud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.starHud = [MBProgressHUD showHUDAddedTo:self.view animated:NO];
     self.starHud.mode = MBProgressHUDModeIndeterminate;
     self.starHud.animationType = MBProgressHUDAnimationZoomIn;
-    self.starHud.labelText = @"Starring";
     
     NSString *repository = self.repo;
     OCTClient *client = self.client;
@@ -129,18 +134,12 @@
 {
     NSString *repository = self.repo;
     OCTClient *client = self.client;
-    
-    self.starHud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    self.starHud.mode = MBProgressHUDModeIndeterminate;
-    self.starHud.animationType = MBProgressHUDAnimationZoomIn;
-    self.starHud.labelText = @"Unstarring";
 
     //DELETE /user/starred/:owner/:repo
     NSString *path = [@"/user/starred/" stringByAppendingString:repository];
     [client deletePath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"Unstarred successfully");
         [self.starBtn setSelected: FALSE];
-        [self.starHud hide:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Unsuccessful unstarring");
     }];

@@ -110,13 +110,16 @@
         [self.client getPath:@"/user" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
             self.username = [responseObject objectForKey:@"login"];
             NSLog(@"Username: %@", self.username);
-            Mixpanel *mixpanel = [Mixpanel sharedInstance]; //TODO do i have to repeat this?
-            [mixpanel identify:self.username];
-            [mixpanel.people set:@"Opened the app" to:[NSDate date]];
+
+            
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"Username not retrieved.");
         }];
     }
+    
+    Mixpanel *mixpanel = [Mixpanel sharedInstance]; //TODO do i have to repeat this?
+    [mixpanel identify:self.username];
+    [mixpanel.people set:@"Opened the app" to:[NSDate date]];
 }
 
 - (void)addItemViewController:(RepoViewController *)controller didFinishEnteringItem:(BOOL)item
