@@ -13,7 +13,7 @@
     //Clear keychain on first run in case of reinstallation
     if (![[NSUserDefaults standardUserDefaults] objectForKey:@"FirstRun"]) {
         // Delete values from keychain here
-        [RFKeychain deletePasswordForAccount:@"GitHub" service:@"Repo"];
+        [RFKeychain deletePasswordForAccount:KEYCHAIN_ACCOUNT service:KEYCHAIN_SERVICE];
         [[NSUserDefaults standardUserDefaults] setValue:@"1strun" forKey:@"FirstRun"];
     }
     

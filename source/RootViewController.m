@@ -10,6 +10,7 @@
 #import "RFKeychain.h"
 #import "KGModal.h"
 #import "Mixpanel.h"
+#import "Tokens.h"
 
 @interface RootViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -103,7 +104,7 @@
     [[GitHubOAuth sharedClient] requestAccessToken:code completionHandler:^(NSString *token, AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Got token %@", token);
         
-        [RFKeychain setPassword:token account:@"GitHub" service:@"Repo"];
+        [RFKeychain setPassword:token account:KEYCHAIN_ACCOUNT service:KEYCHAIN_SERVICE];
         [self createClient:token];
     }];
 }
