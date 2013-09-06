@@ -92,6 +92,7 @@
 		DC473A9C17B0D48A009C54E6 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		DC473A9E17B0D496009C54E6 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		DC68C7A517DA50C3000B0F35 /* Tokens-example.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tokens-example.h"; sourceTree = "<group>"; };
+		DC68C7A617DA5180000B0F35 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		DC968EC417C681FB00A84A51 /* iPhone Retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone Retina.png"; sourceTree = "<group>"; };
 		DC968EC817C6BA5800A84A51 /* trending_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trending_circle.png; sourceTree = "<group>"; };
 		DC968EC917C6BA5800A84A51 /* trending_circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "trending_circle@2x.png"; sourceTree = "<group>"; };
@@ -245,6 +246,7 @@
 				ECC0D3E617A1CE0100016744 /* TableViewCell.m */,
 				ECC0D3E717A1CE0100016744 /* LanguageController.h */,
 				ECC0D3E817A1CE0100016744 /* LanguageController.m */,
+				DC68C7A617DA5180000B0F35 /* Constants.h */,
 				ECC0D3E917A1CE0100016744 /* main.m */,
 				ECC0D3EA17A1CE0100016744 /* README-prefix.pch */,
 				ECC0D3EB17A1CE0100016744 /* RepoViewController.h */,
