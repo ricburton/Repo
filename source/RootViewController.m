@@ -120,13 +120,13 @@
     
     [self.client getPath:@"/user/starred" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                     
-        NSArray *readme_urls = [responseObject valueForKeyPath:@"html_url"];
-        NSLog(@"urls: %@", readme_urls);
+        NSArray *repo_urls = [responseObject valueForKeyPath:@"html_url"];
+        NSLog(@"urls: %@", repo_urls);
         NSArray *descriptions = [responseObject valueForKeyPath:[NSString stringWithFormat:@"description"]];
         NSLog(@"descriptions: %@", descriptions);
         
         NSMutableDictionary *dataDict = [NSMutableDictionary dictionaryWithObject:descriptions forKey:@"descriptions"];
-        [dataDict setObject:readme_urls forKey:@"readme_url"];
+        [dataDict setObject:repo_urls forKey:@"repo_url"];
         
         self.arrayOfLangs = @[@"What you've starred"];
         [self.dataArray addObject:dataDict];
@@ -260,21 +260,21 @@
                         NSString *languageWithoutSpace = [languageWithoutPercent stringByReplacingOccurrencesOfString:@" " withString:@"-"];
                         NSString *language = [languageWithoutSpace lowercaseString];
                         
-                        NSString *readme_url_data = [NSString stringWithFormat:@"%@.readme",language];
-                        NSLog(@"Readme URL%@",readme_url_data);
-                        NSArray *readme_urls = [self.response_data valueForKeyPath:readme_url_data];
+                        NSString *repo_url_data = [NSString stringWithFormat:@"%@.readme",language];//TODO fix API
+                        NSLog(@"repo URL%@",repo_url_data);
+                        NSArray *repo_urls = [self.response_data valueForKeyPath:repo_url_data];
                         
                         NSArray *descriptions = [self.response_data valueForKeyPath:[NSString stringWithFormat:@"%@.description",language]];
                         
-                        if (descriptions && readme_urls) {
+                        if (descriptions && repo_urls) {
                             NSMutableDictionary *dataDict = [NSMutableDictionary dictionaryWithObject:descriptions forKey:@"descriptions"];
-                            [dataDict setObject:readme_urls forKey:@"readme_url"];
+                            [dataDict setObject:repo_urls forKey:@"repo_url"];
                             
                             [self.dataArray addObject:dataDict];
                         } else {
                             NSLog(@"No stars or forks");
                             NSMutableDictionary *dataDict = [NSMutableDictionary dictionaryWithObject:@[@"NOTHING"] forKey:@"descriptions"];
-                            [dataDict setObject:@[@"NOTHING"] forKey:@"readme_url"];
+                            [dataDict setObject:@[@"NOTHING"] forKey:@"repo_url"];
                             [self.dataArray addObject:dataDict];
                         }
                     }
@@ -305,8 +305,6 @@
             
             self.tableView.allowsSelection = NO;
             self.navigationItem.rightBarButtonItem.enabled = NO;
-            
-            
         });
     };
     
@@ -428,22 +426,24 @@
     }
     
     NSDictionary *dictionary = [self.dataArray objectAtIndex:indexPath.section];
-    NSArray *readmeArray = [dictionary objectForKey:@"descriptions"];
-    NSString *description = [readmeArray objectAtIndex:indexPath.row]; //TODO keep language consistent.
-    NSString *readmeText;
+    NSArray *repoArray = [dictionary objectForKey:@"descriptions"];
+    NSString *description = [repoArray objectAtIndex:indexPath.row]; //TODO keep language consistent.
+    NSString *repoText;
     if (description == (id)[NSNull null] || description.length == 0 ) {
-        readmeText = @"No description available.";
+        repoText = @"No description available.";
     } else {
-        readmeText = description;
+        repoText = description;
     }
     
-    NSArray *readmeURLArray = [dictionary objectForKey:@"readme_url"];
-    NSString *readmeURL = [readmeURLArray objectAtIndex:indexPath.row];
+    NSArray *repoURLArray = [dictionary objectForKey:@"repo_url"];
+    NSString *repoURL = [repoURLArray objectAtIndex:indexPath.row];
         
-    NSLog(@"readmeURL: %@", readmeURL);
+    NSLog(@"repoURL: %@", repoURL);
     NSLog(@"description: %@", description);
-    NSLog(@"description: %@", readmeText);
-    if ([readmeURL isEqualToString: @"NOTHING"]) {
+    NSLog(@"description: %@", repoText);
+    if (repoURL == (id)[NSNull null] || repoURL.length == 0 ) { //TODO handle nil here gradefully
+//        NSDictionary
+    } else if ([repoURL isEqualToString: @"NOTHING"]) {
         NSLog(@"No stars or forks");
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.repoTitle.text = @"No projects starred or forked.";
@@ -452,10 +452,8 @@
         cell.contestIcon.image = [UIImage imageNamed:@"no_repos.png"];
         
         return cell;
-    } else if ([readmeURL isEqualToString: @"Readme link unavailable."]){
-        return cell;
     } else {
-        NSURL *url = [NSURL URLWithString:readmeURL];
+        NSURL *url = [NSURL URLWithString:repoURL];
 
         NSString *githubUser   = url.pathComponents[1];
         NSString *repoTitle    = url.pathComponents[2];
@@ -485,8 +483,8 @@
         cell.backgroundColor      = [UIColor colorWithHexString:@"#FBFBFB"];
         [cell.repoTitle setAttributedText:attributedText];
         
-        cell.repoDescription.text = readmeText;
-        cell.repoDescription.textColor = [UIColor colorWithHexString:@"#555555"];
+        cell.repoDescription.text = repoText;
+        cell.repoDescription.textColor = [UIColor colorWithHexString:@"#555"];
         cell.contestIcon.image    = [UIImage imageNamed:@"repo_icon.png"];
          
         return cell;
@@ -497,13 +495,13 @@
 {
     [self.hud hide:YES];
     NSDictionary *dictionary = [self.dataArray objectAtIndex:indexPath.section];
-    NSArray *readmeURLArray = [dictionary objectForKey:@"readme_url"];
-    NSString *readmeURL = [readmeURLArray objectAtIndex:indexPath.row];
+    NSArray *repoURLArray = [dictionary objectForKey:@"repo_url"];
+    NSString *repoURL = [repoURLArray objectAtIndex:indexPath.row];
     
-    if ([readmeURL isEqualToString: @"NOTHING"]) {
+    if ([repoURL isEqualToString: @"NOTHING"]) {
     } else {
         RepoViewController *webView = [[RepoViewController alloc] init];
-        NSURL *url = [NSURL URLWithString:readmeURL]; //TODO Tidy this up
+        NSURL *url = [NSURL URLWithString:repoURL]; //TODO Tidy this up
         webView.url = url;
         NSString *githubUser   = url.pathComponents[1];
         NSString *repoTitle    = url.pathComponents[2];
@@ -517,9 +515,7 @@
         webView.delegate = self;
         
         Mixpanel *mixpanel = [Mixpanel sharedInstance];
-        [mixpanel track:@"readme_click" properties:@{
-         @"read": readmeURL
-         }];
+        [mixpanel track:@"repo_click" properties:@{@"read": repoURL}];
         [self.sad_hud hide:YES];
         [self presentViewController:webView animated:YES completion:nil];
     }

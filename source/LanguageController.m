@@ -37,10 +37,6 @@
     
     [[self navigationController] setNavigationBarHidden:YES];
 
-    
-
-
-    
     UIImage *settingsImg = [UIImage imageNamed:@"save_circle.png"];
     self.saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.saveBtn setImage:settingsImg forState:UIControlStateNormal];
@@ -139,8 +135,7 @@
     NSArray *array = [self.dataArray objectAtIndex:indexPath.section];
     NSString *text = [array objectAtIndex:indexPath.row];
     cell.isSelected = [self.selectedMarks containsObject:text];
-    NSString *formattedLanguage = [text stringByReplacingOccurrencesOfString:@"%20"
-                                                                    withString:@" "];
+    NSString *formattedLanguage = [text stringByReplacingOccurrencesOfString:@"%20" withString:@" "];
     cell.textLabel.text = formattedLanguage;
     cell.textLabel.textColor = [UIColor colorWithHexString:@"#555"];
     cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:16];
