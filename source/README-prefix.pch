@@ -11,4 +11,5 @@
 #import <AFNetworking/AFNetworking.h>
 #import <Mixpanel/Mixpanel.h>
 #import <UI7Kit/UI7Kit.h>
+#import <UIColor-HexString/UIColor+HexString.h>
 #endif

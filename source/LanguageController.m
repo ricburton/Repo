@@ -19,31 +19,6 @@
 
 @implementation LanguageController
 
-//TODO - Move this repeated code to a Pod
-- (unsigned int)intFromHexString:(NSString *)hexStr
-{
-    unsigned int hexInt = 0;
-    
-    NSScanner *scanner = [NSScanner scannerWithString:hexStr];
-    [scanner setCharactersToBeSkipped:[NSCharacterSet characterSetWithCharactersInString:@"#"]];
-    [scanner scanHexInt:&hexInt];
-    
-    return hexInt;
-}
-
-- (UIColor *)getUIColorObjectFromHexString:(NSString *)hexStr alpha:(CGFloat)alpha
-{
-    unsigned int hexint = [self intFromHexString:hexStr];
-    
-    UIColor *color =
-    [UIColor colorWithRed:((CGFloat) ((hexint & 0xFF0000) >> 16))/255
-                    green:((CGFloat) ((hexint & 0xFF00) >> 8))/255
-                     blue:((CGFloat) (hexint & 0xFF))/255
-                    alpha:alpha];
-    
-    return color;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -57,7 +32,7 @@
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.separatorColor = [self getUIColorObjectFromHexString:@"#DDDDDD" alpha:.32];
+    self.tableView.separatorColor = [UIColor colorWithHexString:@"#32DDDDDD"];
     
     [[self navigationController] setNavigationBarHidden:YES];
 
@@ -140,13 +115,13 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 0)];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(9, 0, self.tableView.frame.size.width, 35)];
     [label setFont:[UIFont fontWithName:@"Helvetica-Bold" size:18]];
-    [label setTextColor:[self getUIColorObjectFromHexString:@"#4E575B" alpha:1]];
+    [label setTextColor:[UIColor colorWithHexString:@"#4E575B"]];
     
     [label setText:languageSection];
     [view addSubview:label];
     
-    [label setBackgroundColor:[self getUIColorObjectFromHexString:@"E6EBED" alpha:1]];
-    [view setBackgroundColor:[self getUIColorObjectFromHexString:@"E6EBED" alpha:1]];
+    [label setBackgroundColor:[UIColor colorWithHexString:@"E6EBED"]];
+    [view setBackgroundColor:[UIColor colorWithHexString:@"E6EBED"]];
     return view;
 }
 
@@ -166,7 +141,7 @@
     NSString *formattedLanguage = [text stringByReplacingOccurrencesOfString:@"%20"
                                                                     withString:@" "];
     cell.textLabel.text = formattedLanguage;
-    cell.textLabel.textColor = [self getUIColorObjectFromHexString:@"#555555" alpha:1];
+    cell.textLabel.textColor = [UIColor colorWithHexString:@"#555"];
     cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:16];
     
     return cell;

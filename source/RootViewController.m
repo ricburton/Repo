@@ -50,7 +50,7 @@
 
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.separatorColor = [self getUIColorObjectFromHexString:@"#DDDDDD" alpha:1];
+    self.tableView.separatorColor = [UIColor colorWithHexString:@"#DDDDDD"];
     
     [[NSNotificationCenter defaultCenter] addObserverForName:@"Repo" object:nil queue:nil usingBlock:^(NSNotification *event) {
         NSString *code = [[event userInfo] objectForKey:@"code"];
@@ -350,7 +350,7 @@
             UILabel *infoLabel = [[UILabel alloc] initWithFrame:infoLabelRect];
             infoLabel.text = @"Connect your GitHub account using OAuth to star the repositories you like.";
             infoLabel.numberOfLines = 3;
-            infoLabel.textColor = [self getUIColorObjectFromHexString:@"C1C1C1" alpha:1];
+            infoLabel.textColor = [UIColor colorWithHexString:@"C1C1C1"];
             infoLabel.textAlignment = NSTextAlignmentCenter;
             infoLabel.backgroundColor = [UIColor clearColor];
             UIFont *infoFont = [UIFont boldSystemFontOfSize:13];
@@ -358,7 +358,7 @@
             [contentView addSubview:infoLabel];
             
             self.modal = [KGModal sharedInstance];
-            self.modal.modalBackgroundColor = [self getUIColorObjectFromHexString:@"262626" alpha:0.96];
+            self.modal.modalBackgroundColor = [UIColor colorWithHexString:@"96C1C1C1"];
             [self.modal showWithContentView:contentView andAnimated:YES];
             
             Mixpanel *mixpanel = [Mixpanel sharedInstance];
@@ -370,30 +370,6 @@
 {
     //TODO Log out
     //    [[GitHubOAuth sharedClient] authorizeWithParams:@{@"scope": @"public_repo"}];
-}
-
-- (unsigned int)intFromHexString:(NSString *)hexStr
-{
-    unsigned int hexInt = 0;
-    
-    NSScanner *scanner = [NSScanner scannerWithString:hexStr];
-    [scanner setCharactersToBeSkipped:[NSCharacterSet characterSetWithCharactersInString:@"#"]];
-    [scanner scanHexInt:&hexInt];
-    
-    return hexInt;
-}
-
-- (UIColor *)getUIColorObjectFromHexString:(NSString *)hexStr alpha:(CGFloat)alpha
-{
-    unsigned int hexint = [self intFromHexString:hexStr];
-    
-    UIColor *color =
-    [UIColor colorWithRed:((CGFloat) ((hexint & 0xFF0000) >> 16))/255
-                    green:((CGFloat) ((hexint & 0xFF00) >> 8))/255
-                     blue:((CGFloat) (hexint & 0xFF))/255
-                    alpha:alpha];
-    
-    return color;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -408,7 +384,7 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 0)];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(9, 0, self.tableView.frame.size.width, 35)];
     [label setFont:[UIFont fontWithName:@"Helvetica-Bold" size:18]];
-    [label setTextColor:[self getUIColorObjectFromHexString:@"#ffffff" alpha:1]];
+    [label setTextColor:[UIColor colorWithHexString:@"fff"]];
     NSString *string = self.arrayOfLangs[section];
     
     NSString *formattedLanguage = [string stringByReplacingOccurrencesOfString:@"%20"
@@ -422,8 +398,8 @@
     } else {
         sectionColor = @"#4A4A4A";
     }
-    [label setBackgroundColor:[self getUIColorObjectFromHexString:sectionColor alpha:1]];
-    [view setBackgroundColor:[self getUIColorObjectFromHexString:sectionColor alpha:1]];
+    [label setBackgroundColor:[UIColor colorWithHexString:sectionColor]];
+    [view setBackgroundColor:[UIColor colorWithHexString:sectionColor]];
     return view;
 }
 
@@ -469,7 +445,7 @@
         NSLog(@"No stars or forks");
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.repoTitle.text = @"No projects starred or forked.";
-        cell.repoTitle.textColor = [self getUIColorObjectFromHexString:@"#555555" alpha:1];
+        cell.repoTitle.textColor = [UIColor colorWithHexString:@"#555"];
         cell.repoDescription.text = @"Go give the language some love :)";
         cell.contestIcon.image = [UIImage imageNamed:@"no_repos.png"];
         
@@ -486,9 +462,9 @@
 
         const CGFloat fontSize = 13;
         UIFont *boldFont = [UIFont boldSystemFontOfSize:fontSize];
-        UIColor *boldColor  = [self getUIColorObjectFromHexString:@"#3A85D6" alpha:1];
+        UIColor *boldColor  = [UIColor colorWithHexString:@"#3A85D6"];
         UIFont *slashFont = [UIFont boldSystemFontOfSize:fontSize];
-        UIColor *slashColor = [self getUIColorObjectFromHexString:@"#999999" alpha:1];
+        UIColor *slashColor = [UIColor colorWithHexString:@"#999"];
         
         NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
                                boldFont, NSFontAttributeName,
@@ -504,11 +480,11 @@
         [[NSMutableAttributedString alloc] initWithString:repoDirectory attributes:attrs];
         [attributedText setAttributes:subAttrs range:rangeSlash];
         
-        cell.backgroundColor      = [self getUIColorObjectFromHexString:@"#FBFBFB" alpha:1];
+        cell.backgroundColor      = [UIColor colorWithHexString:@"#FBFBFB"];
         [cell.repoTitle setAttributedText:attributedText];
         
         cell.repoDescription.text = readmeText;
-        cell.repoDescription.textColor = [self getUIColorObjectFromHexString:@"#555555" alpha:1];
+        cell.repoDescription.textColor = [UIColor colorWithHexString:@"#555555"];
         cell.contestIcon.image    = [UIImage imageNamed:@"repo_icon.png"];
          
         return cell;
